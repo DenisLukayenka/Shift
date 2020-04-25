@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
-import { onMainContentChange } from './shared/components/animations/sidenav.animation';
-import { MenuState, selectIsOpen } from './core/store/menu/menu.state';
 import { Store, select } from '@ngrx/store';
+import { AppState, selectAppLoading } from './core/store/app/app.state';
+import { onMainContentChange } from './shared/animations/sidenav.animation';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  animations: [ onMainContentChange ]
+  animations: [onMainContentChange]
 })
 export class AppComponent {
   title = 'app';
-  public onSideNavChange: boolean;
+  public isLoading: boolean;
 
-  constructor(private menuStore: Store<MenuState>) {
-    this.menuStore.pipe(select(selectIsOpen)).subscribe(isOpen => this.onSideNavChange = isOpen);
+  constructor(private appStore: Store<AppState>) {
+    this.appStore.pipe(select(selectAppLoading)).subscribe(appLoading => this.isLoading = appLoading);
   }
 }

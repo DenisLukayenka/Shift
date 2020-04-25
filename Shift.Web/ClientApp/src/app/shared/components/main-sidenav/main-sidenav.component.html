@@ -2,11 +2,11 @@
     <div class="menu-wrapper">
         <div>
             <mat-nav-list class="nav-list">
-                <pac-menu-item (click)="onSideNavToggle()" icon="menu" name="Свернуть" [isShow]="linkText"></pac-menu-item>
+                <pac-menu-item (click)="onSideNavToggle()" icon="menu" name="Свернуть"></pac-menu-item>
                 
                 <mat-divider></mat-divider>
                 <ng-container *ngFor="let page of pages">
-                    <pac-menu-item [icon]="page?.icon" [name]="page?.name" [isShow]="linkText"></pac-menu-item>
+                    <pac-menu-item [icon]="page?.icon" [name]="page?.name"></pac-menu-item>
                 </ng-container>
               </mat-nav-list>
         </div>

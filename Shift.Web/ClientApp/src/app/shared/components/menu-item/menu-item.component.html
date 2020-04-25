@@ -1,4 +1,4 @@
 <mat-list-item class="menu-item-container">
-    <mat-icon class="item-icon">{{icon}}</mat-icon>
-    <span [@animateText]="isShow ? 'show' : 'hide'">{{name}}</span>
+    <mat-icon *ngIf="!!icon" class="item-icon">{{icon}}</mat-icon>
+    <span [@animateText]="isShow ? 'show' : 'hide'">{{ name | uppercase}}</span>
 </mat-list-item>

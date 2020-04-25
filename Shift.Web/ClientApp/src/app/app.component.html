@@ -1,18 +1,27 @@
-<body>
+<mat-spinner *ngIf="!isLoading"></mat-spinner>
+
+
+<div *ngIf="isLoading">
     <app-nav-menu></app-nav-menu>
 
-    <div class="lv-sidenav-container">
+    <div>
         <mat-sidenav-container class="sidenav-container">
-            <mat-sidenav mode="side" opened disableClose="true" fixedTopGap="0">
-                <pac-lv-sidenav></pac-lv-sidenav>
+            <mat-sidenav
+                fixedInViewport="true"
+                mode="side" 
+                opened 
+                disableClose="true">
+                <pac-main-sidenav></pac-main-sidenav>
             </mat-sidenav>
-    
+
             <mat-sidenav-content [@onMainContentChange]="onSideNavChange ? 'open': 'close'">
                 <div class="main-content">
                     My content!!!!!!!!!!!
-                    <router-outlet></router-outlet>
                 </div>
+                <router-outlet></router-outlet>
             </mat-sidenav-content>
         </mat-sidenav-container>
     </div>
-</body>
+</div>
+
+

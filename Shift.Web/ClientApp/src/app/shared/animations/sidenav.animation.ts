@@ -1,7 +1,7 @@
 import { trigger, state, style, transition, animate } from "@angular/animations";
 
-const minSidenavWidth = '60px';
-const fullSidenavWidth = '256px';
+const minSidenavWidth = '64px';
+const fullSidenavWidth = '240px';
 
 export const onSideNavChange = trigger('onSideNavChange', [
     state('close',

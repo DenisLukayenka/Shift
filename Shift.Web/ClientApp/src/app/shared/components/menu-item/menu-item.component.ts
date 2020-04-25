@@ -1,6 +1,8 @@
 import { Component, Input, OnChanges } from "@angular/core";
-import { animateText } from "src/app/shared/components/animations/sidenav.animation";
+import { animateText } from "src/app/shared/animations/sidenav.animation";
 import { SimpleChanges } from "@angular/core";
+import { MenuState, selectIsOpen } from "src/app/core/store/menu/menu.state";
+import { Store, select } from '@ngrx/store';
 
 @Component({
     selector: 'pac-menu-item',
@@ -8,15 +10,17 @@ import { SimpleChanges } from "@angular/core";
     styleUrls: ['./menu-item.component.scss'],
     animations: [animateText]
 })
-export class MenuItemComponent implements OnChanges {
+export class MenuItemComponent {
     @Input() icon: string;
     @Input() name: string;
     @Input() link: string;
-    @Input() isShow: boolean = true;
+    public isShow: boolean = true;
 
-    public ngOnChanges(changes: SimpleChanges ): void {
-        if(!!changes.isShow.currentValue) {
-            this.isShow = changes.isShow.currentValue;
-        }
+    constructor(private menuStore: Store<MenuState>){
+        this.menuStore.pipe(select(selectIsOpen)).subscribe(isOpen => {
+            setTimeout(() => {
+                this.isShow = isOpen;
+            }, 150);
+        });
     }
 }

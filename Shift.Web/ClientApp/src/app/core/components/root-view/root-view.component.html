@@ -1,0 +1,19 @@
+<app-nav-menu></app-nav-menu>
+
+<div>
+    <mat-sidenav-container class="sidenav-container">
+        <mat-sidenav
+            fixedInViewport="true"
+            mode="side" 
+            opened 
+            disableClose="true">
+            <pac-main-sidenav></pac-main-sidenav>
+        </mat-sidenav>
+
+        <mat-sidenav-content [@onMainContentChange]="onSideNavChange ? 'open': 'close'">
+            <div class="main-content">
+                My content!!!!!!!!!!!
+            </div>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>
