@@ -4,6 +4,7 @@ using System.Collections.Generic;
 namespace Shift.DAL.Models.UserModels.GraduateData
 {
 	using Shift.DAL.Models.University;
+	using Shift.DAL.Models.UserModels.EmployeeData;
 	using Shift.DAL.Models.UserModels.UserData;
 
 	public class Graduate
@@ -15,6 +16,9 @@ namespace Shift.DAL.Models.UserModels.GraduateData
 
 		public DateTime StartEducationDate { get; set; }
 		public DateTime FinishEducationDate { get; set; }
+
+		public int? ScienceAdviserId { get; set; }
+		public virtual Employee ScienceAdviser { get; set; }
 
 		public int? SpecialtyId { get; set; }
 		public virtual Specialty Specialty { get; set; }

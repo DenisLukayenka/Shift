@@ -10,7 +10,7 @@ using Shift.DAL;
 namespace Shift.DAL.Migrations
 {
     [DbContext(typeof(AppContext))]
-    [Migration("20200423220338_init")]
+    [Migration("20200425113729_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,14 +31,14 @@ namespace Shift.DAL.Migrations
                     b.Property<string>("Abbreviation")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DepartmentHead")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DepartmentName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int?>("FacultyId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Head")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -78,7 +78,7 @@ namespace Shift.DAL.Migrations
                     b.Property<string>("Dean")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FacultyName")
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -153,7 +153,7 @@ namespace Shift.DAL.Migrations
 
             modelBuilder.Entity("Shift.DAL.Models.UserModels.EmployeeData.AcademicDegree", b =>
                 {
-                    b.Property<int>("AcademicDegreeId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -161,14 +161,14 @@ namespace Shift.DAL.Migrations
                     b.Property<string>("DegreeName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("AcademicDegreeId");
+                    b.HasKey("Id");
 
                     b.ToTable("AcademicDegrees");
                 });
 
             modelBuilder.Entity("Shift.DAL.Models.UserModels.EmployeeData.AcademicRank", b =>
                 {
-                    b.Property<int>("AcademicRankId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -176,7 +176,7 @@ namespace Shift.DAL.Migrations
                     b.Property<string>("RankName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("AcademicRankId");
+                    b.HasKey("Id");
 
                     b.ToTable("AcademicRanks");
                 });
@@ -215,15 +215,18 @@ namespace Shift.DAL.Migrations
 
             modelBuilder.Entity("Shift.DAL.Models.UserModels.EmployeeData.JobPosition", b =>
                 {
-                    b.Property<int>("JobPositionId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("JobPositionName")
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("JobPositionId");
+                    b.Property<string>("ShortName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
 
                     b.ToTable("JobPositions");
                 });
@@ -241,11 +244,11 @@ namespace Shift.DAL.Migrations
                     b.Property<int>("EducationForm")
                         .HasColumnType("int");
 
-                    b.Property<int?>("EmployeeId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("FinishEducationDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("ScienceAdviserId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("SpecialtyId")
                         .HasColumnType("int");
@@ -257,7 +260,7 @@ namespace Shift.DAL.Migrations
 
                     b.HasIndex("DepartmentId");
 
-                    b.HasIndex("EmployeeId");
+                    b.HasIndex("ScienceAdviserId");
 
                     b.HasIndex("SpecialtyId");
 
@@ -274,22 +277,12 @@ namespace Shift.DAL.Migrations
                     b.Property<int?>("GraduateId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ScienceAdviserId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ThesisPlanId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("UniversitySettingsId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("GraduateId");
-
-                    b.HasIndex("ScienceAdviserId");
-
-                    b.HasIndex("ThesisPlanId");
 
                     b.HasIndex("UniversitySettingsId");
 
@@ -312,9 +305,6 @@ namespace Shift.DAL.Migrations
                     b.Property<string>("AttestationResult")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("DepartmentHead")
                         .HasColumnType("nvarchar(max)");
 
@@ -335,12 +325,6 @@ namespace Shift.DAL.Migrations
 
                     b.Property<int?>("ProtocolId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Result")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ScientificTrainerHead")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("TrainingHeadApproveDate")
                         .HasColumnType("datetime2");
@@ -399,20 +383,17 @@ namespace Shift.DAL.Migrations
                     b.Property<string>("Adviser")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("AdviserPhaseApproveDate")
+                    b.Property<DateTime?>("AdviserApproveDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsAdviserPhaseApproved")
+                    b.Property<bool>("IsAdviserApproved")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsPhaseSubmitted")
+                    b.Property<bool>("IsSubmitted")
                         .HasColumnType("bit");
 
                     b.Property<int?>("JournalId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime?>("PhaseSubmitDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Publications")
                         .HasColumnType("nvarchar(max)");
@@ -425,6 +406,9 @@ namespace Shift.DAL.Migrations
 
                     b.Property<string>("SubWorks")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("SubmitDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("TripsInternships")
                         .HasColumnType("nvarchar(max)");
@@ -446,13 +430,13 @@ namespace Shift.DAL.Migrations
                     b.Property<string>("Adviser")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("AdviserRationalApproveDate")
+                    b.Property<DateTime?>("AdviserApproveDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DepartmentHead")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("DepartmentHeadRationalApproveDate")
+                    b.Property<DateTime?>("DepartmentHeadApproveDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DissertationTopic")
@@ -461,13 +445,13 @@ namespace Shift.DAL.Migrations
                     b.Property<int?>("GraduateJournalId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsAdviserRationalApproved")
+                    b.Property<bool>("IsAdviserApproved")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsDepartmentHeadRationalApproved")
+                    b.Property<bool>("IsDepartmentHeadApproved")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsTrainingHeadRationalApproved")
+                    b.Property<bool>("IsTrainingHeadApproved")
                         .HasColumnType("bit");
 
                     b.Property<string>("Justification")
@@ -494,7 +478,7 @@ namespace Shift.DAL.Migrations
                     b.Property<string>("TrainingHead")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("TrainingHeadRationalApproveDate")
+                    b.Property<DateTime?>("TrainingHeadApproveDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("RationalInfoId");
@@ -550,22 +534,29 @@ namespace Shift.DAL.Migrations
                     b.Property<string>("Adviser")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("AdviserThesisPlanApproveDate")
+                    b.Property<DateTime?>("AdviserApproveDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsThesisPlanApproved")
-                        .HasColumnType("bit");
+                    b.Property<int?>("GraduateJournalId")
+                        .HasColumnType("int");
 
-                    b.Property<bool>("IsThesisPlanSubmitted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ThesisPlanInfo")
+                    b.Property<string>("Info")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("ThesisPlanSubmitDate")
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSubmitted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("SubmitDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("ThesisPlanId");
+
+                    b.HasIndex("GraduateJournalId")
+                        .IsUnique()
+                        .HasFilter("[GraduateJournalId] IS NOT NULL");
 
                     b.ToTable("ThesisPlans");
                 });
@@ -580,7 +571,7 @@ namespace Shift.DAL.Migrations
                     b.Property<string>("Adviser")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("AdviserPlanApproveDate")
+                    b.Property<DateTime?>("AdviserApproveDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CouncilNumber")
@@ -592,22 +583,22 @@ namespace Shift.DAL.Migrations
                     b.Property<int?>("GraduateJournalId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsAdviserPlanApproved")
+                    b.Property<bool>("IsAdviserApproved")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsPlanSubmitted")
+                    b.Property<bool>("IsSubmitted")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsTrainingHeadPlanApproved")
+                    b.Property<bool>("IsTrainingHeadApproved")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime?>("PlanSubmitDate")
+                    b.Property<DateTime?>("SubmitDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("TrainingHead")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("TrainingHeadPlanApproveDate")
+                    b.Property<DateTime?>("TrainingHeadApproveDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("WorkPlanId");
@@ -716,12 +707,15 @@ namespace Shift.DAL.Migrations
                     b.ToTable("PreparationInfo");
                 });
 
-            modelBuilder.Entity("Shift.DAL.Models.UserModels.UndergraduateData.JournalData.ReportResult", b =>
+            modelBuilder.Entity("Shift.DAL.Models.UserModels.UndergraduateData.JournalData.Report", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("DepartmentHead")
                         .HasColumnType("nvarchar(max)");
@@ -729,11 +723,8 @@ namespace Shift.DAL.Migrations
                     b.Property<int?>("ProtocolId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Report")
+                    b.Property<string>("Result")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("ReportDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<int?>("UndergraduateJournalId")
                         .HasColumnType("int");
@@ -789,7 +780,7 @@ namespace Shift.DAL.Migrations
                     b.Property<string>("DepartmentHead")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsThesisApproved")
+                    b.Property<bool>("IsApproved")
                         .HasColumnType("bit");
 
                     b.Property<int>("Mark")
@@ -820,11 +811,14 @@ namespace Shift.DAL.Migrations
                     b.Property<int>("EducationForm")
                         .HasColumnType("int");
 
-                    b.Property<int?>("EmployeeId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("FinishEducationDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("ScienceAdviserId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SpecialtyId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("StartEducationDate")
                         .HasColumnType("datetime2");
@@ -836,7 +830,9 @@ namespace Shift.DAL.Migrations
 
                     b.HasIndex("DepartmentId");
 
-                    b.HasIndex("EmployeeId");
+                    b.HasIndex("ScienceAdviserId");
+
+                    b.HasIndex("SpecialtyId");
 
                     b.ToTable("Undergraduates");
                 });
@@ -848,9 +844,6 @@ namespace Shift.DAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ScienceAdviserId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("UndergraduateId")
                         .HasColumnType("int");
 
@@ -858,8 +851,6 @@ namespace Shift.DAL.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ScienceAdviserId");
 
                     b.HasIndex("UndergraduateId");
 
@@ -887,16 +878,11 @@ namespace Shift.DAL.Migrations
                     b.Property<int>("Mark")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("DisciplineId");
 
                     b.HasIndex("GraduateId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("ExamInfo");
                 });
@@ -944,12 +930,7 @@ namespace Shift.DAL.Migrations
                     b.Property<string>("PatronymicName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SpecialtyId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("SpecialtyId");
 
                     b.ToTable("Users");
                 });
@@ -993,12 +974,12 @@ namespace Shift.DAL.Migrations
                         .WithMany("Graduates")
                         .HasForeignKey("DepartmentId");
 
-                    b.HasOne("Shift.DAL.Models.UserModels.EmployeeData.Employee", null)
+                    b.HasOne("Shift.DAL.Models.UserModels.EmployeeData.Employee", "ScienceAdviser")
                         .WithMany("Graduates")
-                        .HasForeignKey("EmployeeId");
+                        .HasForeignKey("ScienceAdviserId");
 
                     b.HasOne("Shift.DAL.Models.University.Specialty", "Specialty")
-                        .WithMany()
+                        .WithMany("Graduates")
                         .HasForeignKey("SpecialtyId");
                 });
 
@@ -1007,14 +988,6 @@ namespace Shift.DAL.Migrations
                     b.HasOne("Shift.DAL.Models.UserModels.GraduateData.Graduate", "Graduate")
                         .WithMany("GraduateJournals")
                         .HasForeignKey("GraduateId");
-
-                    b.HasOne("Shift.DAL.Models.UserModels.EmployeeData.Employee", "ScienceAdviser")
-                        .WithMany()
-                        .HasForeignKey("ScienceAdviserId");
-
-                    b.HasOne("Shift.DAL.Models.UserModels.GraduateData.JournalData.ThesisPlan", "ThesisPlan")
-                        .WithMany()
-                        .HasForeignKey("ThesisPlanId");
 
                     b.HasOne("Shift.DAL.Models.University.UniversitySettings", "UniversitySettings")
                         .WithMany()
@@ -1064,6 +1037,13 @@ namespace Shift.DAL.Migrations
                         .HasForeignKey("EducationPhaseId");
                 });
 
+            modelBuilder.Entity("Shift.DAL.Models.UserModels.GraduateData.JournalData.ThesisPlan", b =>
+                {
+                    b.HasOne("Shift.DAL.Models.UserModels.GraduateData.GraduateJournal", "GraduateJournal")
+                        .WithOne("ThesisPlan")
+                        .HasForeignKey("Shift.DAL.Models.UserModels.GraduateData.JournalData.ThesisPlan", "GraduateJournalId");
+                });
+
             modelBuilder.Entity("Shift.DAL.Models.UserModels.GraduateData.JournalData.WorkPlan", b =>
                 {
                     b.HasOne("Shift.DAL.Models.UserModels.GraduateData.GraduateJournal", "GraduateJournal")
@@ -1085,7 +1065,7 @@ namespace Shift.DAL.Migrations
                         .HasForeignKey("Shift.DAL.Models.UserModels.UndergraduateData.JournalData.PreparationInfo", "UndergraduateJournalId");
                 });
 
-            modelBuilder.Entity("Shift.DAL.Models.UserModels.UndergraduateData.JournalData.ReportResult", b =>
+            modelBuilder.Entity("Shift.DAL.Models.UserModels.UndergraduateData.JournalData.Report", b =>
                 {
                     b.HasOne("Shift.DAL.Models.University.Protocol", "Protocol")
                         .WithMany()
@@ -1112,21 +1092,21 @@ namespace Shift.DAL.Migrations
 
             modelBuilder.Entity("Shift.DAL.Models.UserModels.UndergraduateData.Undergraduate", b =>
                 {
-                    b.HasOne("Shift.DAL.Models.University.Department", "Department")
+                    b.HasOne("Shift.DAL.Models.University.Department", null)
                         .WithMany("Undergraduates")
                         .HasForeignKey("DepartmentId");
 
-                    b.HasOne("Shift.DAL.Models.UserModels.EmployeeData.Employee", null)
+                    b.HasOne("Shift.DAL.Models.UserModels.EmployeeData.Employee", "ScienceAdviser")
                         .WithMany("Undergraduates")
-                        .HasForeignKey("EmployeeId");
+                        .HasForeignKey("ScienceAdviserId");
+
+                    b.HasOne("Shift.DAL.Models.University.Specialty", "Specialty")
+                        .WithMany("Undergraduates")
+                        .HasForeignKey("SpecialtyId");
                 });
 
             modelBuilder.Entity("Shift.DAL.Models.UserModels.UndergraduateData.UndergraduateJournal", b =>
                 {
-                    b.HasOne("Shift.DAL.Models.UserModels.EmployeeData.Employee", "ScienceAdviser")
-                        .WithMany()
-                        .HasForeignKey("ScienceAdviserId");
-
                     b.HasOne("Shift.DAL.Models.UserModels.UndergraduateData.Undergraduate", "Undergraduate")
                         .WithMany("Journals")
                         .HasForeignKey("UndergraduateId");
@@ -1142,13 +1122,9 @@ namespace Shift.DAL.Migrations
                         .WithMany("ExamInfo")
                         .HasForeignKey("DisciplineId");
 
-                    b.HasOne("Shift.DAL.Models.UserModels.GraduateData.Graduate", null)
+                    b.HasOne("Shift.DAL.Models.UserModels.GraduateData.Graduate", "Graduate")
                         .WithMany("ExamsData")
                         .HasForeignKey("GraduateId");
-
-                    b.HasOne("Shift.DAL.Models.UserModels.UserData.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Shift.DAL.Models.UserModels.UserData.LoginInfo", b =>
@@ -1177,10 +1153,6 @@ namespace Shift.DAL.Migrations
                         .HasForeignKey("Shift.DAL.Models.UserModels.UserData.User", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Shift.DAL.Models.University.Specialty", null)
-                        .WithMany("Students")
-                        .HasForeignKey("SpecialtyId");
                 });
 #pragma warning restore 612, 618
         }

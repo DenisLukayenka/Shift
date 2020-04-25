@@ -7,17 +7,17 @@ namespace Shift.DAL.Models.UserModels.GraduateData.JournalData
 	{
 		public int WorkPlanId { get; set; }
 
-		public bool IsPlanSubmitted { get; set; } = false;
+		public bool IsSubmitted { get; set; } = false;
 
-		public DateTime? PlanSubmitDate { get; set; }
+		public DateTime? SubmitDate { get; set; }
 
 		public string Adviser { get; set; }
-		public DateTime? AdviserPlanApproveDate { get; set; }
-		public bool IsAdviserPlanApproved { get; set; } = false;
+		public DateTime? AdviserApproveDate { get; set; }
+		public bool IsAdviserApproved { get; set; } = false;
 
 		public string TrainingHead { get; set; }
-		public DateTime? TrainingHeadPlanApproveDate { get; set; }
-		public bool IsTrainingHeadPlanApproved { get; set; } = false;
+		public DateTime? TrainingHeadApproveDate { get; set; }
+		public bool IsTrainingHeadApproved { get; set; } = false;
 
 		public string FinalCertification { get; set; }
 		public string CouncilNumber { get; set; }

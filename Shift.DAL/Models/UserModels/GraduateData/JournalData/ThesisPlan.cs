@@ -6,13 +6,16 @@ namespace Shift.DAL.Models.UserModels.GraduateData.JournalData
 	{
 		public int ThesisPlanId { get; set; }
 
-		public string ThesisPlanInfo { get; set; }
+		public string Info { get; set; }
 		public string Adviser { get; set; }
 
-		public DateTime? AdviserThesisPlanApproveDate { get; set; }
-		public DateTime? ThesisPlanSubmitDate { get; set; }
+		public DateTime? AdviserApproveDate { get; set; }
+		public DateTime? SubmitDate { get; set; }
 
-		public bool IsThesisPlanSubmitted { get; set; } = false;
-		public bool IsThesisPlanApproved { get; set; } = false;
+		public bool IsSubmitted { get; set; } = false;
+		public bool IsApproved { get; set; } = false;
+
+		public int? GraduateJournalId { get; set; }
+		public GraduateJournal GraduateJournal { get; set; }
 	}
 }

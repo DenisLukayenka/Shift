@@ -6,7 +6,7 @@ namespace Shift.DAL.Models.UserModels.UndergraduateData.JournalData
 	{
 		public int ThesisCertificationId { get; set; }
 
-		public bool IsThesisApproved { get; set; } = false;
+		public bool IsApproved { get; set; } = false;
 		public int Mark { get; set; }
 
 		public DateTime ApproveDate { get; set; }

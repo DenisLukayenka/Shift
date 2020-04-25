@@ -9,11 +9,6 @@ namespace Shift.DAL.Models.UserModels.GraduateData.JournalData
 		public int Id { get; set; }
 
 		public string AttestationResult { get; set; }
-		public string ScientificTrainerHead { get; set; }
-
-		public DateTime Date { get; set; }
-
-		public string Result { get; set; }
 
 		public string Adviser { get; set; }
 		public DateTime? AdviserApproveDate { get; set; }

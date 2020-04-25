@@ -3,7 +3,6 @@
 namespace Shift.DAL.Models.UserModels.GraduateData
 {
 	using Shift.DAL.Models.University;
-	using Shift.DAL.Models.UserModels.EmployeeData;
 	using Shift.DAL.Models.UserModels.GraduateData.JournalData;
 
 	public class GraduateJournal
@@ -12,9 +11,6 @@ namespace Shift.DAL.Models.UserModels.GraduateData
 
 		public int? GraduateId { get; set; }
 		public virtual Graduate Graduate { get; set; }
-
-		public int? ScienceAdviserId { get; set; }
-		public virtual Employee ScienceAdviser { get; set; }
 
 		public int? UniversitySettingsId { get; set; }
 		public virtual UniversitySettings UniversitySettings { get; set; }

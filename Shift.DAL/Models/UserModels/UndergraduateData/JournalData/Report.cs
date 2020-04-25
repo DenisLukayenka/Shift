@@ -4,12 +4,12 @@ namespace Shift.DAL.Models.UserModels.UndergraduateData.JournalData
 {
 	using Shift.DAL.Models.University;
 
-	public class ReportResult
+	public class Report
 	{
 		public int Id { get; set; }
 
-		public DateTime ReportDate { get; set; }
-		public string Report { get; set; }
+		public DateTime Date { get; set; }
+		public string Result { get; set; }
 		public string DepartmentHead { get; set; }
 
 		public int? UndergraduateJournalId { get; set; }

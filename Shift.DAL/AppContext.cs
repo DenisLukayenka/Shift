@@ -63,7 +63,7 @@ namespace Shift.DAL
 		public DbSet<Undergraduate> Undergraduates { get; set; }
 		public DbSet<UndergraduateJournal> UndergraduateJournal { get; set; }
 		public DbSet<PreparationInfo> PreparationInfo { get; set; }
-		public DbSet<ReportResult> ReportResults { get; set; }
+		public DbSet<Report> ReportResults { get; set; }
 		public DbSet<ResearchWork> ResearchWorks { get; set; }
 		public DbSet<ThesisCertification> ThesisCertifications { get; set; }
 

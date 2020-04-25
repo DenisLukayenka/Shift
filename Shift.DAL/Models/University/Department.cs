@@ -10,9 +10,9 @@ namespace Shift.DAL.Models.University
 	{
 		public int Id { get; set; }
 
-		public string DepartmentName { get; set; }
+		public string Name { get; set; }
 		public string Abbreviation { get; set; }
-		public string DepartmentHead { get; set; }
+		public string Head { get; set; }
 
 		public int? FacultyId { get; set; }
 		public Faculty Faculty { get; set; }

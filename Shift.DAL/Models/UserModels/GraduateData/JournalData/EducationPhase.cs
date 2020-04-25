@@ -18,11 +18,11 @@ namespace Shift.DAL.Models.UserModels.GraduateData.JournalData
 		public GraduateJournal Journal { get; set; }
 
 		public string Adviser { get; set; }
-		public DateTime? AdviserPhaseApproveDate { get; set; }
-		public bool IsAdviserPhaseApproved { get; set; } = false;
+		public DateTime? AdviserApproveDate { get; set; }
+		public bool IsAdviserApproved { get; set; } = false;
 
-		public DateTime? PhaseSubmitDate { get; set; }
-		public bool IsPhaseSubmitted { get; set; } = false;
+		public DateTime? SubmitDate { get; set; }
+		public bool IsSubmitted { get; set; } = false;
 
 		public virtual ICollection<CalendarStage> CalendarStages { get; set; } = new List<CalendarStage>();
 		public virtual ICollection<ScienceActivity> ScienceActivities { get; set; } = new List<ScienceActivity>();

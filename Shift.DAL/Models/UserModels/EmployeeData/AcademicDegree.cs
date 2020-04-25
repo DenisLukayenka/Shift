@@ -4,7 +4,7 @@ namespace Shift.DAL.Models.UserModels.EmployeeData
 {
 	public class AcademicDegree
 	{
-		public int AcademicDegreeId { get; set; }
+		public int Id { get; set; }
 
 		public string DegreeName { get; set; }
 

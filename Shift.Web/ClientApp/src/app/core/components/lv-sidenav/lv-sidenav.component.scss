@@ -1,0 +1,18 @@
+.sidenav-container {
+    min-width: 60px; 
+    height: calc(100vh - 200px);
+}
+
+.menu-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.menu-bottom {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    align-content: center;
+}
