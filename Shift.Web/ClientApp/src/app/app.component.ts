@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { onMainContentChange } from './core/animations/sidenav.animation';
+import { onMainContentChange } from './shared/components/animations/sidenav.animation';
 import { MenuState, selectIsOpen } from './core/store/menu/menu.state';
 import { Store, select } from '@ngrx/store';
 

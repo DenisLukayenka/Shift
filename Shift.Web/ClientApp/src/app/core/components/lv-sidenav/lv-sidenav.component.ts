@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { Store, select } from '@ngrx/store';
-import { onSideNavChange, animateText } from "../../animations/sidenav.animation";
+import { onSideNavChange, animateText } from "../../../shared/components/animations/sidenav.animation";
 import { MenuState, selectIsOpen } from "../../store/menu/menu.state";
 import { MenuToggle } from "../../store/menu/menu.action";
 

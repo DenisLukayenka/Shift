@@ -1,14 +1,17 @@
 import { trigger, state, style, transition, animate } from "@angular/animations";
 
+const minSidenavWidth = '60px';
+const fullSidenavWidth = '256px';
+
 export const onSideNavChange = trigger('onSideNavChange', [
     state('close',
       style({
-        'min-width': '50px'
+        'min-width': minSidenavWidth
       })
     ),
     state('open',
       style({
-        'min-width': '200px'
+        'min-width': fullSidenavWidth
       })
     ),
     transition('close => open', animate('250ms ease-in')),
@@ -18,12 +21,12 @@ export const onSideNavChange = trigger('onSideNavChange', [
 export const onMainContentChange = trigger('onMainContentChange', [
     state('close',
       style({
-        'margin-left': '62px'
+        'margin-left': minSidenavWidth
       })
     ),
     state('open',
       style({
-        'margin-left': '200px'
+        'margin-left': fullSidenavWidth
       })
     ),
     transition('close => open', animate('250ms ease-in')),

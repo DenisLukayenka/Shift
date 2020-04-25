@@ -1,16 +1,18 @@
 <body>
     <app-nav-menu></app-nav-menu>
 
-    <mat-sidenav-container class="sidenav-container">
-        <mat-sidenav mode="side" opened disableClose="true">
-            <pac-lv-sidenav></pac-lv-sidenav>
-        </mat-sidenav>
-
-        <mat-sidenav-content [@onMainContentChange]="onSideNavChange ? 'open': 'close'">
-            <div class="main-content">
-                My content!!!!!!!!!!!
-                <router-outlet></router-outlet>
-            </div>
-        </mat-sidenav-content>
-    </mat-sidenav-container>
+    <div class="lv-sidenav-container">
+        <mat-sidenav-container class="sidenav-container">
+            <mat-sidenav mode="side" opened disableClose="true" fixedTopGap="0">
+                <pac-lv-sidenav></pac-lv-sidenav>
+            </mat-sidenav>
+    
+            <mat-sidenav-content [@onMainContentChange]="onSideNavChange ? 'open': 'close'">
+                <div class="main-content">
+                    My content!!!!!!!!!!!
+                    <router-outlet></router-outlet>
+                </div>
+            </mat-sidenav-content>
+        </mat-sidenav-container>
+    </div>
 </body>
