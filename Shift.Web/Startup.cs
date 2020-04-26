@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Shift.Services.Services.Handler;
+using Shift.Services.Services.Menu;
+using Shift.Services.Services.RequestProcessor;
 
 namespace Shift.Web
 {
@@ -18,11 +21,22 @@ namespace Shift.Web
 
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.AddCors(options =>
+			{
+				options.AddPolicy("CorsPolicy",
+					builder => builder.AllowAnyOrigin()
+						.AllowAnyMethod()
+						.AllowAnyHeader());
+			});
+
+
 			services.AddControllersWithViews();
 			services.AddSpaStaticFiles(configuration =>
 			{
 				configuration.RootPath = "ClientApp/dist";
 			});
+
+			this.RegisterServices(services);
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -35,6 +49,8 @@ namespace Shift.Web
 			{
 				app.UseExceptionHandler("/Error");
 			}
+
+			app.UseCors("CorsPolicy");
 
 			app.UseStaticFiles();
 			if (!env.IsDevelopment())
@@ -60,6 +76,13 @@ namespace Shift.Web
 					spa.UseAngularCliServer(npmScript: "start");
 				}
 			});
+		}
+
+		private void RegisterServices(IServiceCollection services)
+		{
+			services.AddTransient<IMenuService, MenuService>();
+			services.AddTransient<IRequestProcessorAsync, RequestProcessor>();
+			services.AddTransient<IRequestHandler, GenericRequestHandler>();
 		}
 	}
 }

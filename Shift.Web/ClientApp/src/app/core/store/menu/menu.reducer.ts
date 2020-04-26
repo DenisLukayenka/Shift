@@ -9,6 +9,11 @@ export function menuReducer(state = initialState, action: MenuActionsUnion): Men
                 draft.menuOpen = !draft.menuOpen;
             });
 
+        case MenuActionTypes.FetchRootMenuSuccess:
+            return produce(state, draft => {
+                draft.menu = action.payload.menu;
+            });
+
         default:
             return state;
     }

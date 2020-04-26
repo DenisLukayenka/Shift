@@ -29,6 +29,7 @@
     "@ngrx/store": "^9.1.0",
     "@ngrx/store-devtools": "^9.1.0",
     "@nguniversal/module-map-ngfactory-loader": "8.1.1",
+    "@types/lodash": "^4.14.150",
     "aspnet-prerendering": "^3.0.1",
     "bootstrap": "^4.3.1",
     "core-js": "^3.3.3",
