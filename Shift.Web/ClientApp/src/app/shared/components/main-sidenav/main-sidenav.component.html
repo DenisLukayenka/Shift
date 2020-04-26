@@ -1,10 +1,8 @@
 <div class="sidenav-menu"  [@onSideNavChange]="sideNavState ? 'open' : 'close'">
     <div class="menu-wrapper">
         <div>
-            <mat-nav-list class="nav-list">
-                <pac-menu-item (click)="onSideNavToggle()" icon="menu" name="Свернуть"></pac-menu-item>
-                
-                <mat-divider></mat-divider>
+            <mat-nav-list class="nav-list">                
+                <mat-divider class="header-divider"></mat-divider>
                 <ng-container *ngFor="let page of pages">
                     <pac-menu-item [icon]="page?.icon" [name]="page?.name"></pac-menu-item>
                 </ng-container>

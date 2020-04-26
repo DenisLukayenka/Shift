@@ -1,0 +1,45 @@
+.container-flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+html {
+    font-size: 14px;
+}
+
+.header {
+    font-size: large;
+}
+
+.box-shadow {
+    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
+    position: relative;
+    z-index: 1000;
+}
+
+.primary-block {
+    background-color: #3f51b5;
+    color: white;
+  
+    a {
+      color: white;
+    }
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+button:focus, button:active:focus, button.active:focus {
+    outline: none !important;
+    outline-style: none !important;
+}
+
+.menu-divider {
+    margin: 0px 8px;
+    height: 50%;
+    border-right: 1px;
+    border-right-style: solid;
+    border-color: white;
+}

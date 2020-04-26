@@ -14,7 +14,7 @@ export class MainSidenavComponent {
     public sideNavState: boolean;
 
     constructor(private menuStore: Store<MenuState>) {
-        this.menuStore.pipe(select(selectIsOpen)).subscribe(isOpen => this.sideNavState = isOpen) 
+        this.menuStore.pipe(select(selectIsOpen)).subscribe(isOpen => this.sideNavState = isOpen);
     }
 
     public pages: Page[] = [
@@ -22,10 +22,6 @@ export class MainSidenavComponent {
         {name: 'Starred', link:'some-link', icon: 'star'},
         {name: 'Send email', link:'some-link', icon: 'send'},
     ]
-
-    public onSideNavToggle() {
-        this.menuStore.dispatch(new MenuToggle());
-    }
 }
 
 interface Page {
