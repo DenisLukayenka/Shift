@@ -1,0 +1,10 @@
+
+<span matSubheader *ngIf="!icon" class="flex text-overflow-hide" [@collapseByWidth]="isShow ? 'open' : 'close'">{{ name | uppercase}}</span>
+
+<mat-list-item *ngIf='icon'>
+    <div class="flex menu-font">
+        <mat-icon  class="item-icon">{{icon}}</mat-icon>
+
+        <span class="text-overflow-hide" [@collapseByWidth]="isShow ? 'open' : 'close'">{{ name | uppercase}}</span>
+    </div>
+</mat-list-item>

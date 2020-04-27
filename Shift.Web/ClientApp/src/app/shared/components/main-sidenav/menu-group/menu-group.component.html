@@ -1,0 +1,6 @@
+<mat-divider class="header-divider"></mat-divider>
+<pac-menu-item [name]="menuGroup.Caption"></pac-menu-item>
+
+<ng-container *ngFor="let menuItem of menuGroup.Items">
+    <pac-menu-item [icon]="menuItem.Icon" [name]="menuItem.Caption" [link]="menuItem.Link"></pac-menu-item>
+</ng-container>

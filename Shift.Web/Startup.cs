@@ -30,7 +30,9 @@ namespace Shift.Web
 			});
 
 
-			services.AddControllersWithViews();
+			services.AddControllersWithViews()
+				.AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
+
 			services.AddSpaStaticFiles(configuration =>
 			{
 				configuration.RootPath = "ClientApp/dist";

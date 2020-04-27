@@ -1,31 +1,29 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Store, select } from '@ngrx/store';
-import { onSideNavChange, animateText } from "src/app/shared/animations/sidenav.animation";
-import { MenuState, selectIsOpen } from "src/app/core/store/menu/menu.state";
-import { MenuToggle } from "src/app/core/store/menu/menu.action";
+import { onSideNavChange } from "src/app/shared/animations/sidenav.animation";
+import { MenuState, selectIsOpen, selectRootMenu } from "src/app/core/store/menu/menu.state";
+import { RootMenu } from "src/app/infrastracture/entities/menu/RootMenu";
+import { Observable } from "rxjs";
 
 @Component({
     selector: 'pac-main-sidenav',
     styleUrls: ['./main-sidenav.component.scss'],
     templateUrl: './main-sidenav.component.html',
-    animations: [ onSideNavChange, animateText ]
+    animations: [ onSideNavChange ]
 })
-export class MainSidenavComponent {
-    public sideNavState: boolean;
+export class MainSidenavComponent implements OnInit {
+    public isShow: boolean;
+    public menu$: Observable<RootMenu>;
 
     constructor(private menuStore: Store<MenuState>) {
-        this.menuStore.pipe(select(selectIsOpen)).subscribe(isOpen => this.sideNavState = isOpen);
+        this.menuStore.pipe(select(selectIsOpen)).subscribe(isOpen => {
+            setTimeout(() => {
+                this.isShow = isOpen;
+            }, 0);
+        });
     }
 
-    public pages: Page[] = [
-        {name: 'Inbox', link:'some-link', icon: 'inbox'},
-        {name: 'Starred', link:'some-link', icon: 'star'},
-        {name: 'Send email', link:'some-link', icon: 'send'},
-    ]
-}
-
-interface Page {
-    link: string;
-    name: string;
-    icon: string;
+    ngOnInit() {
+        this.menu$ = this.menuStore.pipe(select(selectRootMenu));
+    }
 }

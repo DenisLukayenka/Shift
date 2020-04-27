@@ -1,0 +1,28 @@
+.item-icon {
+    margin-right: 8px;
+}
+
+.text-overflow-hide {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.flex {
+    display: flex;
+}
+
+.group-header {
+    padding: 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(0,0,0,.54);
+    font-family: Roboto,"Helvetica Neue",sans-serif;
+}
+
+.menu-font {
+    font-size: .8125rem;
+    font-weight: 400;
+    line-height: 1.5rem;
+    color: #424242;
+}
