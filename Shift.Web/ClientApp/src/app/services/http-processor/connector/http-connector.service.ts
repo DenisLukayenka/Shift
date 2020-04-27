@@ -18,11 +18,7 @@ export class HttpConnectorService {
     }
 
     async postRequest(request: BaseRequest): Promise<BaseResponse> {
-        try {
-            return this.http.post<BaseResponse>(request.ReqUrl, request.Body, request.Options).toPromise();
-        } catch (error) {
-            console.log("error at post method", error);
-        }
+        return this.http.post<BaseResponse>(request.ReqUrl, request.Body, request.Options).toPromise();
     }
 
     async putRequest(request: BaseRequest): Promise<BaseResponse> {

@@ -17,7 +17,8 @@ export class MenuEffects {
     @Effect()
     fetchRootMenu$ = this.actions$.pipe(
         ofType<FetchRootMenu>(MenuActionTypes.FetchRootMenu),
-        exhaustMap(() => from(this.httpProcessor.execute(new FetchRootMenuReq("undergraduate")))),
+        map(action => action.payload.userRole),
+        exhaustMap((userRole) => from(this.httpProcessor.execute(new FetchRootMenuReq(userRole)))),
         switchMap((response: FetchRootMenuResp) => {
             if(!!response) {
                 return [ new FetchRootMenuSuccess({ menu: response.RootMenu }), new LoadSuccess() ];
@@ -30,6 +31,6 @@ export class MenuEffects {
 
     constructor(
         private actions$: Actions, 
-        private aboutVersionStore: Store<MenuState>,
+        private menuStore: Store<MenuState>,
         private httpProcessor: HttpProcessorService) {}
 }

@@ -10,6 +10,10 @@ import { MaterialModule } from './material/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/SharedModule';
 import { HttpRequestInterceptor } from './services/http-processor/interceptors/http-request-interceptor';
+import { JwtModule } from "@auth0/angular-jwt";
+import { getJwtToken } from './infrastracture/utilities/getJwtToken';
+import { AuthGuard } from './infrastracture/guards/AuthGuard';
+import { Router } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -24,11 +28,25 @@ import { HttpRequestInterceptor } from './services/http-processor/interceptors/h
     SharedModule,
     BrowserAnimationsModule,
     MaterialModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: getJwtToken,
+        whitelistedDomains: ["localhost:4200", "localhost:50280"],
+        blacklistedRoutes: []
+      }
+    }),
   ],
   providers: [
     { provide: Window, useValue: window },
     { provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true },
+    AuthGuard,
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(private router: Router) {}
+
+  ngDoBootstrap() {
+    this.router.initialNavigation();
+  }
+}

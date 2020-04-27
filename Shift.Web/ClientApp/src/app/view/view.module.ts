@@ -9,6 +9,9 @@ import { UndergraduateJournalComponent } from "./uj-view/uj-view.component";
         GraduateJournalComponent,
         UndergraduateJournalComponent,
     ],
-    exports: []
+    exports: [
+        GraduateJournalComponent,
+        UndergraduateJournalComponent,
+    ]
 })
 export class ViewModule {}

@@ -1,0 +1,19 @@
+.right-box-shadow {
+    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+    background-color: #ebebeb;
+    z-index: 500;
+}
+
+.main-content {
+    width: 100%; 
+    height: calc(100vh - 60px); 
+    background: #efefef;
+    padding: 20px;
+}
+
+.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

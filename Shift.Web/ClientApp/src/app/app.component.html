@@ -1,25 +1,2 @@
+<router-outlet class="height-full"></router-outlet>
 
-<div *ngIf="isLoading" class="center">
-    <mat-spinner></mat-spinner>
-</div>
-
-<ng-container *ngIf="!isLoading">
-    <pac-toolbar></pac-toolbar>
-
-    <mat-sidenav-container>
-        <mat-sidenav
-            mode="side" 
-            opened 
-            disableClose="true"
-            class="right-box-shadow">
-                <pac-main-sidenav></pac-main-sidenav>
-        </mat-sidenav>
-
-        <mat-sidenav-content [@onMainContentChange]="isOpened ? 'open': 'close'">
-            <div class="main-content">
-                My content!!!!!!!!!!!
-                <router-outlet></router-outlet>
-            </div>
-        </mat-sidenav-content>
-    </mat-sidenav-container>
-</ng-container>

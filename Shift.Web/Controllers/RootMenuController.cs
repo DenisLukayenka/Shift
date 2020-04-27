@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Shift.Infrastructure.Requests;
@@ -20,6 +21,7 @@ namespace Shift.Web.Controllers
             this._processor = processor;
         }
 
+        [Authorize(Roles = "Manager")]
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] RootMenuRequest request)
         {
