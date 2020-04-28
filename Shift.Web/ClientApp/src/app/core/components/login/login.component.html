@@ -1,16 +1,39 @@
-<form class="form-signin" #loginForm="ngForm" (ngSubmit)="login(loginForm)">
-    <div class="container-fluid">
-        <h2 class="form-signin-heading">Вход</h2>
-        <div *ngIf="!isAuth" class="alert alert-danger">{{ authAlert$| async }}</div>
-        <br/>
 
-        <label for="login" class="sr-only">Логин</label>
-        <input type="text" id="login" name="login" ngModel class="form-control" placeholder="Логин" required autofocus>
-        <br/>
+<div class="light-background height-full">
+    <div class="center">
+        <div class="auth-wrapper auth-border">
+            <div class="form-header">
+                <h2>Вход</h2>
+            </div>
+           
+            <form [formGroup]="options" class="auth-form" autocomplete="off">
+                <mat-form-field class="width-full form-element">
+                    <mat-label>Введите логин</mat-label>
+                    <input matInput placeholder="Логин" [formControl]="loginControl">
 
-        <label for="password" class="sr-only">Пароль</label>
-        <input type="password" id="password" name="password" ngModel class="form-control" placeholder="Пароль" required autofocus>
-
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Вход</button>
+                    <mat-error *ngIf="loginControl.invalid">{{validateLogin()}}</mat-error>
+                </mat-form-field>
+                <br />
+        
+                <mat-form-field class="width-full form-element">
+                    <mat-label>Введите пароль</mat-label>
+                    <input [type]="hidePassword ? 'password' : 'text'" matInput placeholder="Пароль" [formControl]="passwordControl">
+                    <button 
+                        mat-icon-button 
+                        matSuffix (click)="hidePassword = !hidePassword" 
+                        [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+                            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                    <mat-error *ngIf="passwordControl.invalid">{{validatePassword()}}</mat-error>
+                </mat-form-field>
+                <br />
+        
+                <div class="action-footer">
+                    <mat-divider></mat-divider>
+                    <button class="form-element action-element" button mat-raised-button color="primary" (click)='login()'>Вход</button>
+                    <button class="form-element action-element" button mat-raised-button>Регистрация</button>
+                </div>
+            </form>
+        </div>
     </div>
-</form>
+</div>
