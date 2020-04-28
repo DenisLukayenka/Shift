@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Shift.DAL.Models.UserModels.UndergraduateData.JournalData
 {
 	public class PreparationInfo
 	{
+		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int PreparationInfoId { get; set; }
 
 		public string Topic { get; set; }

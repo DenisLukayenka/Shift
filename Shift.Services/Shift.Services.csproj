@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Shift.DAL\Shift.DAL.csproj" />
     <ProjectReference Include="..\Shift.Infrastructure\Shift.Infrastructure.csproj" />
   </ItemGroup>
 

@@ -1,12 +1,11 @@
 import { Component } from "@angular/core";
-import { NgForm, FormBuilder, FormGroupDirective, FormGroup, FormControl, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, FormControl, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { JwtStorageKey } from "src/app/infrastracture/config";
-import { AppState, selectIsAuth, selectAuthAlert } from "../../store/app/app.state";
-import { Store, select } from "@ngrx/store";
-import { TryAuth } from "../../store/app/app.actions";
-import { Observable } from "rxjs";
+import { from } from "rxjs";
+import { HttpProcessorService } from "src/app/services/http-processor/http-processor.service";
+import { AuthReq } from "src/app/infrastracture/requests/AuthReq";
+import { TokenStorageService } from "src/app/services/token/token-storage.service";
+import { RootPage, RegisterPage } from "src/app/infrastracture/config";
 
 @Component({
     selector: 'pac-login',
@@ -14,24 +13,39 @@ import { Observable } from "rxjs";
     templateUrl: './login.component.html',
 })
 export class LoginComponent {
-    isAuth$: Observable<boolean>;
-    authAlert$: Observable<string>;
-    options: FormGroup;
+    isAuth: boolean;
+    authAlert: string;
 
+    options: FormGroup;
     hidePassword = true;
+
     private loginControl: FormControl;
     private passwordControl: FormControl;
 
-    constructor(private appStore: Store<AppState>, private formBuilder: FormBuilder) {
-        this.isAuth$ = this.appStore.pipe(select(selectIsAuth));
-        this.authAlert$ = this.appStore.pipe(select(selectAuthAlert));
-
+    constructor(
+        private formBuilder: FormBuilder, 
+        private httpProcessor: HttpProcessorService,
+        private storage: TokenStorageService,
+        private router: Router
+    ) {
         this.initializeForm();
     }
     
     public login() {
         if(!this.options.invalid) {
-            this.appStore.dispatch(new TryAuth({ login: this.options.value.login, password: this.options.value.password }));
+            from(this.httpProcessor.execute(new AuthReq(this.options.value.login, this.options.value.password)))
+                .subscribe(response => {
+                    if(response === undefined) {
+                        this.authAlert = 'Произошла ошибка при обработке запроса';
+                    } else if(response.Alert !== undefined) {
+                        this.authAlert = response.Alert;
+                    } else if(response.Token === undefined) {
+                        this.authAlert = 'Произошла ошибка при получении данных';
+                    } else {
+                        this.storage.addToken(response.Token);
+                        this.router.navigate([RootPage]);
+                    }
+                })
         }
     }
 
@@ -51,12 +65,8 @@ export class LoginComponent {
         }
     }
 
-    public clearPassword() {
-        this.passwordControl.reset();
-    }
-
-    public clearLogin() {
-        this.loginControl.reset();
+    public register() {
+        this.router.navigate([RegisterPage]);
     }
 
     private initializeForm() {

@@ -6,20 +6,24 @@ import { RootViewComponent } from "./core/components/root-view/root-view.compone
 import { AuthGuard } from "./infrastracture/guards/AuthGuard";
 import { ErrorPageComponent } from "./shared/components/error-page/error-page.component";
 import { ErrorPageGuard } from "./infrastracture/guards/error-page.guard";
+import { RegisterPage, LoginPage, RootPage, ErrorPage } from "./infrastracture/config";
+import { RegisterComponent } from "./core/components/register/register.component";
 
 const routes: Routes = [
     { 
-        path: 'root', 
+        path: RootPage, 
         component: RootViewComponent,
         runGuardsAndResolvers: 'paramsOrQueryParamsChange',
         canActivate: [AuthGuard],
     },
 
-    { path: 'login', component: LoginComponent },
+    { path: LoginPage, component: LoginComponent },
+    { path: RegisterPage, component: RegisterComponent, runGuardsAndResolvers: 'paramsOrQueryParamsChange' },
+    
     { path: 'toolbar', component: ToolbarComponent },
 
     { path: '', redirectTo: '/root', pathMatch: 'full' },
-    { path: 'error', component: ErrorPageComponent, canActivate: [ErrorPageGuard] }
+    { path: ErrorPage, component: ErrorPageComponent, canActivate: [ErrorPageGuard] }
 ]
 
 @NgModule({

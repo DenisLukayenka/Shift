@@ -1,8 +1,6 @@
 ﻿using Shift.Services.Contexts;
 using Shift.Services.Services.Repositories.Implementations;
 using Shift.Services.Services.Repositories.Interfaces;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Shift.Services.Services.Repositories
@@ -11,6 +9,10 @@ namespace Shift.Services.Services.Repositories
 	{
 		private readonly CoreContext _dbContext;
 		private IUserRepository _userRepository;
+		private IUndergraduateRepository _undergraduateRepository;
+		private IRoleRepository _roleRepository;
+		private IEmployeeRepository _employeeRepository;
+		private IGraduateRepository _graduateRepository;
 
 		public RepositoryWrapper(CoreContext repositoryContext)
 		{
@@ -27,6 +29,58 @@ namespace Shift.Services.Services.Repositories
 				}
 
 				return this._userRepository;
+			}
+		}
+
+		public IUndergraduateRepository Undergraduates
+		{
+			get
+			{
+				if(this._undergraduateRepository is null)
+				{
+					this._undergraduateRepository = new UndergraduateRepository(this._dbContext);
+				}
+
+				return this._undergraduateRepository;
+			}
+		}
+
+		public IRoleRepository Roles
+		{
+			get
+			{
+				if (this._roleRepository is null)
+				{
+					this._roleRepository = new RoleRepository(this._dbContext);
+				}
+
+				return this._roleRepository;
+			}
+		}
+
+		public IEmployeeRepository Employees
+		{
+			get
+			{
+				if (this._employeeRepository is null)
+				{
+					this._employeeRepository = new EmployeeRepository(this._dbContext);
+				}
+
+				return this._employeeRepository;
+			}
+		}
+
+		public IGraduateRepository Graduates
+		{
+			get
+			{
+				if (this._graduateRepository is null)
+				{
+					this._graduateRepository = new GraduateRepository(this._dbContext);
+				}
+
+				return this._graduateRepository;
 			}
 		}
 

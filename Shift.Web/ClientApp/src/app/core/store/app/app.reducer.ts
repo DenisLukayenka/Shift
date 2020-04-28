@@ -16,16 +16,6 @@ export function appReducer(state = initialState, action: AppActionsUnion): AppSt
             return produce(state, draft => {
                 draft.appLoading = false;
             });
-        case AppActionTypes.AuthSuccess:
-            return produce(state, draft => {
-                draft.isAuth = true;
-                draft.authAlert = '';
-            });
-        case AppActionTypes.AuthFailure:
-            return produce(state, draft => {
-                draft.isAuth = false;
-                draft.authAlert = action.payload.alert;
-            });
         case AppActionTypes.LogOut:
             return produce(state, draft => {
                 draft.appLoading = true;
@@ -33,8 +23,6 @@ export function appReducer(state = initialState, action: AppActionsUnion): AppSt
         case AppActionTypes.LogOutSuccess:
             return produce(state, draft => {
                 draft.appLoading = false;
-                draft.isAuth = false;
-                draft.authAlert = '';
             });
         case AppActionTypes.AppFailure:
             return produce(state, draft => {

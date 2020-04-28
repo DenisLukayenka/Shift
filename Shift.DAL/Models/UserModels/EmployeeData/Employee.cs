@@ -6,10 +6,16 @@ namespace Shift.DAL.Models.UserModels.EmployeeData
 	using Shift.DAL.Models.UserModels.GraduateData;
 	using Shift.DAL.Models.UserModels.UndergraduateData;
 	using Shift.DAL.Models.UserModels.UserData;
+	using System.ComponentModel.DataAnnotations;
+	using System.ComponentModel.DataAnnotations.Schema;
 
 	public class Employee
 	{
-		public int Id { get; set; }
+		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		public int EmployeeId { get; set; }
+
+		public int UserId { get; set; }
 		public User User { get; set; }
 
 		public int? JobPositionId { get; set; }

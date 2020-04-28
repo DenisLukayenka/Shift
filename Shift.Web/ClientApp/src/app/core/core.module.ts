@@ -8,14 +8,21 @@ import { RouterModule } from "@angular/router";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { LoginComponent } from "./components/login/login.component";
 import { ViewModule } from "../view/view.module";
-import { UjRegisterComponent } from "./components/register/uj-register/uj-register.component";
+import { URegisterComponent } from "./components/register/u-register/u-register.component";
+import { RegisterComponent } from "./components/register/register.component";
+import { GRegisterComponent } from "./components/register/g-register/g-register.component";
+import { ERegisterComponent } from "./components/register/e-register/e-register.component";
 
 @NgModule({
     declarations: [
         ToolbarComponent,
         RootViewComponent,
         LoginComponent,
-        UjRegisterComponent,
+        
+        URegisterComponent,
+        RegisterComponent,
+        ERegisterComponent,
+        GRegisterComponent,
     ],
     imports: [
         CoreStoreModule,

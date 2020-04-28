@@ -3,9 +3,13 @@
 namespace Shift.DAL.Models.UserModels.UndergraduateData.JournalData
 {
 	using Shift.DAL.Models.University;
+	using System.ComponentModel.DataAnnotations;
+	using System.ComponentModel.DataAnnotations.Schema;
 
 	public class Report
 	{
+		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int Id { get; set; }
 
 		public DateTime Date { get; set; }

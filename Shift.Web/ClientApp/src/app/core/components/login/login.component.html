@@ -2,10 +2,12 @@
 <div class="light-background height-full">
     <div class="center">
         <div class="auth-wrapper auth-border">
-            <div class="form-header">
-                <h2>Вход</h2>
+            <div>
+                <h2 class="form-header">Вход</h2>
             </div>
-           
+            <mat-error *ngIf="!isAuth">{{authAlert }}</mat-error>
+            <mat-divider></mat-divider>
+
             <form [formGroup]="options" class="auth-form" autocomplete="off">
                 <mat-form-field class="width-full form-element">
                     <mat-label>Введите логин</mat-label>
@@ -27,11 +29,10 @@
                     <mat-error *ngIf="passwordControl.invalid">{{validatePassword()}}</mat-error>
                 </mat-form-field>
                 <br />
-        
+
                 <div class="action-footer">
-                    <mat-divider></mat-divider>
                     <button class="form-element action-element" button mat-raised-button color="primary" (click)='login()'>Вход</button>
-                    <button class="form-element action-element" button mat-raised-button>Регистрация</button>
+                    <button class="form-element action-element" button mat-raised-button (click)='register()'>Регистрация</button>
                 </div>
             </form>
         </div>

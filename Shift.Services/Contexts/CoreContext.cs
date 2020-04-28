@@ -82,20 +82,6 @@ namespace Shift.Services.Contexts
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-			modelBuilder.Entity<Employee>()
-				.HasOne<User>(s => s.User)
-				.WithOne(s => s.Employee)
-				.HasForeignKey<User>(s => s.Id);
-
-			modelBuilder.Entity<Graduate>()
-				.HasOne<User>(s => s.User)
-				.WithOne(s => s.Graduate)
-				.HasForeignKey<User>(s => s.Id);
-
-			modelBuilder.Entity<Undergraduate>()
-				.HasOne<User>(s => s.User)
-				.WithOne(s => s.Undergraduate)
-				.HasForeignKey<User>(s => s.Id);
 		}
 	}
 }

@@ -1,9 +1,13 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Shift.DAL.Models.UserModels.UndergraduateData.JournalData
 {
 	public class ThesisCertification
 	{
+		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int ThesisCertificationId { get; set; }
 
 		public bool IsApproved { get; set; } = false;

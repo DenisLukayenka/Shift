@@ -11,10 +11,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/SharedModule';
 import { HttpRequestInterceptor } from './services/http-processor/interceptors/http-request-interceptor';
 import { JwtModule } from "@auth0/angular-jwt";
-import { getJwtToken } from './infrastracture/utilities/getJwtToken';
 import { AuthGuard } from './infrastracture/guards/AuthGuard';
 import { Router } from '@angular/router';
 import { ErrorPageGuard } from './infrastracture/guards/error-page.guard';
+import { getJwtToken } from './infrastracture/utilities/getJwtToken';
 
 @NgModule({
   declarations: [

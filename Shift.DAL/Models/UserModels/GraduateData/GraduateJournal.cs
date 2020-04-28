@@ -4,9 +4,13 @@ namespace Shift.DAL.Models.UserModels.GraduateData
 {
 	using Shift.DAL.Models.University;
 	using Shift.DAL.Models.UserModels.GraduateData.JournalData;
+	using System.ComponentModel.DataAnnotations;
+	using System.ComponentModel.DataAnnotations.Schema;
 
 	public class GraduateJournal
 	{
+		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int Id { get; set; }
 
 		public int? GraduateId { get; set; }

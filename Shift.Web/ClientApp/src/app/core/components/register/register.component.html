@@ -1,0 +1,29 @@
+<div class="light-background height-full">
+    <div class="center">
+        <div class="auth-wrapper auth-border" [ngSwitch]="currentType">
+            <ng-container *ngSwitchCase="RegisterTypes.UnSelected">
+                <ng-container *ngTemplateOutlet="registerSelect"></ng-container>
+            </ng-container>
+            <pac-u-register *ngSwitchCase="RegisterTypes.UndergraduateRegister" (resetTargetType)="resetCurrentType()"></pac-u-register>
+            <pac-g-register *ngSwitchCase="RegisterTypes.GraduateRegister" (resetTargetType)="resetCurrentType()"></pac-g-register>
+            <pac-e-register *ngSwitchCase="RegisterTypes.EmployeeRegister" (resetTargetType)="resetCurrentType()"></pac-e-register>
+        </div>
+    </div>
+</div>
+
+<ng-template #registerSelect>
+    <h3 class="form-header">Регистрация</h3>
+    <label id="register-selector-label" class="mt-2">Выберите тип регистрации:</label>
+    <mat-radio-group
+        aria-labelledby="register-selector-label"
+        class="register-select-form"
+        [(ngModel)]="formType">
+        <mat-radio-button *ngFor="let selector of SelectRegisterTypes" [value]="selector" class="register-selector">
+            {{selector}}
+        </mat-radio-button>
+    </mat-radio-group>
+    <mat-divider></mat-divider>
+    <div class="action-footer">
+        <button class="action-element" button mat-raised-button color="primary" (click)='selectTargetType()'>Далее</button>
+    </div>
+</ng-template>

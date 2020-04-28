@@ -3,9 +3,13 @@
 namespace Shift.DAL.Models.UserModels.GraduateData.JournalData
 {
 	using Shift.DAL.Models.University;
+	using System.ComponentModel.DataAnnotations;
+	using System.ComponentModel.DataAnnotations.Schema;
 
 	public class RationalInfo
 	{
+		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int RationalInfoId { get; set; }
 
 		public string StudyPurpose { get; set; }

@@ -11,7 +11,7 @@ export class HttpProcessorService {
     constructor(private connector: HttpConnectorService) {
     }
 
-    public execute(request: BaseRequest): Promise<BaseResponse> {
+    public execute(request: BaseRequest): Promise<any> {
         switch(request.ReqType){
             case RequestType.GET:
                 return this.connector.getRequest(request);

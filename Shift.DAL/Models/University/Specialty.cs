@@ -4,9 +4,13 @@ namespace Shift.DAL.Models.University
 {
 	using Shift.DAL.Models.UserModels.GraduateData;
 	using Shift.DAL.Models.UserModels.UndergraduateData;
+	using System.ComponentModel.DataAnnotations;
+	using System.ComponentModel.DataAnnotations.Schema;
 
 	public class Specialty
 	{
+		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int Id { get; set; }
 
 		public string Code { get; set; }

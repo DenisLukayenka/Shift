@@ -1,9 +1,8 @@
 import { Injectable } from "@angular/core";
-import { Observable, of, throwError } from "rxjs";
+import { Observable, throwError } from "rxjs";
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { catchError } from "rxjs/operators";
-import { AuthFailure, AppFailure } from "src/app/core/store/app/app.actions";
 import { Store } from "@ngrx/store";
 import { AppState } from "src/app/core/store/app/app.state";
 import { ErrorPage, LoginPage } from "src/app/infrastracture/config";
