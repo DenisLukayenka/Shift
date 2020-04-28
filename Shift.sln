@@ -9,9 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shift.DAL", "Shift.DAL\Shif
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shift.Services", "Shift.Services\Shift.Services.csproj", "{C9EA20FD-6F84-418E-9515-2903ADDE4366}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shift.DAL.Tests", "Shift.DAL.Tests\Shift.DAL.Tests.csproj", "{9F60C72E-7CA5-4D49-B902-75B88A8EA50F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shift.Infrastructure", "Shift.Infrastructure\Shift.Infrastructure.csproj", "{5824AC89-9F1F-496A-A43D-2F1D153C61E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shift.Infrastructure", "Shift.Infrastructure\Shift.Infrastructure.csproj", "{5824AC89-9F1F-496A-A43D-2F1D153C61E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,10 +29,6 @@ Global
 		{C9EA20FD-6F84-418E-9515-2903ADDE4366}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9EA20FD-6F84-418E-9515-2903ADDE4366}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9EA20FD-6F84-418E-9515-2903ADDE4366}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9F60C72E-7CA5-4D49-B902-75B88A8EA50F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9F60C72E-7CA5-4D49-B902-75B88A8EA50F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9F60C72E-7CA5-4D49-B902-75B88A8EA50F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9F60C72E-7CA5-4D49-B902-75B88A8EA50F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5824AC89-9F1F-496A-A43D-2F1D153C61E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5824AC89-9F1F-496A-A43D-2F1D153C61E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5824AC89-9F1F-496A-A43D-2F1D153C61E0}.Release|Any CPU.ActiveCfg = Release|Any CPU

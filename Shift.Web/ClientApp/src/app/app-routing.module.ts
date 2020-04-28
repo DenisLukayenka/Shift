@@ -4,6 +4,8 @@ import { ToolbarComponent } from "./core/components/toolbar/toolbar.component";
 import { LoginComponent } from "./core/components/login/login.component";
 import { RootViewComponent } from "./core/components/root-view/root-view.component";
 import { AuthGuard } from "./infrastracture/guards/AuthGuard";
+import { ErrorPageComponent } from "./shared/components/error-page/error-page.component";
+import { ErrorPageGuard } from "./infrastracture/guards/error-page.guard";
 
 const routes: Routes = [
     { 
@@ -17,6 +19,7 @@ const routes: Routes = [
     { path: 'toolbar', component: ToolbarComponent },
 
     { path: '', redirectTo: '/root', pathMatch: 'full' },
+    { path: 'error', component: ErrorPageComponent, canActivate: [ErrorPageGuard] }
 ]
 
 @NgModule({

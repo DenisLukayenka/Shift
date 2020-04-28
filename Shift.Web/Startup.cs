@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Shift.Services.Providers.Token;
 using Shift.Services.Services.Handler;
 using Shift.Services.Services.Menu;
 using Shift.Services.Services.RequestProcessor;
@@ -13,6 +14,10 @@ using System.Text;
 
 namespace Shift.Web
 {
+	using Microsoft.EntityFrameworkCore;
+	using Shift.Services.Contexts;
+	using Shift.Web.ServicesExtensions;
+
 	public class Startup
 	{
 		public Startup(IConfiguration configuration)
@@ -61,7 +66,9 @@ namespace Shift.Web
 				configuration.RootPath = "ClientApp/dist";
 			});
 
-			this.RegisterServices(services);
+			services.ConfigureSqlServerDbContext(Configuration);
+			services.ConfigureServices();
+			services.ConfigureRepositoryWrapper();
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -103,13 +110,6 @@ namespace Shift.Web
 					spa.UseAngularCliServer(npmScript: "start");
 				}
 			});
-		}
-
-		private void RegisterServices(IServiceCollection services)
-		{
-			services.AddTransient<IMenuService, MenuService>();
-			services.AddTransient<IRequestProcessorAsync, RequestProcessor>();
-			services.AddTransient<IRequestHandler, GenericRequestHandler>();
 		}
 	}
 }

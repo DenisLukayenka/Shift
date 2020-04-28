@@ -21,5 +21,8 @@ namespace Shift.DAL.Models.UserModels.UserData
 		public virtual Employee Employee { get; set; }
 		public virtual Graduate Graduate { get; set; }
 		public virtual Undergraduate Undergraduate { get; set; }
+
+		public int RoleId { get; set; }
+		public virtual Role Role { get; set; }
 	}
 }

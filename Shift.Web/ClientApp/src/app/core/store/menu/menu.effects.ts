@@ -10,7 +10,7 @@ import { HttpProcessorService } from "src/app/services/http-processor/http-proce
 import { isRootMenuResponse } from "src/app/infrastracture/utilities/isRootMenuResponse";
 import { FetchRootMenuResp } from "src/app/infrastracture/responses/FetchRootMenuResp";
 import { FetchRootMenuReq } from "src/app/infrastracture/requests/FetchRootMenuReq";
-import { LoadSuccess } from "../app/app.actions";
+import { LoadSuccess, AppFailure } from "../app/app.actions";
 
 @Injectable()
 export class MenuEffects {
@@ -28,6 +28,12 @@ export class MenuEffects {
         }),
         catchError(error => of(new FetchRootMenuFailure()))
     );
+
+    @Effect()
+    fetchRootMenuFailure$ = this.actions$.pipe(
+        ofType<FetchRootMenuFailure>(MenuActionTypes.FetchRootMenuFailure),
+        map(() => new AppFailure()),
+    )
 
     constructor(
         private actions$: Actions, 

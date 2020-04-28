@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Shift.DAL.Migrations
+namespace Shift.Services.Migrations
 {
     public partial class init : Migration
     {
@@ -88,6 +88,19 @@ namespace Shift.DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Protocol", x => x.ProtocolId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Roles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Caption = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Roles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -350,7 +363,8 @@ namespace Shift.DAL.Migrations
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     PatronymicName = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true)
+                    Email = table.Column<string>(nullable: true),
+                    RoleId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -371,6 +385,12 @@ namespace Shift.DAL.Migrations
                         name: "FK_Users_Undergraduates_Id",
                         column: x => x.Id,
                         principalTable: "Undergraduates",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Users_Roles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -909,6 +929,11 @@ namespace Shift.DAL.Migrations
                 column: "SpecialtyId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Users_RoleId",
+                table: "Users",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_WorkPlans_GraduateJournalId",
                 table: "WorkPlans",
                 column: "GraduateJournalId");
@@ -971,6 +996,9 @@ namespace Shift.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "WorkPlans");
+
+            migrationBuilder.DropTable(
+                name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "UndergraduateJournal");

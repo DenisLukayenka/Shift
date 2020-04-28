@@ -5,4 +5,5 @@ export class AuthResponse extends BaseResponse {
     Type: string = AuthResponse.fullName;
 
     Token: string;
+    Alert: string;
 }

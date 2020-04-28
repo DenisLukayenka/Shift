@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
 import { MenuState, selectIsOpen } from "../../store/menu/menu.state";
 import { MenuToggle } from "../../store/menu/menu.action";
 import { Store, select } from "@ngrx/store";
-import { AppState, selectIsAuth, selectAppLoading } from "../../store/app/app.state";
+import { AppState, selectAppLoading } from "../../store/app/app.state";
 import { LoadApp } from "../../store/app/app.actions";
 import { onMainContentChange } from "src/app/shared/animations/sidenav.animation";
 import { Observable } from "rxjs";

@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Shift.DAL
+namespace Shift.Services.Contexts
 {
+	
 	using Shift.DAL.Models.University;
 	using Shift.DAL.Models.UserModels.EmployeeData;
 	using Shift.DAL.Models.UserModels.GraduateData;
@@ -10,7 +11,7 @@ namespace Shift.DAL
 	using Shift.DAL.Models.UserModels.UndergraduateData.JournalData;
 	using Shift.DAL.Models.UserModels.UserData;
 
-	public class AppContext: DbContext
+	public class CoreContext : DbContext
 	{
 		#region DbSets
 
@@ -31,6 +32,7 @@ namespace Shift.DAL
 		public DbSet<User> Users { get; set; }
 		public DbSet<LoginInfo> LoginInfo { get; set; }
 		public DbSet<ExamInfo> ExamInfo { get; set; }
+		public DbSet<Role> Roles { get; set; }
 
 		#endregion
 
@@ -73,10 +75,9 @@ namespace Shift.DAL
 
 		#endregion
 
-		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+		public CoreContext(DbContextOptions options)
+			: base(options)
 		{
-
-			optionsBuilder.UseSqlServer("Server=localhost;Database=ShiftDb;Trusted_Connection=True");
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)

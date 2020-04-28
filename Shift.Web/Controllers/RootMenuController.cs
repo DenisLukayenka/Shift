@@ -21,7 +21,7 @@ namespace Shift.Web.Controllers
             this._processor = processor;
         }
 
-        [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "undergraduate")]
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] RootMenuRequest request)
         {

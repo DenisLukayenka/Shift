@@ -36,6 +36,8 @@ export class TryAuth implements Action {
 
 export class AuthFailure implements Action {
     readonly type = AppActionTypes.AuthFailure;
+
+    constructor(public payload: { alert: string }){}
 }
 
 export class AppFailure implements Action {

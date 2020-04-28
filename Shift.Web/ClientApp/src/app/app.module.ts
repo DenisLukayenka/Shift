@@ -14,6 +14,7 @@ import { JwtModule } from "@auth0/angular-jwt";
 import { getJwtToken } from './infrastracture/utilities/getJwtToken';
 import { AuthGuard } from './infrastracture/guards/AuthGuard';
 import { Router } from '@angular/router';
+import { ErrorPageGuard } from './infrastracture/guards/error-page.guard';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { Router } from '@angular/router';
     { provide: Window, useValue: window },
     { provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true },
     AuthGuard,
+    ErrorPageGuard,
   ],
   bootstrap: [AppComponent]
 })

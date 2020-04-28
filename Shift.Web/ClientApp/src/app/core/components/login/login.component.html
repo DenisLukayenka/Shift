@@ -1,7 +1,7 @@
 <form class="form-signin" #loginForm="ngForm" (ngSubmit)="login(loginForm)">
     <div class="container-fluid">
         <h2 class="form-signin-heading">Вход</h2>
-        <div *ngIf="invalidLogin" class="alert alert-danger">Неверное имя пользователя или/и пароль</div>
+        <div *ngIf="!isAuth" class="alert alert-danger">{{ authAlert$| async }}</div>
         <br/>
 
         <label for="login" class="sr-only">Логин</label>

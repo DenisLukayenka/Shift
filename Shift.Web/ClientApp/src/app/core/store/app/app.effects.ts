@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { AppState } from "./app.state";
 import { Store } from '@ngrx/store';
-import { AppActionTypes, LoadApp, LoadFailure, TryAuth, AuthFailure, AuthSuccess, LogOutSuccess, LogOut } from "./app.actions";
+import { AppActionTypes, LoadApp, LoadFailure, TryAuth, AuthFailure, AuthSuccess, LogOutSuccess, LogOut, AppFailure } from "./app.actions";
 import { switchMap, catchError, exhaustMap, map, tap } from "rxjs/operators";
 import { of, from } from "rxjs";
 import { HttpProcessorService } from "src/app/services/http-processor/http-processor.service";
@@ -24,7 +24,7 @@ export class AppEffects {
                 new FetchRootMenu({ userRole: userRole }),
             ]
         }),
-        catchError(error => of(new LoadFailure()))
+        catchError(error => of(new AppFailure()))
     );
 
     @Effect()
@@ -32,15 +32,22 @@ export class AppEffects {
         ofType<TryAuth>(AppActionTypes.TryAuth),
         exhaustMap((action) => from(this.httpProcessor.execute(new AuthReq(action.payload.login, action.payload.password)))),
         map((response: AuthResponse) => {
-            let token = !!response ? response.Token: undefined;
-            if(!token) {
-                return new AuthFailure();
+            if(response === undefined) {
+                return new AppFailure();
             }
-            this.storage.addToken(token);
+            var alert = response.Alert;
+            if(response.Alert !== undefined) {
+                return new AuthFailure({ alert });
+            }
+            if(response.Token === undefined) {
+                return new AuthFailure({ alert: 'Token not provided' });
+            }
+
+            this.storage.addToken(response.Token);
             this.router.navigate(["/"]);
             return new AuthSuccess();
         }),
-        catchError(error => of(new AuthFailure()))
+        catchError(error => of(new AppFailure()))
     );
 
     @Effect()
@@ -56,7 +63,6 @@ export class AppEffects {
 
     constructor(
         private actions$: Actions, 
-        private appStore: Store<AppState>,
         private httpProcessor: HttpProcessorService,
         private storage: TokenStorageService,
         private router: Router) {}

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Shift.DAL;
+using Shift.Services.Contexts;
 
-namespace Shift.DAL.Migrations
+namespace Shift.Services.Migrations
 {
-    [DbContext(typeof(AppContext))]
-    partial class AppContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(CoreContext))]
+    [Migration("20200428114147_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -911,6 +913,21 @@ namespace Shift.DAL.Migrations
                     b.ToTable("LoginInfo");
                 });
 
+            modelBuilder.Entity("Shift.DAL.Models.UserModels.UserData.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Caption")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+                });
+
             modelBuilder.Entity("Shift.DAL.Models.UserModels.UserData.User", b =>
                 {
                     b.Property<int>("Id")
@@ -928,7 +945,12 @@ namespace Shift.DAL.Migrations
                     b.Property<string>("PatronymicName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("Users");
                 });
@@ -1149,6 +1171,12 @@ namespace Shift.DAL.Migrations
                     b.HasOne("Shift.DAL.Models.UserModels.UndergraduateData.Undergraduate", "Undergraduate")
                         .WithOne("User")
                         .HasForeignKey("Shift.DAL.Models.UserModels.UserData.User", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Shift.DAL.Models.UserModels.UserData.Role", "Role")
+                        .WithMany("Users")
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
