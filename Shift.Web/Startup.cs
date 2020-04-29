@@ -6,10 +6,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using Shift.Services.Providers.Token;
-using Shift.Services.Services.Handler;
-using Shift.Services.Services.Menu;
-using Shift.Services.Services.RequestProcessor;
 using System.Text;
 
 namespace Shift.Web

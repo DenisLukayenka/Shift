@@ -4,8 +4,6 @@ import { ReqOptions } from "../entities/requests/ReqOptions";
 import { HttpParams } from "@angular/common/http";
 
 export class FetchRootMenuReq extends BaseRequest {
-    static fullName = 'FetchRootMenuReq';
-    Type = FetchRootMenuReq.fullName;
     Role: string;
 
     get ReqType (): RequestType {

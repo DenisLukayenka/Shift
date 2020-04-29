@@ -3,8 +3,6 @@ import { ReqOptions } from "../entities/requests/ReqOptions";
 import { SERVER_URL } from "../config";
 
 export abstract class BaseRequest {
-    abstract Type = '';
-
     get ReqUrl(): string {
         return SERVER_URL + this.TargetReqUrl;
     }

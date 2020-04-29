@@ -4,9 +4,6 @@ import { ReqOptions } from "../entities/requests/ReqOptions";
 import { HttpHeaders } from "@angular/common/http";
 
 export class AuthReq extends BaseRequest {
-    static fullName = 'AuthReq';
-    Type: string = AuthReq.fullName;
-
     Login: string;
     Password: string;
 

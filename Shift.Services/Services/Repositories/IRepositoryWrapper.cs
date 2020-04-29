@@ -10,6 +10,9 @@ namespace Shift.Services.Services.Repositories
 		IRoleRepository Roles { get; }
 		IGraduateRepository Graduates { get; }
 		IEmployeeRepository Employees { get; }
+		IUJournalRepository UJournals { get; }
+		IGJournalRepository GJournals { get; }
+
 
 		Task SaveAsync();
 	}

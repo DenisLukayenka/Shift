@@ -9,11 +9,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\ViewModels\Students\" />
+    <ProjectReference Include="..\Shift.DAL\Shift.DAL.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Shift.DAL\Shift.DAL.csproj" />
+    <Folder Include="Responses\" />
   </ItemGroup>
 
 </Project>

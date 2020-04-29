@@ -6,8 +6,6 @@ import { UViewModel } from "../entities/auth/UViewModel";
 import { castEducationForm } from "../utilities/castEducationForm";
 
 export class RegisterUReq extends BaseRequest {
-    static fullName = 'RegisterUReq';
-    Type = RegisterUReq.fullName;
     UViewModel: UViewModel;
 
     constructor(undergraduate: UViewModel) {

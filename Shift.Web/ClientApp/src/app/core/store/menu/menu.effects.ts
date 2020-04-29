@@ -7,7 +7,6 @@ import { from, of } from 'rxjs';
 import * as _ from 'lodash';
 import { exhaustMap, map, catchError, switchMap } from 'rxjs/operators';
 import { HttpProcessorService } from "src/app/services/http-processor/http-processor.service";
-import { isRootMenuResponse } from "src/app/infrastracture/utilities/isRootMenuResponse";
 import { FetchRootMenuResp } from "src/app/infrastracture/responses/FetchRootMenuResp";
 import { FetchRootMenuReq } from "src/app/infrastracture/requests/FetchRootMenuReq";
 import { LoadSuccess, AppFailure } from "../app/app.actions";

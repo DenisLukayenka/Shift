@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shift.Infrastructure.Requests;
-using Shift.Services.Services.RequestProcessor;
+using Shift.Services.Services.Menu;
 
 namespace Shift.Web.Controllers
 {
@@ -10,20 +10,20 @@ namespace Shift.Web.Controllers
     [ApiController]
     public class RootMenuController : ControllerBase
     {
-        private readonly IRequestProcessorAsync _processor;
+        private readonly IMenuService _menuService;
 
-        public RootMenuController(IRequestProcessorAsync processor)
+        public RootMenuController(IMenuService menuService)
         {
-            this._processor = processor;
+            this._menuService = menuService;
         }
 
         [Authorize(Roles = "undergraduate")]
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] RootMenuRequest request)
         {
-            var response = await this._processor.PerformAsync(request);
+            var menu = this._menuService.GetRootMenu(request.Role);
 
-            return Ok(response);
+            return Ok(new { RootMenu = menu });
         }
     }
 }

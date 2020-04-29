@@ -2,8 +2,8 @@
 {
 	public static class RoleNames
 	{
-		public static string Undergraduate = "undergraduate";
-		public static string Graduate = "graduate";
-		public static string Employee = "employee";
+		public const string Undergraduate = "undergraduate";
+		public const string Graduate = "graduate";
+		public const string Employee = "employee";
 	}
 }

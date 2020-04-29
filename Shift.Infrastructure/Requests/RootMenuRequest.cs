@@ -1,9 +1,7 @@
 ﻿namespace Shift.Infrastructure.Requests
 {
-	public class RootMenuRequest: BaseRequest
+	public class RootMenuRequest
 	{
 		public string Role { get; set; }
-
-		public override string Type => "RootMenuRequest";
 	}
 }

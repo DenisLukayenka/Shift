@@ -13,6 +13,8 @@ namespace Shift.Services.Services.Repositories
 		private IRoleRepository _roleRepository;
 		private IEmployeeRepository _employeeRepository;
 		private IGraduateRepository _graduateRepository;
+		private IUJournalRepository _uJournalRepository;
+		private IGJournalRepository _gJournalRepository;
 
 		public RepositoryWrapper(CoreContext repositoryContext)
 		{
@@ -81,6 +83,32 @@ namespace Shift.Services.Services.Repositories
 				}
 
 				return this._graduateRepository;
+			}
+		}
+
+		public IUJournalRepository UJournals
+		{
+			get
+			{
+				if (this._uJournalRepository is null)
+				{
+					this._uJournalRepository = new UJournalRepository(this._dbContext);
+				}
+
+				return this._uJournalRepository;
+			}
+		}
+
+		public IGJournalRepository GJournals
+		{
+			get
+			{
+				if (this._gJournalRepository is null)
+				{
+					this._gJournalRepository = new GJournalRepository(this._dbContext);
+				}
+
+				return this._gJournalRepository;
 			}
 		}
 
