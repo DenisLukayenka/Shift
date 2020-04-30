@@ -21,8 +21,8 @@ namespace Shift.Web.ServicesExtensions
 		{
 			services.AddTransient<IMenuService, MenuService>();
 			services.AddTransient<ITokenProvider, JwtTokenProvider>();
-			services.AddTransient<IUserManagerAsync, UserManager>();
-			services.AddTransient<IUJournalManagerAsync, UJournalManager>();
+			services.AddTransient<IUserManager, UserManager>();
+			services.AddTransient<IUJournalManager, UJournalManager>();
 		}
 
 		public static void ConfigureSqlServerDbContext(this IServiceCollection services, IConfiguration config) 

@@ -1,8 +1,6 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shift.Infrastructure;
-using Shift.Infrastructure.Models;
 using Shift.Infrastructure.Models.ViewModels.Auth;
 using Shift.Services.Managers.User;
 using Shift.Services.Providers.Token;
@@ -13,10 +11,10 @@ namespace Shift.Web.Controllers
 	[ApiController]
 	public class AuthController: ControllerBase
 	{
-		private readonly IUserManagerAsync _userManager;
+		private readonly IUserManager _userManager;
 		private readonly ITokenProvider _tokenProvider;
 
-		public AuthController(IUserManagerAsync userManager, ITokenProvider tokenProvider)
+		public AuthController(IUserManager userManager, ITokenProvider tokenProvider)
 		{
 			this._userManager = userManager;
 			this._tokenProvider = tokenProvider;
@@ -25,84 +23,82 @@ namespace Shift.Web.Controllers
 		[HttpPost]
 		[AllowAnonymous]
 		[Route("login")]
-		public async Task<IActionResult> Login([FromBody] LoginViewModel user)
+		public IActionResult Login([FromBody] LoginViewModel user)
 		{
 			if(user is null)
 			{
 				return Ok(new { Alert = Config.BadRequest });
 			}
+			var authContext = this._userManager.Login(user);
 
-			var role = await this._userManager.LoginAsync(user);
-			if(role is null)
+			if(authContext.User != null)
 			{
-				return Ok(new { Alert = Config.InvalidAuth });
-			}
-			var token = this._tokenProvider.GenerateToken(user.Login, role);
+				authContext.Token = this._tokenProvider.GenerateToken(authContext.User.Login, authContext.User.Role);
 
-			return Ok(new { Token = token });
+				return Ok(authContext);
+			}
+
+			return Ok(authContext);
 		}
 
-		[HttpPost]
+		[HttpPut]
 		[AllowAnonymous]
 		[Route("register/undergraduate")]
-		public async Task<IActionResult> RegisterUndergraduate([FromBody] UndergraduateViewModel undergraduate)
+		public IActionResult RegisterUndergraduate([FromBody] UndergraduateViewModel undergraduate)
 		{
 			if(undergraduate is null)
 			{
 				return Ok(new { Alert = Config.BadRequest });
 			}
 
-			var alerts = await this._userManager.RegisterUndergraduateAsync(undergraduate);
-			if(alerts != null)
+			var authContext = this._userManager.RegisterUndergraduate(undergraduate);
+			if(authContext.User != null)
 			{
-				return Ok(new { Alert = alerts });
+				authContext.Token = this._tokenProvider.GenerateToken(authContext.User.Login, authContext.User.Role);
+				return Ok(authContext);
 			}
 
-			var token = this._tokenProvider.GenerateToken(undergraduate.Login, RoleNames.Undergraduate);
-
-			return Ok(new { Token = token });
+			return Ok(authContext);
 		}
 
-		[HttpPost]
+		[HttpPut]
 		[AllowAnonymous]
 		[Route("register/graduate")]
-		public async Task<IActionResult> RegisterGraduate([FromBody] GraduateViewModel graduate)
+		public IActionResult RegisterGraduate([FromBody] GraduateViewModel graduate)
 		{
 			if (graduate is null)
 			{
 				return Ok(new { Alert = Config.BadRequest });
 			}
 
-			var alerts = await this._userManager.RegisterGraduateAsync(graduate);
-			if (alerts != null)
+			var authContext = this._userManager.RegisterGraduate(graduate);
+			if (authContext.User != null)
 			{
-				return Ok(new { Alert = alerts });
+				authContext.Token = this._tokenProvider.GenerateToken(authContext.User.Login, authContext.User.Role);
+				return Ok(authContext);
 			}
 
-			var token = this._tokenProvider.GenerateToken(graduate.Login, RoleNames.Graduate);
-
-			return Ok(new { Token = token });
+			return Ok(authContext);
 		}
 
-		[HttpPost]
+		[HttpPut]
 		[AllowAnonymous]
 		[Route("register/employee")]
-		public async Task<IActionResult> RegisterEmployee([FromBody] EmployeeViewModel employee)
+		public IActionResult RegisterEmployee([FromBody] EmployeeViewModel employee)
 		{
 			if (employee is null)
 			{
 				return Ok(new { Alert = Config.BadRequest });
 			}
 
-			var alerts = await this._userManager.RegisterEmployeeAsync(employee);
-			if (alerts != null)
+			var authContext = this._userManager.RegisterEmployee(employee);
+			if (authContext.User != null)
 			{
-				return Ok(new { Alert = alerts });
+				authContext.Token = this._tokenProvider.GenerateToken(authContext.User.Login, authContext.User.Role);
+				return Ok(authContext);
 			}
 
-			var token = this._tokenProvider.GenerateToken(employee.Login, RoleNames.Employee);
-
-			return Ok(new { Token = token });
+			return Ok(authContext);
 		}
 	}
 }

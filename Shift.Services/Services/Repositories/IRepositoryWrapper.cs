@@ -1,5 +1,4 @@
 ﻿using Shift.Services.Services.Repositories.Interfaces;
-using System.Threading.Tasks;
 
 namespace Shift.Services.Services.Repositories
 {
@@ -14,6 +13,6 @@ namespace Shift.Services.Services.Repositories
 		IGJournalRepository GJournals { get; }
 
 
-		Task SaveAsync();
+		void Save();
 	}
 }

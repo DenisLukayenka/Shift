@@ -3,14 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using Shift.Services.Contexts;
 using Shift.Services.Services.Repositories.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace Shift.Services.Services.Repositories.Implementations
 {
-	public abstract class BaseRepository<T> : IRepositoryAsync<T> where T: class
+	public abstract class BaseRepository<T> : IRepository<T> where T: class
 	{
 		protected CoreContext AppContext { get; set; }
 
@@ -19,28 +17,28 @@ namespace Shift.Services.Services.Repositories.Implementations
 			this.AppContext = context;
 		}
 
-		public virtual async Task<IQueryable<T>> GetAllAsync()
+		public virtual IQueryable<T> GetAll()
 		{
 			return this.AppContext.Set<T>().AsNoTracking();
 		}
 
-		public virtual async Task<IQueryable<T>> GetAsync(Expression<Func<T, bool>> expression)
+		public virtual IQueryable<T> Get(Expression<Func<T, bool>> expression)
 		{
 			return this.AppContext.Set<T>().Where(expression).AsNoTracking();
 		}
 
 
-		public virtual async Task AddAsync(T entity)
+		public virtual void Add(T entity)
 		{
-			await this.AppContext.Set<T>().AddAsync(entity);
+			this.AppContext.Set<T>().Add(entity);
 		}
 
-		public virtual async Task DeleteAsync(T entity)
+		public virtual void Delete(T entity)
 		{
 			this.AppContext.Set<T>().Remove(entity);
 		}
 
-		public virtual async Task UpdateAsync(T entity)
+		public virtual void Update(T entity)
 		{
 			this.AppContext.Set<T>().Update(entity);
 		}

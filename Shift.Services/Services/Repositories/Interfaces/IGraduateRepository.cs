@@ -2,7 +2,7 @@
 
 namespace Shift.Services.Services.Repositories.Interfaces
 {
-	public interface IGraduateRepository: IRepositoryAsync<Graduate>
+	public interface IGraduateRepository: IRepository<Graduate>
 	{
 	}
 }

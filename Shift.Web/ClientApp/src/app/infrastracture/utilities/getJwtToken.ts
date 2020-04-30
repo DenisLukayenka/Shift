@@ -1,3 +1,3 @@
-import { JwtStorageKey } from "../config";
+import { TokenKey } from "src/app/services/storage/StorageKeys";
 
-export const getJwtToken = () => localStorage[JwtStorageKey];
+export const getJwtToken = () => localStorage[TokenKey];

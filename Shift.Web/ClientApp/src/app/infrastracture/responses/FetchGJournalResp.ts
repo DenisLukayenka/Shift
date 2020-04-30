@@ -1,6 +1,5 @@
-import { BaseResponse } from "./BaseResponse";
 import { GJournal } from "../entities/GJournal";
 
-export class FetchGJournalResp extends BaseResponse {
+export class FetchGJournalResp {
     GJournal: GJournal;
 }

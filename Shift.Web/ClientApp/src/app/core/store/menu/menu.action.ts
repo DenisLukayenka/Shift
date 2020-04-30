@@ -15,7 +15,7 @@ export class MenuToggle implements Action {
 export class FetchRootMenu implements Action {
     readonly type = MenuActionTypes.FetchRootMenu;
 
-    constructor(public payload: { userRole: string }){}
+    constructor(public payload: { userId: number }){}
 };
 
 export class FetchRootMenuSuccess implements Action {

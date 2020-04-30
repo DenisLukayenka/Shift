@@ -2,7 +2,7 @@
 
 namespace Shift.Services.Services.Repositories.Interfaces
 {
-	public interface IUserRepository: IRepositoryAsync<User>
+	public interface IUserRepository: IRepository<User>
 	{
 	}
 }

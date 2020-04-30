@@ -1,6 +1,7 @@
-import { BaseResponse } from "./BaseResponse";
+import { UserContext } from "./UserContext";
 
-export class AuthResponse extends BaseResponse {
-    Token: string;
+export class AuthResponse {
+    User: UserContext;
     Alert: string;
+    Token: string;
 }

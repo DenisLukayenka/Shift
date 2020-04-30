@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shift.Infrastructure;
 using Shift.Infrastructure.Models;
+using Shift.Infrastructure.Responses;
+using Shift.Services.Managers.Journals.UJournals;
 
 namespace Shift.Web.Controllers
 {
@@ -15,5 +12,24 @@ namespace Shift.Web.Controllers
     [ApiController]
     public class UJournalController : ControllerBase
     {
+        private IUJournalManager _journalManager;
+
+        public UJournalController(IUJournalManager manager)
+        {
+            this._journalManager = manager;
+        }
+
+        [HttpGet]
+        public IActionResult Get([FromQuery] int userId)
+        {
+            var journal = this._journalManager.FetchJournal(userId);
+
+            if(journal != null)
+            {
+                return Ok(new UJournalResponse() { Journal = journal });
+            }
+
+            return Ok(new { Alert = Config.BadRequest });
+        }
     }
 }

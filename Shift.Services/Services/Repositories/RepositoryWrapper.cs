@@ -112,9 +112,9 @@ namespace Shift.Services.Services.Repositories
 			}
 		}
 
-		public async Task SaveAsync()
+		public void Save()
 		{
-			await this._dbContext.SaveChangesAsync();
+			this._dbContext.SaveChangesAsync();
 		}
 	}
 }

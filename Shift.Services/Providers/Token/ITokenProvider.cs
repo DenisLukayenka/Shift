@@ -1,4 +1,4 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Shift.Infrastructure.Models.ViewModels.Auth;
 
 namespace Shift.Services.Providers.Token
 {

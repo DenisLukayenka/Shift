@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Threading.Tasks;
 using System.Collections.Generic;
 
 namespace Shift.Services.Managers.User
@@ -14,7 +13,7 @@ namespace Shift.Services.Managers.User
 	using Shift.DAL.Models.UserModels.EmployeeData;
 	using Shift.DAL.Models.UserModels.GraduateData;
 
-	public class UserManager : IUserManagerAsync
+	public class UserManager : IUserManager
 	{
 		private readonly IRepositoryWrapper _repository;
 
@@ -23,27 +22,43 @@ namespace Shift.Services.Managers.User
 			this._repository = repository;
 		}
 
-		public async Task<string> LoginAsync(LoginViewModel user)
+		public AuthResponse Login(LoginViewModel user)
 		{
-			var usersQuery = await this._repository.Users.GetAsync(u =>
+			var dbUser = this._repository.Users.Get(u =>
 				u.LoginData.FirstOrDefault(ld =>
-					ld.Login == user.Login && ld.HashPassword == user.Password) != null);
-			var dbUsers = usersQuery.ToArray();
+					ld.Login == user.Login && ld.HashPassword == user.Password) != null).FirstOrDefault();
 
-			if(dbUsers.Length > 0)
+			var context = new AuthResponse();
+
+			if(dbUser != null)
 			{
-				return dbUsers.FirstOrDefault()?.Role?.Caption;
+				var loginInfo = dbUser.LoginData.FirstOrDefault();
+
+				context.User = new UserContext
+				{
+					UserId = dbUser.Id,
+					FirstName = dbUser.FirstName,
+					LastName = dbUser.LastName,
+					Login = loginInfo?.Login,
+					Role = dbUser.Role?.Caption,
+				};
+
+				return context;
 			}
 
-			return null;
+			context.Alert = Config.InvalidAuth;
+
+			return context;
 		}
 
-		public async Task<string> RegisterEmployeeAsync(EmployeeViewModel employee)
+		public AuthResponse RegisterEmployee(EmployeeViewModel employee)
 		{
-			var usersQuery = await this._repository.Employees.GetAsync(u => u.User.LoginData.FirstOrDefault(ld => ld.Login == employee.Login) != null);
-			var dbEmployees = usersQuery.ToArray();
+			var dbEmployee = this._repository.Employees
+				.Get(u => u.User.LoginData.FirstOrDefault(ld => ld.Login == employee.Login) != null)
+				.FirstOrDefault();
+			var context = new AuthResponse();
 
-			if(dbEmployees.Length == 0)
+			if(dbEmployee == null)
 			{
 				var entity = new Employee
 				{
@@ -53,7 +68,7 @@ namespace Shift.Services.Managers.User
 						LastName = employee.LastName,
 						PatronymicName = employee.PatronymicName,
 						Email = employee.Email,
-						RoleId = await this.FetchRole(RoleNames.Employee),
+						RoleId = this.GetOrAddRole(RoleNames.Employee),
 						LoginData = new List<LoginInfo>()
 						{
 							new LoginInfo()
@@ -69,21 +84,34 @@ namespace Shift.Services.Managers.User
 					DepartmentId = employee.DepartmentId,
 				};
 
-				await this._repository.Employees.AddAsync(entity);
-				await this._repository.SaveAsync();
+				this._repository.Employees.Add(entity);
+				this._repository.Save();
 
-				return null;
+				context.User = new UserContext
+				{
+					UserId = entity.User.Id,
+					FirstName = entity.User.FirstName,
+					LastName = entity.User.LastName,
+					Login = entity.User.LoginData.FirstOrDefault().Login,
+					Role = entity.User.Role?.Caption,
+				};
+
+				return context;
 			}
 
-			return Config.LoginExist;
+			context.Alert = Config.LoginExist;
+			return context;
 		}
 
-		public async Task<string> RegisterGraduateAsync(GraduateViewModel graduate)
+		public AuthResponse RegisterGraduate(GraduateViewModel graduate)
 		{
-			var usersQuery = await this._repository.Graduates.GetAsync(u => u.User.LoginData.FirstOrDefault(ld => ld.Login == graduate.Login) != null);
-			var dbGraduates = usersQuery.ToArray();
+			var dbGradute = this._repository.Graduates
+				.Get(u => u.User.LoginData.FirstOrDefault(ld => ld.Login == graduate.Login) != null)
+				.FirstOrDefault();
 
-			if (dbGraduates.Length == 0)
+			var context = new AuthResponse();
+
+			if (dbGradute == null)
 			{
 				var entity = new Graduate
 				{
@@ -93,7 +121,7 @@ namespace Shift.Services.Managers.User
 						LastName = graduate.LastName,
 						PatronymicName = graduate.PatronymicName,
 						Email = graduate.Email,
-						RoleId = await this.FetchRole(RoleNames.Graduate),
+						RoleId = this.GetOrAddRole(RoleNames.Graduate),
 						LoginData = new List<LoginInfo>()
 						{
 							new LoginInfo()
@@ -110,21 +138,33 @@ namespace Shift.Services.Managers.User
 					FinishEducationDate = graduate.FinishEducationDate,
 				};
 
-				await this._repository.Graduates.AddAsync(entity);
-				await this._repository.SaveAsync();
+				this._repository.Graduates.Add(entity);
+				this._repository.Save();
 
-				return null;
+				context.User = new UserContext
+				{
+					UserId = entity.User.Id,
+					FirstName = entity.User.FirstName,
+					LastName = entity.User.LastName,
+					Login = entity.User.LoginData.FirstOrDefault().Login,
+					Role = entity.User.Role?.Caption,
+				};
+
+				return context;
 			}
 
-			return Config.LoginExist;
+			context.Alert = Config.LoginExist;
+			return context;
 		}
 
-		public async Task<string> RegisterUndergraduateAsync(UndergraduateViewModel undergraduate)
+		public AuthResponse RegisterUndergraduate(UndergraduateViewModel undergraduate)
 		{
-			var usersQuery = await this._repository.Undergraduates.GetAsync(u => u.User.LoginData.FirstOrDefault(ld => ld.Login == undergraduate.Login) != null);
-			var dbUndergraduates = usersQuery.ToArray();
+			var dbUndergraduate = this._repository.Undergraduates
+				.Get(u => u.User.LoginData.FirstOrDefault(ld => ld.Login == undergraduate.Login) != null)
+				.FirstOrDefault();
+			var context = new AuthResponse();
 
-			if (dbUndergraduates.Length == 0)
+			if (dbUndergraduate == null)
 			{
 				var entity = new Undergraduate()
 				{
@@ -134,7 +174,7 @@ namespace Shift.Services.Managers.User
 						LastName = undergraduate.LastName,
 						PatronymicName = undergraduate.PatronymicName,
 						Email = undergraduate.Email,
-						RoleId = await this.FetchRole(RoleNames.Undergraduate),
+						RoleId = this.GetOrAddRole(RoleNames.Undergraduate),
 						LoginData = new List<LoginInfo>()
 						{
 							new LoginInfo()
@@ -151,19 +191,40 @@ namespace Shift.Services.Managers.User
 					FinishEducationDate = undergraduate.FinishEducationDate,
 				};
 
-				await this._repository.Undergraduates.AddAsync(entity);
-				await this._repository.SaveAsync();
+				this._repository.Undergraduates.Add(entity);
+				this._repository.Save();
 
-				return null;
+				context.User = new UserContext
+				{
+					UserId = entity.User.Id,
+					FirstName = entity.User.FirstName,
+					LastName = entity.User.LastName,
+					Login = entity.User.LoginData.FirstOrDefault().Login,
+					Role = entity.User.Role?.Caption,
+				};
+
+				return context;
 			}
-			
-			return Config.LoginExist;
+
+			context.Alert = Config.LoginExist;
+			return context;
 		}
 
-		protected async Task<int> FetchRole(string roleCaption)
+		public string FetchUserRole(int userId)
 		{
-			var rolesQuery = await this._repository.Roles.GetAsync(r => r.Caption == roleCaption);
-			var role = rolesQuery.FirstOrDefault();
+			var dbUser = this._repository.Users.Get(u => u.Id == userId).FirstOrDefault();
+
+			if(dbUser != null)
+			{
+				return dbUser.Role.Caption;
+			}
+
+			return null;
+		}
+
+		protected int GetOrAddRole(string roleCaption)
+		{
+			var role = this._repository.Roles.Get(r => r.Caption == roleCaption).FirstOrDefault();
 
 			if(role is null)
 			{
@@ -172,8 +233,8 @@ namespace Shift.Services.Managers.User
 					Caption = roleCaption,
 				};
 
-				await this._repository.Roles.AddAsync(roleEntity);
-				await this._repository.SaveAsync();
+				this._repository.Roles.Add(roleEntity);
+				this._repository.Save();
 
 				role = roleEntity;
 			}

@@ -1,6 +1,6 @@
 import { BaseRequest } from "./BaseRequest";
-import { RequestType } from "../entities/requests/requestType";
-import { ReqOptions } from "../entities/requests/ReqOptions";
+import { RequestType } from "./requestType";
+import { ReqOptions } from "./ReqOptions";
 import { HttpHeaders } from "@angular/common/http";
 
 export class AuthReq extends BaseRequest {
@@ -24,13 +24,6 @@ export class AuthReq extends BaseRequest {
         };
 
         return JSON.stringify(authModel);
-    }
-    get Options (): ReqOptions {
-        return {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-            }),
-        };
     }
     get TargetReqUrl (): string {
         return 'api/auth/login';

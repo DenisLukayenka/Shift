@@ -2,7 +2,7 @@
 
 namespace Shift.Services.Services.Repositories.Interfaces
 {
-	public interface IUndergraduateRepository: IRepositoryAsync<Undergraduate>
+	public interface IUndergraduateRepository: IRepository<Undergraduate>
 	{
 	}
 }

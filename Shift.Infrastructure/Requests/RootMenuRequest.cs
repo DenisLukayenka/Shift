@@ -2,6 +2,6 @@
 {
 	public class RootMenuRequest
 	{
-		public string Role { get; set; }
+		public int UserId { get; set; }
 	}
 }

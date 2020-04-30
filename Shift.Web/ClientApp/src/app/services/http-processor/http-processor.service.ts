@@ -1,8 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpConnectorService } from "./connector/http-connector.service";
 import { BaseRequest } from "src/app/infrastracture/requests/BaseRequest";
-import { BaseResponse } from "src/app/infrastracture/responses/BaseResponse";
-import { RequestType } from "src/app/infrastracture/entities/requests/requestType";
+import { RequestType } from "src/app/infrastracture/requests/requestType";
 
 @Injectable({
     providedIn: 'root'

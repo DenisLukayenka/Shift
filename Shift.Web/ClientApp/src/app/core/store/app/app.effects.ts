@@ -1,14 +1,16 @@
 import { Injectable } from "@angular/core";
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { AppActionTypes, LoadApp, LogOutSuccess, LogOut, AppFailure } from "./app.actions";
-import { switchMap, catchError, exhaustMap, map, tap } from "rxjs/operators";
-import { of, from } from "rxjs";
+import { AppActionTypes, LoadApp, LogOutSuccess, LogOut, AppFailure, TryAuth, AuthSuccess, AuthFailure } from "./app.actions";
+import { switchMap, catchError, map, exhaustMap } from "rxjs/operators";
+import { of } from "rxjs";
+import { Router } from "@angular/router";
+import { FetchRootMenu } from "../menu/menu.action";
+import { StorageService } from "src/app/services/storage/storage.service";
+import { UserIdKey, TokenKey } from "src/app/services/storage/StorageKeys";
+import { LoginPage, RootPage } from "src/app/infrastracture/config";
 import { HttpProcessorService } from "src/app/services/http-processor/http-processor.service";
 import { AuthReq } from "src/app/infrastracture/requests/AuthReq";
 import { AuthResponse } from "src/app/infrastracture/responses/AuthResponse";
-import { TokenStorageService } from "../../../services/token/token-storage.service";
-import { Router } from "@angular/router";
-import { FetchRootMenu } from "../menu/menu.action";
 
 @Injectable()
 export class AppEffects {
@@ -16,10 +18,10 @@ export class AppEffects {
     loadApp$ = this.actions$.pipe(
         ofType<LoadApp>(AppActionTypes.LoadApp),
         switchMap(() => {
-            let userRole = this.storage.getUserRole();
+            let userId = +this.storage.getValue(UserIdKey);
 
             return [
-                new FetchRootMenu({ userRole: userRole }),
+                new FetchRootMenu({ userId: userId }),
             ]
         }),
         catchError(error => of(new AppFailure()))
@@ -29,16 +31,35 @@ export class AppEffects {
     logOut$ = this.actions$.pipe(
         ofType<LogOut>(AppActionTypes.LogOut),
         map(() => {
-            this.storage.removeToken();
-            this.router.navigate(['login']);
+            this.storage.clear();
+            this.router.navigate([LoginPage]);
 
             return new LogOutSuccess();
-        })
+        }),
+        catchError(error => of(new AppFailure()))
+    );
+
+    @Effect()
+    tryAuth$ = this.actions$.pipe(
+        ofType<TryAuth>(AppActionTypes.TryAuth),
+        map(action => action.payload),
+        exhaustMap(data => this.httpProcessor.execute(new AuthReq(data.login, data.password))),
+        map((response: AuthResponse) => {
+            if(response.Alert) {
+                return new AuthFailure({ alert: response.Alert });
+            }
+            this.storage.setValue(TokenKey, response.Token);
+            this.storage.setValue(UserIdKey, response.User.UserId.toString());
+            this.router.navigate([RootPage]);
+
+            return new AuthSuccess({ userContext: response.User });
+        }),
+        catchError(error => of(new AppFailure()))
     );
 
     constructor(
         private actions$: Actions, 
-        private httpProcessor: HttpProcessorService,
-        private storage: TokenStorageService,
-        private router: Router) {}
+        private storage: StorageService,
+        private router: Router,
+        private httpProcessor: HttpProcessorService) {}
 }

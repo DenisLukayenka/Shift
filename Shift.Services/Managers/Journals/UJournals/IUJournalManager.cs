@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 
 namespace Shift.Services.Managers.Journals.UJournals
 {
-	public interface IUJournalManagerAsync
+	public interface IUJournalManager
 	{
-		Task<UJournal> FetchJournalAsync(int userId);
-		Task SaveJournalAsync(int journalId, UJournal journal);
+		UJournal FetchJournal(int userId);
+		void SaveJournal(UJournal journal);
 	}
 }

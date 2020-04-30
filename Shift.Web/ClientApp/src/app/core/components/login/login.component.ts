@@ -1,18 +1,17 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, FormControl, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { from } from "rxjs";
-import { HttpProcessorService } from "src/app/services/http-processor/http-processor.service";
-import { AuthReq } from "src/app/infrastracture/requests/AuthReq";
-import { TokenStorageService } from "src/app/services/token/token-storage.service";
-import { RootPage, RegisterPage } from "src/app/infrastracture/config";
+import { RegisterPage } from "src/app/infrastracture/config";
+import { Store, select } from "@ngrx/store";
+import { AppState, selectAuthAlert } from "../../store/app/app.state";
+import { TryAuth } from "../../store/app/app.actions";
 
 @Component({
     selector: 'pac-login',
     styleUrls: ['./login.component.scss'],
     templateUrl: './login.component.html',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
     isAuth: boolean;
     authAlert: string;
 
@@ -23,29 +22,20 @@ export class LoginComponent {
     private passwordControl: FormControl;
 
     constructor(
-        private formBuilder: FormBuilder, 
-        private httpProcessor: HttpProcessorService,
-        private storage: TokenStorageService,
-        private router: Router
+        private formBuilder: FormBuilder,
+        private router: Router,
+        private appState: Store<AppState>,
     ) {
         this.initializeForm();
+    }
+
+    public ngOnInit() {
+        this.appState.pipe(select(selectAuthAlert)).subscribe(alert => this.authAlert = alert);
     }
     
     public login() {
         if(!this.options.invalid) {
-            from(this.httpProcessor.execute(new AuthReq(this.options.value.login, this.options.value.password)))
-                .subscribe(response => {
-                    if(response === undefined) {
-                        this.authAlert = 'Произошла ошибка при обработке запроса';
-                    } else if(response.Alert !== undefined) {
-                        this.authAlert = response.Alert;
-                    } else if(response.Token === undefined) {
-                        this.authAlert = 'Произошла ошибка при получении данных';
-                    } else {
-                        this.storage.addToken(response.Token);
-                        this.router.navigate([RootPage]);
-                    }
-                })
+            this.appState.dispatch(new TryAuth({ login: this.options.value.login, password: this.options.value.password }));
         }
     }
 

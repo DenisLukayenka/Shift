@@ -1,4 +1,5 @@
 import { Action } from '@ngrx/store';
+import { UserContext } from 'src/app/infrastracture/responses/UserContext';
 
 export enum AppActionTypes {
     LoadApp = '[Pac] Load App',
@@ -8,6 +9,9 @@ export enum AppActionTypes {
     AppFailure = '[Pac] App Failure',
     LogOut = '[Pac] Log out',
     LogOutSuccess = '[Pac] Log out Success',
+    AuthSuccess = '[Pac] Auth Success',
+    TryAuth = '[Pac] Try Auth',
+    AuthFailure = '[Pac] Auth Failure',
 }
 
 export class LoadApp implements Action {
@@ -34,6 +38,24 @@ export class LogOutSuccess implements Action {
     readonly type = AppActionTypes.LogOutSuccess;
 }
 
+export class AuthSuccess implements Action {
+    readonly type = AppActionTypes.AuthSuccess;
+
+    constructor(public payload: { userContext: UserContext }) {}
+}
+
+export class TryAuth implements Action {
+    readonly type = AppActionTypes.TryAuth;
+
+    constructor(public payload: { login: string, password: string }) {}
+}
+
+export class AuthFailure implements Action {
+    readonly type = AppActionTypes.AuthFailure;
+
+    constructor(public payload: { alert: string }) {}
+}
+
 export type AppActionsUnion = 
     | LoadSuccess
     | LoadFailure
@@ -41,5 +63,8 @@ export type AppActionsUnion =
     
     | LogOut
     | LogOutSuccess
+    | AuthSuccess
+    | TryAuth
+    | AuthFailure
     
     | AppFailure;

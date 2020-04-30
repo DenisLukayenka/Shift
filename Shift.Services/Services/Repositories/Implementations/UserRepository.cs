@@ -16,9 +16,9 @@ namespace Shift.Services.Services.Repositories.Implementations
 		{ 
 		}
 
-		public override async Task<IQueryable<User>> GetAsync(Expression<Func<User, bool>> expression)
+		public override IQueryable<User> Get(Expression<Func<User, bool>> expression)
 		{
-			return this.AppContext.Set<User>().Where(expression).Include(u => u.Role).AsNoTracking();
+			return this.AppContext.Set<User>().Where(expression).Include(u => u.Role).Include(u => u.LoginData).AsNoTracking();
 		}
 	}
 }

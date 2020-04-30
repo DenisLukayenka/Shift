@@ -1,5 +1,5 @@
-import { RequestType } from "../entities/requests/requestType";
-import { ReqOptions } from "../entities/requests/ReqOptions";
+import { RequestType } from "./requestType";
+import { ReqOptions } from "./ReqOptions";
 import { SERVER_URL } from "../config";
 
 export abstract class BaseRequest {
@@ -9,6 +9,9 @@ export abstract class BaseRequest {
 
     abstract get ReqType(): RequestType;
     abstract get Body();
-    abstract get Options(): ReqOptions;
     abstract get TargetReqUrl(): string;
+
+    get Options(): ReqOptions {
+        return new ReqOptions();
+    }
 }

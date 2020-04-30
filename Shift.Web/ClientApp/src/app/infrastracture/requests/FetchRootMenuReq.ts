@@ -1,10 +1,10 @@
 import { BaseRequest } from "./BaseRequest";
-import { RequestType } from "../entities/requests/requestType";
-import { ReqOptions } from "../entities/requests/ReqOptions";
+import { RequestType } from "./requestType";
+import { ReqOptions } from "./ReqOptions";
 import { HttpParams } from "@angular/common/http";
 
 export class FetchRootMenuReq extends BaseRequest {
-    Role: string;
+    UserId: number;
 
     get ReqType (): RequestType {
         return RequestType.GET;
@@ -20,15 +20,15 @@ export class FetchRootMenuReq extends BaseRequest {
 
     get Options (): ReqOptions {
         const params = new HttpParams()
-            .set('role', this.Role);
+            .set('UserId', this.UserId.toString());
             
         return {
             params: params
         };
     }
 
-    constructor(role: string) {
+    constructor(userId: number) {
         super();
-        this.Role = role;
+        this.UserId = userId;
     }
 }

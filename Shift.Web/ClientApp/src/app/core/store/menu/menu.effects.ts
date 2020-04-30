@@ -1,7 +1,5 @@
 import { Injectable } from "@angular/core";
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { MenuState } from "./menu.state";
-import { Store } from '@ngrx/store';
 import { FetchRootMenu, MenuActionTypes, FetchRootMenuFailure, FetchRootMenuSuccess } from "./menu.action";
 import { from, of } from 'rxjs';
 import * as _ from 'lodash';
@@ -16,8 +14,8 @@ export class MenuEffects {
     @Effect()
     fetchRootMenu$ = this.actions$.pipe(
         ofType<FetchRootMenu>(MenuActionTypes.FetchRootMenu),
-        map(action => action.payload.userRole),
-        exhaustMap((userRole) => from(this.httpProcessor.execute(new FetchRootMenuReq(userRole)))),
+        map(action => action.payload.userId),
+        exhaustMap((userId) => from(this.httpProcessor.execute(new FetchRootMenuReq(userId)))),
         switchMap((response: FetchRootMenuResp) => {
             if(!!response) {
                 return [ new FetchRootMenuSuccess({ menu: response.RootMenu }), new LoadSuccess() ];
@@ -25,17 +23,10 @@ export class MenuEffects {
                 return [ new FetchRootMenuFailure() ];
             }
         }),
-        catchError(error => of(new FetchRootMenuFailure()))
+        catchError(error => of(new AppFailure()))
     );
 
-    @Effect()
-    fetchRootMenuFailure$ = this.actions$.pipe(
-        ofType<FetchRootMenuFailure>(MenuActionTypes.FetchRootMenuFailure),
-        map(() => new AppFailure()),
-    )
-
     constructor(
-        private actions$: Actions, 
-        private menuStore: Store<MenuState>,
+        private actions$: Actions,
         private httpProcessor: HttpProcessorService) {}
 }
