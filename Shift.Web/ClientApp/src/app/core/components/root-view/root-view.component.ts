@@ -1,15 +1,15 @@
-import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { MenuState, selectIsOpen } from "../../store/menu/menu.state";
 import { MenuToggle } from "../../store/menu/menu.action";
 import { Store, select } from "@ngrx/store";
-import { AppState, selectAppLoading } from "../../store/app/app.state";
+import { AppState, selectAppLoading, selectDefaultRoute } from "../../store/app/app.state";
 import { LoadApp } from "../../store/app/app.actions";
 import { onMainContentChange } from "src/app/shared/animations/sidenav.animation";
-import { Observable } from "rxjs";
-import { ViewType } from "src/app/infrastracture/entities/ViewType";
-import { ActivatedRoute } from "@angular/router";
+import { Observable, Subscription } from "rxjs";
+import { ActivatedRoute, Router } from "@angular/router";
 import * as _ from 'lodash';
-import { ViewTypeQueryKey } from "src/app/infrastracture/config";
+import { ViewTypeQueryParam } from "src/app/infrastracture/config";
+import { ViewType } from "src/app/infrastracture/entities/ViewType";
 
 @Component({
     selector: 'pac-root-view',
@@ -17,36 +17,38 @@ import { ViewTypeQueryKey } from "src/app/infrastracture/config";
     templateUrl: './root-view.component.html',
 	animations: [ onMainContentChange ]
 })
-export class RootViewComponent {
-    public isOpened = false;
-    public viewType: ViewType;
-    public isLoading: boolean = false;
+export class RootViewComponent implements OnInit, OnDestroy {
+    public isMenuOpened$: Observable<boolean>;
+    public currentViewType: string;
+    public isLoading$: Observable<boolean>;
+    public defaultRoute: string;
 
-    readonly ViewType: ViewType;
+    viewTypes = ViewType;
+    private onRouteChange: Subscription;
 
-    constructor(private appStore: Store<AppState>, private menuStore: Store<MenuState>, private route: ActivatedRoute) {
-        this.menuStore.pipe(select(selectIsOpen)).subscribe(opened => {
-            setTimeout(() => {
-                this.isOpened = opened;
-            }, 0);
-        });
-
-        this.route.queryParams.subscribe(params => {
-            var viewParam = _.find(params, p => !!p[ViewTypeQueryKey]);
-            if(!!viewParam) {
-                
-            }
-        });
-
-        this.appStore.pipe(select(selectAppLoading)).subscribe(appLoading => {
-			setTimeout(() => {
-				this.isLoading = appLoading;
-			}, 0);
-		});
+    constructor(private appStore: Store<AppState>, private menuStore: Store<MenuState>, private route: ActivatedRoute, private router: Router) {
+        this.isMenuOpened$ = this.menuStore.pipe(select(selectIsOpen));
+        this.isLoading$ = this.appStore.pipe(select(selectAppLoading));
+        this.appStore.pipe(select(selectDefaultRoute)).subscribe(result => this.defaultRoute = result);
     }
 
     public ngOnInit() {
         this.appStore.dispatch(new LoadApp());
+
+        this.onRouteChange = this.route.queryParams.subscribe((params) => {
+            var viewParam = params[ViewTypeQueryParam];
+            if(!!viewParam) {
+                this.currentViewType = viewParam;
+            } else {
+                this.router.navigate([], {
+                    queryParams: { [ViewTypeQueryParam]: this.defaultRoute }
+                });
+            }
+        });
+    }
+
+    public ngOnDestroy() {
+        this.onRouteChange.unsubscribe();
     }
 
     public onSideNavToggle() {

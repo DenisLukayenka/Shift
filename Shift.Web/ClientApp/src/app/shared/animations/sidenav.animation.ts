@@ -3,7 +3,6 @@ import { trigger, state, style, transition, animate } from "@angular/animations"
 const minSidenavWidth = '64px';
 const fullSidenavWidth = '240px';
 const menuItemWidth = '196px';
-const menuItemPadding = '5px';
 
 export const onSideNavChange = trigger('onSideNavChange', [
     state('close',

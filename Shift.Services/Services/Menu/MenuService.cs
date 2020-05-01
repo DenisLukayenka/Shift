@@ -31,13 +31,13 @@ namespace Shift.Services.Services.Menu
 							{
 								Caption = "План работы",
 								Icon = "book",
-								Link = "['uj']"
+								Link = "uj"
 							},
 							new MenuItem
 							{
 								Caption = "Результаты",
 								Icon = "assignment",
-								Link = "['uj-results']"
+								Link = "uj-results"
 							}
 						},
 					},
@@ -60,13 +60,13 @@ namespace Shift.Services.Services.Menu
 							{
 								Caption = "План работы",
 								Icon = "book",
-								Link = "['gj']"
+								Link = "gj"
 							},
 							new MenuItem
 							{
 								Caption = "Результаты",
 								Icon = "assignment",
-								Link = "['gj-results']"
+								Link = "gj-results"
 							}
 						},
 					},
@@ -89,13 +89,13 @@ namespace Shift.Services.Services.Menu
 							{
 								Caption = "Список",
 								Icon = "view_list",
-								Link = "['u-list']"
+								Link = "u-list"
 							},
 							new MenuItem
 							{
 								Caption = "Планы работ",
 								Icon = "assignment",
-								Link = "['uj-list']"
+								Link = "uj-list"
 							}
 						},
 					},
@@ -108,13 +108,13 @@ namespace Shift.Services.Services.Menu
 							{
 								Caption = "Список",
 								Icon = "view_list",
-								Link = "['g-list']"
+								Link = "g-list"
 							},
 							new MenuItem
 							{
 								Caption = "Планы работ",
 								Icon = "assignment",
-								Link = "['gj-list']"
+								Link = "gj-list"
 							}
 						},
 					},

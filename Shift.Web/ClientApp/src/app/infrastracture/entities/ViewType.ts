@@ -1,4 +1,5 @@
 export enum ViewType {
-    GJournal,
-    UJournal,
+    GJournal = 'gj',
+    UJournal = 'uj',
+    Employee = 'e',
 }

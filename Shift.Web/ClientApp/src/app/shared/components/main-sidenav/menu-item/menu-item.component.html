@@ -1,7 +1,7 @@
 
 <span matSubheader *ngIf="!icon" class="flex text-overflow-hide" [@collapseByWidth]="isShow ? 'open' : 'close'">{{ name | uppercase}}</span>
 
-<mat-list-item *ngIf='icon'>
+<mat-list-item *ngIf='icon' (click)='openView()'>
     <div class="flex menu-font">
         <mat-icon  class="item-icon">{{icon}}</mat-icon>
 

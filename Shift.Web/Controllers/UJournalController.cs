@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Shift.Infrastructure;
 using Shift.Infrastructure.Models;
-using Shift.Infrastructure.Responses;
 using Shift.Services.Managers.Journals.UJournals;
 
 namespace Shift.Web.Controllers
@@ -26,7 +25,7 @@ namespace Shift.Web.Controllers
 
             if(journal != null)
             {
-                return Ok(new UJournalResponse() { Journal = journal });
+                return Ok(new { Journal = journal });
             }
 
             return Ok(new { Alert = Config.BadRequest });

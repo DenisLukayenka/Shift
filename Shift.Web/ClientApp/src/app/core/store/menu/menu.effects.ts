@@ -8,6 +8,8 @@ import { HttpProcessorService } from "src/app/services/http-processor/http-proce
 import { FetchRootMenuResp } from "src/app/infrastracture/responses/FetchRootMenuResp";
 import { FetchRootMenuReq } from "src/app/infrastracture/requests/FetchRootMenuReq";
 import { LoadSuccess, AppFailure } from "../app/app.actions";
+import { Router } from "@angular/router";
+import { ViewTypeQueryParam } from "src/app/infrastracture/config";
 
 @Injectable()
 export class MenuEffects {
@@ -28,5 +30,6 @@ export class MenuEffects {
 
     constructor(
         private actions$: Actions,
-        private httpProcessor: HttpProcessorService) {}
+        private httpProcessor: HttpProcessorService,
+        private router: Router) {}
 }

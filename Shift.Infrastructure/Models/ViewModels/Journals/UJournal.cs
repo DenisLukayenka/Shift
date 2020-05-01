@@ -2,7 +2,7 @@
 
 namespace Shift.Infrastructure.Models.ViewModels.Journals
 {
-	using Shift.DAL.Models.UserModels.UndergraduateData.JournalData;
+	using Shift.Infrastructure.Models.ViewModels.Journals.UJournalData;
 
 	public class UJournal
 	{
@@ -10,9 +10,9 @@ namespace Shift.Infrastructure.Models.ViewModels.Journals
 
 		public int? UndergraduateId { get; set; }
 
-		public virtual PreparationInfo PreparationInfo { get; set; }
-		public virtual ThesisCertification ThesisCertification { get; set; }
+		public virtual PreparationInfoVM PreparationInfo { get; set; }
+		public virtual ThesisCertificationVM ThesisCertification { get; set; }
 
-		public virtual ICollection<Report> ReportResults { get; set; } = new List<Report>();
+		public virtual ICollection<ReportVM> ReportResults { get; set; } = new List<ReportVM>();
 	}
 }

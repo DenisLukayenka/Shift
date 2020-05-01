@@ -2,6 +2,8 @@ import { Component, Input } from "@angular/core";
 import { collapseByWidth } from "src/app/shared/animations/sidenav.animation";
 import { MenuState, selectIsOpen } from "src/app/core/store/menu/menu.state";
 import { Store, select } from '@ngrx/store';
+import { Router } from "@angular/router";
+import { ViewTypeQueryParam } from "src/app/infrastracture/config";
 
 @Component({
     selector: 'pac-menu-item',
@@ -15,11 +17,18 @@ export class MenuItemComponent {
     @Input() link: string;
     public isShow: boolean;
 
-    constructor(private menuStore: Store<MenuState>){
+    constructor(private menuStore: Store<MenuState>, private router: Router){
         this.menuStore.pipe(select(selectIsOpen)).subscribe(isOpen => {
             setTimeout(() => {
                 this.isShow = isOpen;
             }, 0);
         });
+    }
+
+    openView() {
+        let queryParameter = {};
+        queryParameter[ViewTypeQueryParam] = this.link;
+
+        this.router.navigate([], { queryParams: queryParameter });
     }
 }

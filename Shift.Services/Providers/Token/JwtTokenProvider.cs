@@ -28,7 +28,7 @@ namespace Shift.Services.Providers.Token
 					JwtTokenProvider.Audience,
 					claims,
 					null,
-					DateTime.Now.AddMinutes(4),
+					DateTime.Now.AddHours(4),
 					signinCredentials
 				);
 

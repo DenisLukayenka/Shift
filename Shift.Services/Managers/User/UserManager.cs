@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Collections.Generic;
 
 namespace Shift.Services.Managers.User
 {
@@ -12,14 +11,17 @@ namespace Shift.Services.Managers.User
 	using Shift.Services.Services.Repositories;
 	using Shift.DAL.Models.UserModels.EmployeeData;
 	using Shift.DAL.Models.UserModels.GraduateData;
+	using AutoMapper;
 
 	public class UserManager : IUserManager
 	{
 		private readonly IRepositoryWrapper _repository;
+		private readonly IMapper _mapper;
 
-		public UserManager(IRepositoryWrapper repository)
+		public UserManager(IRepositoryWrapper repository, IMapper mapper)
 		{
 			this._repository = repository;
+			this._mapper = mapper;
 		}
 
 		public AuthResponse Login(LoginViewModel user)
@@ -34,15 +36,7 @@ namespace Shift.Services.Managers.User
 			{
 				var loginInfo = dbUser.LoginData.FirstOrDefault();
 
-				context.User = new UserContext
-				{
-					UserId = dbUser.Id,
-					FirstName = dbUser.FirstName,
-					LastName = dbUser.LastName,
-					Login = loginInfo?.Login,
-					Role = dbUser.Role?.Caption,
-				};
-
+				context.User = this._mapper.Map<UserContext>(dbUser);
 				return context;
 			}
 
@@ -60,41 +54,13 @@ namespace Shift.Services.Managers.User
 
 			if(dbEmployee == null)
 			{
-				var entity = new Employee
-				{
-					User = new User
-					{
-						FirstName = employee.FirstName,
-						LastName = employee.LastName,
-						PatronymicName = employee.PatronymicName,
-						Email = employee.Email,
-						RoleId = this.GetOrAddRole(RoleNames.Employee),
-						LoginData = new List<LoginInfo>()
-						{
-							new LoginInfo()
-							{
-								HashPassword = employee.Password,
-								Login = employee.Login,
-							}
-						}
-					},
-					JobPositionId = employee.JobPositionId,
-					AcademicDegreeId = employee.DegreeId,
-					AcademicRankId = employee.RankId,
-					DepartmentId = employee.DepartmentId,
-				};
+				var entity = this._mapper.Map<Employee>(employee);
+				entity.User.RoleId = this.GetOrAddRole(RoleNames.Employee);
 
 				this._repository.Employees.Add(entity);
 				this._repository.Save();
 
-				context.User = new UserContext
-				{
-					UserId = entity.User.Id,
-					FirstName = entity.User.FirstName,
-					LastName = entity.User.LastName,
-					Login = entity.User.LoginData.FirstOrDefault().Login,
-					Role = entity.User.Role?.Caption,
-				};
+				context.User = this._mapper.Map<UserContext>(entity.User);
 
 				return context;
 			}
@@ -113,42 +79,13 @@ namespace Shift.Services.Managers.User
 
 			if (dbGradute == null)
 			{
-				var entity = new Graduate
-				{
-					User = new User
-					{
-						FirstName = graduate.FirstName,
-						LastName = graduate.LastName,
-						PatronymicName = graduate.PatronymicName,
-						Email = graduate.Email,
-						RoleId = this.GetOrAddRole(RoleNames.Graduate),
-						LoginData = new List<LoginInfo>()
-						{
-							new LoginInfo()
-							{
-								HashPassword = graduate.Password,
-								Login = graduate.Login,
-							}
-						}
-					},
-					EducationForm = graduate.EducationForm,
-					SpecialtyId = graduate.SpecialtyId,
-					ScienceAdviserId = graduate.AdviserId,
-					StartEducationDate = graduate.StartEducationDate,
-					FinishEducationDate = graduate.FinishEducationDate,
-				};
+				var entity = this._mapper.Map<Graduate>(graduate);
+				entity.User.RoleId = this.GetOrAddRole(RoleNames.Graduate);
 
 				this._repository.Graduates.Add(entity);
 				this._repository.Save();
 
-				context.User = new UserContext
-				{
-					UserId = entity.User.Id,
-					FirstName = entity.User.FirstName,
-					LastName = entity.User.LastName,
-					Login = entity.User.LoginData.FirstOrDefault().Login,
-					Role = entity.User.Role?.Caption,
-				};
+				context.User = this._mapper.Map<UserContext>(entity.User);
 
 				return context;
 			}
@@ -166,42 +103,13 @@ namespace Shift.Services.Managers.User
 
 			if (dbUndergraduate == null)
 			{
-				var entity = new Undergraduate()
-				{
-					User = new User
-					{
-						FirstName = undergraduate.FirstName,
-						LastName = undergraduate.LastName,
-						PatronymicName = undergraduate.PatronymicName,
-						Email = undergraduate.Email,
-						RoleId = this.GetOrAddRole(RoleNames.Undergraduate),
-						LoginData = new List<LoginInfo>()
-						{
-							new LoginInfo()
-							{
-								HashPassword = undergraduate.Password,
-								Login = undergraduate.Login
-							}
-						},
-					},
-					EducationForm = undergraduate.EducationForm,
-					SpecialtyId = undergraduate.SpecialtyId,
-					ScienceAdviserId = undergraduate.AdviserId,
-					StartEducationDate = undergraduate.StartEducationDate,
-					FinishEducationDate = undergraduate.FinishEducationDate,
-				};
+				var entity = this._mapper.Map<Undergraduate>(undergraduate);
+				entity.User.RoleId = this.GetOrAddRole(RoleNames.Undergraduate);
 
 				this._repository.Undergraduates.Add(entity);
 				this._repository.Save();
 
-				context.User = new UserContext
-				{
-					UserId = entity.User.Id,
-					FirstName = entity.User.FirstName,
-					LastName = entity.User.LastName,
-					Login = entity.User.LoginData.FirstOrDefault().Login,
-					Role = entity.User.Role?.Caption,
-				};
+				context.User = this._mapper.Map<UserContext>(entity.User);
 
 				return context;
 			}

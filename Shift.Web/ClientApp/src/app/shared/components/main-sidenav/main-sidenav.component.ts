@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { Store, select } from '@ngrx/store';
 import { onSideNavChange } from "src/app/shared/animations/sidenav.animation";
 import { MenuState, selectIsOpen, selectRootMenu } from "src/app/core/store/menu/menu.state";
@@ -11,7 +11,7 @@ import { Observable } from "rxjs";
     templateUrl: './main-sidenav.component.html',
     animations: [ onSideNavChange ]
 })
-export class MainSidenavComponent implements OnInit {
+export class MainSidenavComponent {
     public isShow: boolean;
     public menu$: Observable<RootMenu>;
 
@@ -21,9 +21,6 @@ export class MainSidenavComponent implements OnInit {
                 this.isShow = isOpen;
             }, 0);
         });
-    }
-
-    ngOnInit() {
         this.menu$ = this.menuStore.pipe(select(selectRootMenu));
     }
 }

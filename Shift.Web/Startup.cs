@@ -10,6 +10,7 @@ using System.Text;
 
 namespace Shift.Web
 {
+	using AutoMapper;
 	using Microsoft.EntityFrameworkCore;
 	using Shift.Services.Contexts;
 	using Shift.Web.ServicesExtensions;
@@ -65,6 +66,7 @@ namespace Shift.Web
 			services.ConfigureSqlServerDbContext(Configuration);
 			services.ConfigureServices();
 			services.ConfigureRepositoryWrapper();
+			services.AddAutoMapper(typeof(Infrastructure.Config).Assembly);
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

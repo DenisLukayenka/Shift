@@ -4,6 +4,7 @@ import { JwtHelperService } from "@auth0/angular-jwt";
 import { Observable } from "rxjs";
 import { StorageService } from "src/app/services/storage/storage.service";
 import { TokenKey } from "src/app/services/storage/StorageKeys";
+import { LoginPage } from "../config";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -16,7 +17,7 @@ export class AuthGuard implements CanActivate {
             console.log(this.jwtHelper.decodeToken(token));
             return true;
         }
-        this.router.navigate(["login"]);
+        this.router.navigate([LoginPage]);
         return false;
     }
 }

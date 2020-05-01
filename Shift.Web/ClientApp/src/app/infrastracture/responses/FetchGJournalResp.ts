@@ -1,4 +1,4 @@
-import { GJournal } from "../entities/GJournal";
+import { GJournal } from "../entities/gjournal/GJournal";
 
 export class FetchGJournalResp {
     GJournal: GJournal;

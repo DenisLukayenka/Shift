@@ -1,7 +1,5 @@
 import { BaseRequest } from "./BaseRequest";
 import { RequestType } from "./requestType";
-import { ReqOptions } from "./ReqOptions";
-import { HttpHeaders } from "@angular/common/http";
 
 export class AuthReq extends BaseRequest {
     Login: string;

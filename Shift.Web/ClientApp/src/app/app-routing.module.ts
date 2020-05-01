@@ -1,6 +1,5 @@
 import { Routes, RouterModule } from "@angular/router";
 import { NgModule } from "@angular/core";
-import { ToolbarComponent } from "./core/components/toolbar/toolbar.component";
 import { LoginComponent } from "./core/components/login/login.component";
 import { RootViewComponent } from "./core/components/root-view/root-view.component";
 import { AuthGuard } from "./infrastracture/guards/AuthGuard";
@@ -19,10 +18,8 @@ const routes: Routes = [
 
     { path: LoginPage, component: LoginComponent },
     { path: RegisterPage, component: RegisterComponent, runGuardsAndResolvers: 'paramsOrQueryParamsChange' },
-    
-    { path: 'toolbar', component: ToolbarComponent },
 
-    { path: '', redirectTo: '/root', pathMatch: 'full' },
+    { path: '', redirectTo: RootPage, pathMatch: 'full' },
     { path: ErrorPage, component: ErrorPageComponent, canActivate: [ErrorPageGuard] }
 ]
 

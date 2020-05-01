@@ -38,6 +38,10 @@ export function appReducer(state = initialState, action: AppActionsUnion): AppSt
             return produce(state, draft => {
                 draft.authAlert = action.payload.alert;
             });
+        case AppActionTypes.FetchDefaultRouteSuccess:
+            return produce(state, draft => {
+                draft.defaultRoute = action.payload.defaultRoute;
+            });
     
         default:
             return state;

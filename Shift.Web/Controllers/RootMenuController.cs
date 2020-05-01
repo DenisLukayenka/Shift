@@ -26,7 +26,7 @@ namespace Shift.Web.Controllers
             var userRole = this._userManager.FetchUserRole(request.UserId);
             var menu = this._menuService.GetRootMenu(userRole);
 
-            return Ok(new { RootMenu = menu });
+            return Ok(new { RootMenu = menu, DefaultRoute = userRole });
         }
     }
 }

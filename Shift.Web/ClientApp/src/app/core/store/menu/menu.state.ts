@@ -7,12 +7,12 @@ export interface MenuState {
 }
 
 export const initialState: MenuState = {
-    menuOpen: true,
+    menuOpen: false,
     menu: {
         MenuGroups: []
     },
 }
 
 export const selectMenu = createFeatureSelector<MenuState>('menu');
-export const selectIsOpen = createSelector(selectMenu, (state: MenuState) => state.menuOpen);
+export const selectIsOpen = createSelector(selectMenu, state => state.menuOpen);
 export const selectRootMenu = createSelector(selectMenu, state => state.menu);

@@ -31,6 +31,5 @@ namespace Shift.Web.ServicesExtensions
 
 			services.AddDbContext<CoreContext>(o => o.UseSqlServer(connectionString));
 		}
-		
 	}
 }

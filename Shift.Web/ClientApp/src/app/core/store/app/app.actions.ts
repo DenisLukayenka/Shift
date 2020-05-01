@@ -12,6 +12,9 @@ export enum AppActionTypes {
     AuthSuccess = '[Pac] Auth Success',
     TryAuth = '[Pac] Try Auth',
     AuthFailure = '[Pac] Auth Failure',
+
+    FetchDefaultRoute = '[Pac] Fetch Default Route',
+    FetchDefaultRouteSuccess = '[Pac] Fetch Default Route Success',
 }
 
 export class LoadApp implements Action {
@@ -56,6 +59,18 @@ export class AuthFailure implements Action {
     constructor(public payload: { alert: string }) {}
 }
 
+export class FetchDefaultRoute implements Action {
+    readonly type = AppActionTypes.FetchDefaultRoute;
+
+    constructor(public payload: { userId: number }) {}
+}
+
+export class FetchDefaultRouteSuccess implements Action {
+    readonly type = AppActionTypes.FetchDefaultRouteSuccess;
+
+    constructor(public payload: { defaultRoute: string }) {}
+}
+
 export type AppActionsUnion = 
     | LoadSuccess
     | LoadFailure
@@ -66,5 +81,7 @@ export type AppActionsUnion =
     | AuthSuccess
     | TryAuth
     | AuthFailure
+    | FetchDefaultRoute
+    | FetchDefaultRouteSuccess
     
     | AppFailure;

@@ -1,5 +1,5 @@
 export const SERVER_URL = 'http://localhost:50280/';
-export const ViewTypeQueryKey = 'vt';
+export const ViewTypeQueryParam = 'vt';
 
 export const RegisterTypeQueryKey = 'rt';
 
