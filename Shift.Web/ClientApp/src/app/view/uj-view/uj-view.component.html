@@ -1,1 +1,63 @@
-<p>UJ view fdsagdsag</p>
+<div class="flex-center">
+    <div class="container journal-container journal-border">
+        <div class="flex-center">
+            <h3 class="form-header">Индивидуальный план магистранта</h3>
+        </div>
+        <form [formGroup]="journalOptions" autocomplete="off">
+            <div formGroupName="PreparationInfo">
+                <h4 class="chapter-header">
+                    1. Программа подготовки магистерской диссертации
+                </h4>
+                <mat-form-field class="width-full section-element">
+                    <p class="section-label">Тема магистерской диссертации:</p>
+                    <textarea cdkTextareaAutosize cdkAutosizeMinRows="3" matInput formControlName="Topic"></textarea>
+                </mat-form-field>
+
+                <h5 class="section-header">
+                    Обоснование темы магистерской диссертации
+                </h5>
+
+                <mat-form-field class="width-full section-element">
+                    <p class="section-label">Актуальность темы:</p>
+                    <textarea cdkTextareaAutosize cdkAutosizeMinRows="3" matInput formControlName="Relevance"></textarea>
+                </mat-form-field>
+                <mat-form-field class="width-full section-element">
+                    <p class="section-label">Цели и задачи исследования:</p>
+                    <textarea cdkTextareaAutosize cdkAutosizeMinRows="3" matInput formControlName="Objectives"></textarea>
+                </mat-form-field>
+                <mat-form-field class="width-full section-element">
+                    <p class="section-label">Сущность и методика исследования:</p>
+                    <textarea cdkTextareaAutosize cdkAutosizeMinRows="3" matInput formControlName="ResearchProcedure"></textarea>
+                </mat-form-field>
+                <mat-form-field class="width-full section-element">
+                    <p class="section-label">Иные сведения, необходимые для обоснования темы(<i>в том числе, характеризующие степень участия в научных исследованиях по избранной специальности до поступления в магистратуру: публикации по теме исследования, гранты, патенты, акты внедрения, участие в НИР и др.</i>):</p>
+                    <textarea cdkTextareaAutosize cdkAutosizeMinRows="3" matInput formControlName="Additions"></textarea>
+                </mat-form-field>
+
+                <div class="flex-horizontal">
+                    <mat-form-field class="width-full section-element">
+                        <mat-label>Научный руководитель:</mat-label>
+                        <input matInput [matDatepicker]="preparationEmpDatepicker" id="PreparationApprovedDate" formControlName="PreparationApprovedDate">
+                        <mat-datepicker-toggle matSuffix [for]="preparationEmpDatepicker"></mat-datepicker-toggle>
+                        <mat-datepicker #preparationEmpDatepicker></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field class="width-full section-element">
+                        <mat-label>Магистрант:</mat-label>
+                        <input matInput [matDatepicker]="preparationUDatepicker" id="PreparationSubmittedDate" formControlName="PreparationSubmittedDate">
+                        <mat-datepicker-toggle matSuffix [for]="preparationUDatepicker"></mat-datepicker-toggle>
+                        <mat-datepicker #preparationUDatepicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <button mat-stroked-button color="primary" (click)='saveGroup("PreparationInfo")'>Сохранить раздел</button>
+                <button mat-stroked-button color="accent" (click)='submitPreparation()'>Отметить как выполненный</button>
+
+                <h5 class="section-header">
+                    Перечень мероприятий по осуществлению научно-исследовательской работы
+                </h5>
+
+
+            </div>
+        </form>
+    </div>
+</div>
