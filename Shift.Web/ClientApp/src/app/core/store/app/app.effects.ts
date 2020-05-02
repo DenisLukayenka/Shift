@@ -1,13 +1,13 @@
 import { Injectable } from "@angular/core";
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { AppActionTypes, LoadApp, LogOutSuccess, LogOut, AppFailure, TryAuth, AuthSuccess, AuthFailure, FetchDefaultRoute, FetchDefaultRouteSuccess } from "./app.actions";
-import { switchMap, catchError, map, exhaustMap } from "rxjs/operators";
+import { AppActionTypes, LoadApp, LogOutSuccess, LogOut, AppFailure, TryAuth, AuthSuccess, AuthFailure, FetchDefaultRoute, FetchDefaultRouteSuccess, ErrorPageNavigated } from "./app.actions";
+import { switchMap, catchError, map, exhaustMap, tap } from "rxjs/operators";
 import { of } from "rxjs";
 import { Router } from "@angular/router";
 import { FetchRootMenu } from "../menu/menu.action";
 import { StorageService } from "src/app/services/storage/storage.service";
 import { UserIdKey, TokenKey } from "src/app/services/storage/StorageKeys";
-import { LoginPage, RootPage, ViewTypeQueryParam } from "src/app/infrastracture/config";
+import { LoginPage, RootPage, ViewTypeQueryParam, ErrorPage } from "src/app/infrastracture/config";
 import { HttpProcessorService } from "src/app/services/http-processor/http-processor.service";
 import { AuthReq } from "src/app/infrastracture/requests/AuthReq";
 import { AuthResponse } from "src/app/infrastracture/responses/AuthResponse";
@@ -75,6 +75,15 @@ export class AppEffects {
             return new AuthSuccess({ userContext: response.User });
         }),
         catchError(error => of(new AppFailure()))
+    );
+
+    @Effect()
+    appFailure$ = this.actions$.pipe(
+        ofType<AppFailure>(AppActionTypes.AppFailure),
+        tap(() => {
+            this.router.navigate([ErrorPage]);
+        }),
+        map(() => new ErrorPageNavigated()),
     );
 
     constructor(

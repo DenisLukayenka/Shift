@@ -9,7 +9,7 @@
     -moz-box-shadow: 1px 1px 10px -1px #c4c7cf42;
     box-shadow: 1px 1px 10px -1px rgba(196,199,207,0.26);
     background-color: #e9e8ebc4;
-    font-size: 16px;
+    font-size: 15px;
     margin-bottom: 50px;
     padding: 10px;
 }
@@ -17,15 +17,6 @@
 .journal-border {
     border: 1px solid #c5c6ca21;
     border-radius: 4px;
-}
-
-.form-header {
-    font-size: 20px;
-    font-weight: bold;
-    color: rgba(0, 0, 0, 0.747);
-    font-family: Roboto,"Helvetica Neue",sans-serif;
-    margin-top: 10px;
-    margin-bottom: 10px;
 }
 
 .section-element {
@@ -38,13 +29,22 @@
     margin-bottom: 10px;
 }
 
-.chapter-header {
-    font-size: 19px;
+.form-header {
+    font-size: 20px;
     font-weight: bold;
     color: rgba(0, 0, 0, 0.747);
     font-family: Roboto,"Helvetica Neue",sans-serif;
-    margin-bottom: 5px;
-    margin-top: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.chapter-header {
+    font-size: 18px;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.747);
+    font-family: Roboto,"Helvetica Neue",sans-serif;
+    margin-bottom: 15px;
+    margin-top: 25px;
 }
 
 .section-header {
@@ -52,12 +52,12 @@
     font-weight: bold;
     color: rgba(0, 0, 0, 0.747);
     font-family: Roboto,"Helvetica Neue",sans-serif;
-    margin-bottom: 5px;
-    margin-top: 5px;
+    margin-bottom: 8px;
+    margin-top: 8px;
 }
 
 .section-label {
-    font-size: 17px;
+    font-size: 15px;
     font-weight: normal;
     color: rgba(0, 0, 0, 0.747);
     font-family: Roboto,"Helvetica Neue",sans-serif;
@@ -72,5 +72,31 @@
 .flex-horizontal {
     display: flex;
     flex-direction: row;
+    align-items: baseline;
+}
+
+mat-icon {
+    cursor: pointer;
+}
+
+.non-scrollable-textarea {
+    box-sizing: content-box;
+}
+
+.red-icon {
+    color: red  ;
+}
+
+.inline-fields {
+    display: flex;
     align-items: flex-end;
+}
+
+.block-element {
+    display: block;
+}
+
+.chapter-divider {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }

@@ -9,5 +9,7 @@
 		public static string BadRequest = "Неверный запрос!";
 
 		public static string LoginExist = "Пользователь с таким логином уже зарегистрирован";
+
+		public static string SaveSuccess = "Сохранение прошло успешно";
 	}
 }

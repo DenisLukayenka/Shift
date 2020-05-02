@@ -7,6 +7,7 @@ export enum AppActionTypes {
     LoadFailure = '[Pac] App Load Failure',
     
     AppFailure = '[Pac] App Failure',
+    ErrorPageNavigated = '[Pac] Error page navigated',
     LogOut = '[Pac] Log out',
     LogOutSuccess = '[Pac] Log out Success',
     AuthSuccess = '[Pac] Auth Success',
@@ -71,6 +72,10 @@ export class FetchDefaultRouteSuccess implements Action {
     constructor(public payload: { defaultRoute: string }) {}
 }
 
+export class ErrorPageNavigated implements Action {
+    readonly type = AppActionTypes.ErrorPageNavigated;
+}
+
 export type AppActionsUnion = 
     | LoadSuccess
     | LoadFailure
@@ -84,4 +89,5 @@ export type AppActionsUnion =
     | FetchDefaultRoute
     | FetchDefaultRouteSuccess
     
-    | AppFailure;
+    | AppFailure
+    | ErrorPageNavigated;

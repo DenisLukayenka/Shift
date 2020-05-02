@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Shift.Infrastructure;
 using Shift.Infrastructure.Models;
+using Shift.Infrastructure.Models.ViewModels.Journals;
 using Shift.Services.Managers.Journals.UJournals;
 
 namespace Shift.Web.Controllers
@@ -29,6 +30,14 @@ namespace Shift.Web.Controllers
             }
 
             return Ok(new { Alert = Config.BadRequest });
+        }
+
+        [HttpPost]
+        public IActionResult Post([FromBody] UJournal journal)
+        {
+            this._journalManager.SaveJournal(journal);
+
+            return Ok(new { Message = Config.SaveSuccess });
         }
     }
 }

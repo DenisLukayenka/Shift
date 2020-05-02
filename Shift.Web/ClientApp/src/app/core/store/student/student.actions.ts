@@ -4,6 +4,9 @@ import { UJournal } from 'src/app/infrastracture/entities/ujournal/UJournal';
 export enum StudentActionTypes {
     LoadUJournal = '[Pac] Load UJournal',
     LoadUJournalSuccess = '[Pac] Load UJournal Success',
+
+    SaveUJournal = '[Pac] Save UJournal',
+    SaveUJournalSuccess = '[Pac] Save UJournal Success',
 }
 
 export class LoadUJournal implements Action {
@@ -18,6 +21,21 @@ export class LoadUJournalSuccess implements Action {
     constructor(public payload: { journal: UJournal }){}
 };
 
+export class SaveUJournal implements Action {
+    readonly type = StudentActionTypes.SaveUJournal;
+
+    constructor(public payload: { journal: UJournal }){}
+};
+
+export class SaveUJournalSuccess implements Action {
+    readonly type = StudentActionTypes.SaveUJournalSuccess;
+
+    constructor(public payload: { message: string }){}
+};
+
 export type StudentActionsUnion = 
     | LoadUJournal
-    | LoadUJournalSuccess;
+    | LoadUJournalSuccess
+    
+    | SaveUJournal
+    | SaveUJournalSuccess;

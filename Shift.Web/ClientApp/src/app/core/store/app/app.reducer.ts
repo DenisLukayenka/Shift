@@ -26,7 +26,7 @@ export function appReducer(state = initialState, action: AppActionsUnion): AppSt
                 draft.appLoading = false;
                 draft.authAlert = '';
             });
-        case AppActionTypes.AppFailure:
+        case AppActionTypes.ErrorPageNavigated:
             return produce(state, draft => {
                 draft.isErrorOccurs = true;
             });
