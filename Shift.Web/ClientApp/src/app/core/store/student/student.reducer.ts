@@ -8,6 +8,10 @@ export function studentReducer(state = initialState, action: StudentActionsUnion
             return produce(state, draft => {
                 draft.uJournal = action.payload.journal;
             });
+        case StudentActionTypes.LoadGJournalSuccess:
+            return produce(state, draft => {
+                draft.gJournal = action.payload.journal;
+            });
         default:
             return state;
     }

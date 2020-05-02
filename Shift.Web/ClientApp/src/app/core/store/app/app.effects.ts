@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { AppActionTypes, LoadApp, LogOutSuccess, LogOut, AppFailure, TryAuth, AuthSuccess, AuthFailure, FetchDefaultRoute, FetchDefaultRouteSuccess, ErrorPageNavigated } from "./app.actions";
+import { AppActionTypes, LoadApp, LogOutSuccess, LogOut, AppFailure, TryAuth, AuthSuccess, AuthFailure, FetchDefaultRoute, FetchDefaultRouteSuccess, ErrorPageNavigated, ViewFinishLoading } from "./app.actions";
 import { switchMap, catchError, map, exhaustMap, tap } from "rxjs/operators";
 import { of } from "rxjs";
 import { Router } from "@angular/router";
@@ -83,7 +83,7 @@ export class AppEffects {
         tap(() => {
             this.router.navigate([ErrorPage]);
         }),
-        map(() => new ErrorPageNavigated()),
+        switchMap(() => [new ViewFinishLoading(), new ErrorPageNavigated()]),
     );
 
     constructor(

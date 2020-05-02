@@ -25,3 +25,5 @@ export const selectIsErrorOccurs = createSelector(selectApp, state => state.isEr
 export const selectUserContext = createSelector(selectApp, state => state.userContext);
 export const selectAuthAlert = createSelector(selectApp, state => state.authAlert);
 export const selectDefaultRoute = createSelector(selectApp, state => state.defaultRoute);
+export const selectViewLoading = createSelector(selectApp, state => state.viewLoading);
+

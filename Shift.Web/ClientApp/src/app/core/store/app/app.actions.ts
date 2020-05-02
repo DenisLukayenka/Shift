@@ -16,6 +16,8 @@ export enum AppActionTypes {
 
     FetchDefaultRoute = '[Pac] Fetch Default Route',
     FetchDefaultRouteSuccess = '[Pac] Fetch Default Route Success',
+    ViewStartLoading = '[Pac] View Start Loading',
+    ViewFinishLoading = '[Pac] View Finish Loading',
 }
 
 export class LoadApp implements Action {
@@ -76,6 +78,14 @@ export class ErrorPageNavigated implements Action {
     readonly type = AppActionTypes.ErrorPageNavigated;
 }
 
+export class ViewStartLoading implements Action {
+    readonly type = AppActionTypes.ViewStartLoading;
+}
+
+export class ViewFinishLoading implements Action {
+    readonly type = AppActionTypes.ViewFinishLoading;
+}
+
 export type AppActionsUnion = 
     | LoadSuccess
     | LoadFailure
@@ -90,4 +100,7 @@ export type AppActionsUnion =
     | FetchDefaultRouteSuccess
     
     | AppFailure
-    | ErrorPageNavigated;
+    | ErrorPageNavigated
+    
+    | ViewStartLoading
+    | ViewFinishLoading;

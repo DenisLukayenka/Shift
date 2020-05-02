@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, AfterContentInit } from "@angular/core";
 import { MenuState, selectIsOpen } from "../../store/menu/menu.state";
 import { MenuToggle } from "../../store/menu/menu.action";
 import { Store, select } from "@ngrx/store";
-import { AppState, selectAppLoading, selectDefaultRoute } from "../../store/app/app.state";
+import { AppState, selectAppLoading, selectDefaultRoute, selectViewLoading } from "../../store/app/app.state";
 import { LoadApp } from "../../store/app/app.actions";
 import { onMainContentChange } from "src/app/shared/animations/sidenav.animation";
 import { Observable, Subscription } from "rxjs";
@@ -17,22 +17,30 @@ import { ViewType } from "src/app/infrastracture/entities/ViewType";
     templateUrl: './root-view.component.html',
 	animations: [ onMainContentChange ]
 })
-export class RootViewComponent implements OnInit, OnDestroy {
+export class RootViewComponent implements OnInit, OnDestroy, AfterContentInit {
     public isMenuOpened$: Observable<boolean>;
     public currentViewType: string;
-    public isLoading$: Observable<boolean>;
+    public isLoadingApp$: Observable<boolean>;
+    public isViewLoading: boolean = false;
     public defaultRoute: string;
 
     viewTypes = ViewType;
     private onRouteChange: Subscription;
 
-    constructor(private appStore: Store<AppState>, private menuStore: Store<MenuState>, private route: ActivatedRoute, private router: Router) {
+    constructor(
+        private appStore: Store<AppState>, 
+        private menuStore: Store<MenuState>, 
+        private route: ActivatedRoute, 
+        private router: Router,
+        private cd: ChangeDetectorRef
+    ) {
         this.isMenuOpened$ = this.menuStore.pipe(select(selectIsOpen));
-        this.isLoading$ = this.appStore.pipe(select(selectAppLoading));
+        this.isLoadingApp$ = this.appStore.pipe(select(selectAppLoading));
         this.appStore.pipe(select(selectDefaultRoute)).subscribe(result => this.defaultRoute = result);
     }
 
     public ngOnInit() {
+        this.appStore.pipe(select(selectViewLoading)).subscribe(r => setTimeout(() => this.isViewLoading = r));
         this.appStore.dispatch(new LoadApp());
 
         this.onRouteChange = this.route.queryParams.subscribe((params) => {
@@ -45,6 +53,10 @@ export class RootViewComponent implements OnInit, OnDestroy {
                 });
             }
         });
+    }
+
+    ngAfterContentInit (): void {
+        this.cd.detectChanges();
     }
 
     public ngOnDestroy() {

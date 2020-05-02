@@ -1,12 +1,16 @@
 ﻿using AutoMapper;
+using Shift.DAL.Models.University;
 using Shift.DAL.Models.UserModels.EmployeeData;
 using Shift.DAL.Models.UserModels.GraduateData;
+using Shift.DAL.Models.UserModels.GraduateData.JournalData;
 using Shift.DAL.Models.UserModels.UndergraduateData;
 using Shift.DAL.Models.UserModels.UndergraduateData.JournalData;
 using Shift.DAL.Models.UserModels.UserData;
 using Shift.Infrastructure.Models.ViewModels.Auth;
 using Shift.Infrastructure.Models.ViewModels.Journals;
+using Shift.Infrastructure.Models.ViewModels.Journals.GJournalData;
 using Shift.Infrastructure.Models.ViewModels.Journals.UJournalData;
+using Shift.Infrastructure.Models.ViewModels.Journals.University;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,6 +20,7 @@ namespace Shift.Infrastructure.Mappings
 	{
 		public MappingProfile()
 		{
+			CreateMap<Protocol, ProtocolVM>().ReverseMap();
 			CreateMap<PreparationInfo, PreparationInfoVM>().ReverseMap();
 			CreateMap<ThesisCertification, ThesisCertificationVM>().ReverseMap();
 			CreateMap<Report, ReportVM>().ReverseMap();
@@ -72,6 +77,41 @@ namespace Shift.Infrastructure.Mappings
 				.ForMember(dest => dest.Role, opt => opt.MapFrom((src, dest) => src.Role?.Caption ?? ""))
 				.ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
 
+			CreateMap<RationalInfoVM, RationalInfo>()
+				.ForMember(dest => dest.Protocol, opt => opt.MapFrom(src => src.Protocol))
+				.ReverseMap();
+
+			this.RegisterGJournalMappings();
+		}
+
+		public void RegisterGJournalMappings()
+		{
+			CreateMap<ThesisPlanVM, ThesisPlan>().ReverseMap();
+			CreateMap<WorkPlanVM, WorkPlan>().ReverseMap();
+			CreateMap<EducationPhaseVM, EducationPhase>()
+				.ForMember(dest => dest.CalendarStages, opt => opt.MapFrom(src => src.CalendarStages))
+				.ForMember(dest => dest.ScienceActivities, opt => opt.MapFrom(src => src.ScienceActivities))
+				.ForMember(dest => dest.Attestations, opt => opt.MapFrom(src => src.Attestations))
+				.ReverseMap();
+
+			CreateMap<CalendarStageVM, CalendarStage>().ReverseMap();
+			CreateMap<ScienceActivityVM, ScienceActivity>().ReverseMap();
+			CreateMap<AttestationVM, Attestation>()
+				.ForMember(dest => dest.Protocol, opt => opt.MapFrom(src => src.Protocol))
+				.ReverseMap();
+
+			CreateMap<WorkPlanVM, WorkPlan>()
+				.ForMember(dest => dest.WorkStages, opt => opt.MapFrom(src => src.WorkStages))
+				.ReverseMap();
+
+			CreateMap<WorkStageVM, WorkStage>().ReverseMap();
+
+			CreateMap<GraduateJournal, GJournal>()
+				.ForMember(dest => dest.ThesisPlan, opt => opt.MapFrom(src => src.ThesisPlan))
+				.ForMember(dest => dest.RationalInfo, opt => opt.MapFrom(src => src.RationalInfo))
+				.ForMember(dest => dest.EducationYears, opt => opt.MapFrom(src => src.EducationYears))
+				.ForMember(dest => dest.WorkPlans, opt => opt.MapFrom(src => src.WorkPlans))
+				.ReverseMap();
 		}
 	}
 }

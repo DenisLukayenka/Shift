@@ -25,6 +25,7 @@ export function appReducer(state = initialState, action: AppActionsUnion): AppSt
             return produce(state, draft => {
                 draft.appLoading = false;
                 draft.authAlert = '';
+                draft.defaultRoute = '';
             });
         case AppActionTypes.ErrorPageNavigated:
             return produce(state, draft => {
@@ -41,6 +42,14 @@ export function appReducer(state = initialState, action: AppActionsUnion): AppSt
         case AppActionTypes.FetchDefaultRouteSuccess:
             return produce(state, draft => {
                 draft.defaultRoute = action.payload.defaultRoute;
+            });
+        case AppActionTypes.ViewFinishLoading:
+            return produce(state, draft => {
+                draft.viewLoading = false;
+            });
+        case AppActionTypes.ViewStartLoading:
+            return produce(state, draft => {
+                draft.viewLoading = true;
             });
     
         default:

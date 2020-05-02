@@ -20,7 +20,7 @@ namespace Shift.Services.Managers.Journals.UJournals
 		public UJournal FetchJournal(int userId)
 		{
 			var dbJournal = this._repository.UJournals
-				.Get(journal => journal.UndergraduateId == userId)
+				.Get(journal => journal.Undergraduate.UserId == userId)
 				.FirstOrDefault();
 
 			if(dbJournal != null)

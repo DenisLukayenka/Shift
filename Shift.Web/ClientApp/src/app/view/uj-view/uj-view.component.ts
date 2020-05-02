@@ -1,72 +1,35 @@
-import { Component, OnInit, NgZone, ViewChild } from "@angular/core";
-import { StudentState, selectUJournal } from "src/app/core/store/student/student.state";
-import { Store, select } from "@ngrx/store";
+import { Component, Input, OnChanges, SimpleChanges, ChangeDetectionStrategy } from "@angular/core";
+import { StudentState } from "src/app/core/store/student/student.state";
+import { Store } from "@ngrx/store";
 import { UJournal } from "src/app/infrastracture/entities/ujournal/UJournal";
-import { StorageService } from "src/app/services/storage/storage.service";
-import { UserIdKey } from "src/app/services/storage/StorageKeys";
-import { LoadUJournal, SaveUJournal } from "src/app/core/store/student/student.actions";
-import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from "@angular/forms";
+import { SaveUJournal } from "src/app/core/store/student/student.actions";
+import { FormGroup, FormArray, FormControl } from "@angular/forms";
 import * as _ from 'lodash';
+import { UJHelperService } from "./uj-helper.service";
 
 @Component({
     selector: 'pac-uj-view',
     styleUrls: ['./uj-view.component.scss'],
     templateUrl: './uj-view.component.html',
+    providers: [UJHelperService],
 })
-export class UndergraduateJournalComponent implements OnInit {
-    public journal: UJournal;
+export class UndergraduateJournalComponent implements OnChanges {
+    @Input() public journal: UJournal;
+
     public journalOptions: FormGroup;
     
     constructor(
-        private studentState: Store<StudentState>, 
-        private storage: StorageService,
-        private fb: FormBuilder,
-    ) {
-        this.studentState.pipe(select(selectUJournal)).subscribe(j => {
-            if(!!j && !!this.journalOptions) {
-                this.journal = j;
-                this.journalOptions.patchValue(this.journal);
-                this.addResearchWork();
-                this.addReport();
-            }
-        });
-    }
+        private studentState: Store<StudentState>,
+        public ujHelper: UJHelperService,
+    ) {}
 
-    ngOnInit() {
-        let userId = +this.storage.getValue(UserIdKey);
-        this.studentState.dispatch(new LoadUJournal({ userId: userId }));
-        this.initializeForm();
-    }
+    ngOnChanges (changes: SimpleChanges ): void {
+        if(changes.journal.currentValue) {
+            this.journalOptions = this.ujHelper.generateFormOptions(changes.journal.currentValue);
 
-    public initializeForm() {
-        this.journalOptions = this.fb.group({
-            PreparationInfo: this.fb.group({
-                PreparationInfoId: [''],
-                Topic: [''],
-                Relevance: [''],
-                Objectives: [''],
-                ResearchProcedure: [''],
-                Additions: [''],
-                PreparationSubmittedDate: [{ value: null, disabled: true }],
-                PreparationApprovedDate: [{ value: null, disabled: true }],
-                IsPreparationSubmitted: [false],
-                IsPreparationApproved: [false],
-                IsResearchSubmitted: [false],
-                IsResearchApproved: [false],
-                ResearchWorks: this.fb.array([]),
-            }),
-            ReportResults: this.fb.array([]),
-            ThesisCertification: this.fb.group({
-                ThesisCertificationId: [''],
-                IsApproved: [false],
-                Mark: ['', [
-                    Validators.required,
-                    Validators.pattern("^[1-9]|10")
-                ]],
-                ApprovedDate: [null],
-                DepartmentHead: [null],
-            })
-        });
+            this.addReport();
+            this.addResearchWork();
+        }
     }
 
     public submitJournal() {
@@ -108,25 +71,11 @@ export class UndergraduateJournalComponent implements OnInit {
     }
 
     public initialeResearchWork(): FormGroup {
-        return this.fb.group({
-            JobType: ['', Validators.required],
-            PresentationType: ['', Validators.required],
-            StartDate: [null],
-            FinishDate: [null],
-            PreparationInfoId: [this.journal.PreparationInfo.PreparationInfoId],
-        });
+        return this.ujHelper.initResearchWork();
     }
 
     public initialeReportResult(): FormGroup {
-        return this.fb.group({
-            Date: [null],
-            Result: ['', Validators.required],
-            DepartmentHead: [''],
-            Protocol: this.fb.group({
-                Date: [null],
-                Number: ['']
-            }),
-        });
+        return this.ujHelper.initReportResults();
     }
 
     get getRWFormControls() {

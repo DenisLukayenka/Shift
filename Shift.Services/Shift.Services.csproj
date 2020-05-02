@@ -17,8 +17,4 @@
     <ProjectReference Include="..\Shift.Infrastructure\Shift.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Managers\Journals\GJournals\" />
-  </ItemGroup>
-
 </Project>

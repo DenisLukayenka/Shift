@@ -26,25 +26,7 @@ namespace Shift.Web
 
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddAuthentication(opt =>
-			{
-				opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-				opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-			})
-			.AddJwtBearer(opt =>
-			{
-				opt.TokenValidationParameters = new TokenValidationParameters
-				{
-					ValidateIssuer = true,
-					ValidateAudience = true,
-					ValidateLifetime = true,
-					ValidateIssuerSigningKey = true,
-
-					ValidIssuer = "http://localhost:4200",
-					ValidAudience = "http://localhost:50280",
-					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("qwertgdhgy@1gfdhhhfd11")),
-				};
-			});
+			services.ConfigureJwtAuth();
 
 			services.AddCors(options =>
 			{
@@ -53,7 +35,6 @@ namespace Shift.Web
 						.AllowAnyMethod()
 						.AllowAnyHeader());
 			});
-
 
 			services.AddControllersWithViews()
 				.AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);

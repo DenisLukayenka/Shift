@@ -25,6 +25,7 @@ namespace Shift.Services.Services.Repositories.Implementations
 				.Include(j => j.ThesisCertification)
 				.Include(j => j.ReportResults)
 					.ThenInclude(j => j.Protocol)
+				.Include(j => j.Undergraduate)
 				.AsNoTracking();
 		}
 	}

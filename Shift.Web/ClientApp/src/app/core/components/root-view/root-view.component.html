@@ -1,8 +1,8 @@
-<div *ngIf="isLoading$ | async" class="center">
+<div *ngIf="(isLoadingApp$ | async)" class="center">
     <mat-spinner></mat-spinner>
 </div>
 
-<ng-container *ngIf="!(isLoading$ | async)">
+<ng-container *ngIf="!(isLoadingApp$ | async)">
     <pac-toolbar></pac-toolbar>
 
     <mat-sidenav-container class="content-color">
@@ -15,10 +15,10 @@
         </mat-sidenav>
     
         <mat-sidenav-content [@onMainContentChange]="(isMenuOpened$ | async) ? 'open': 'close'">
-            <!--<mat-progress-bar style="position: absolute;" mode="indeterminate"></mat-progress-bar>-->
+            <mat-progress-bar *ngIf="isViewLoading" style="position: absolute;" mode="indeterminate"></mat-progress-bar>
             <div class="main-content content-color" [ngSwitch]="currentViewType">
-                <pac-gj-view *ngSwitchCase="viewTypes.GJournal"></pac-gj-view>
-                <pac-uj-view *ngSwitchCase="viewTypes.UJournal"></pac-uj-view>
+                <pac-gj-wrapper *ngSwitchCase="viewTypes.GJournal"></pac-gj-wrapper>
+                <pac-uj-wrapper *ngSwitchCase="viewTypes.UJournal"></pac-uj-wrapper>
             </div>
         </mat-sidenav-content>
     </mat-sidenav-container>
