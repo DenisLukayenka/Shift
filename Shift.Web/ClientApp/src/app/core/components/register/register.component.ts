@@ -1,7 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
 import { RegisterType } from "src/app/infrastracture/entities/auth/register-types";
-import { RegisterTypeQueryKey } from "src/app/infrastracture/config";
 
 @Component({
     selector: 'pac-register',

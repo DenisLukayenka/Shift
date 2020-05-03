@@ -4,7 +4,7 @@ import { JwtHelperService } from "@auth0/angular-jwt";
 import { Observable } from "rxjs";
 import { StorageService } from "src/app/services/storage/storage.service";
 import { TokenKey } from "src/app/services/storage/StorageKeys";
-import { LoginPage } from "../config";
+import { LoginPage, RoleTokenKey } from "../config";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -14,10 +14,16 @@ export class AuthGuard implements CanActivate {
     canActivate (route: ActivatedRouteSnapshot, state: RouterStateSnapshot ): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
         var token = this.storage.getValue(TokenKey);
         if(!!token && !this.jwtHelper.isTokenExpired(token)) {
-            console.log(this.jwtHelper.decodeToken(token));
             return true;
         }
-        this.router.navigate([LoginPage]);
+        let navigateCommands = [LoginPage];
+
+        let tokenObj = this.jwtHelper.decodeToken(token);
+        if(tokenObj && tokenObj[RoleTokenKey]) {
+            navigateCommands.push(tokenObj[RoleTokenKey]);
+        }
+
+        this.router.navigate(navigateCommands);
         return false;
     }
 }

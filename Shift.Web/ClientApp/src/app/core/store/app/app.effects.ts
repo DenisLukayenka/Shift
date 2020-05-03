@@ -7,7 +7,7 @@ import { Router } from "@angular/router";
 import { FetchRootMenu } from "../menu/menu.action";
 import { StorageService } from "src/app/services/storage/storage.service";
 import { UserIdKey, TokenKey } from "src/app/services/storage/StorageKeys";
-import { LoginPage, RootPage, ViewTypeQueryParam, ErrorPage } from "src/app/infrastracture/config";
+import { LoginPage, RootPage, ErrorPage } from "src/app/infrastracture/config";
 import { HttpProcessorService } from "src/app/services/http-processor/http-processor.service";
 import { AuthReq } from "src/app/infrastracture/requests/AuthReq";
 import { AuthResponse } from "src/app/infrastracture/responses/AuthResponse";
@@ -23,7 +23,6 @@ export class AppEffects {
 
             return [
                 new FetchRootMenu({ userId: userId }),
-                new FetchDefaultRoute({ userId: userId }),
             ]
         }),
         catchError(error => of(new AppFailure()))
@@ -37,24 +36,6 @@ export class AppEffects {
             this.router.navigate([LoginPage]);
 
             return new LogOutSuccess();
-        }),
-        catchError(error => of(new AppFailure()))
-    );
-
-    @Effect()
-    fetchDefaultRoute$ = this.actions$.pipe(
-        ofType<FetchDefaultRoute>(AppActionTypes.FetchDefaultRoute),
-        map(action => action.payload.userId),
-        exhaustMap(userId => this.httpProcessor.execute(new FetchDefaultRouteReq(userId))),
-        map(response => {
-            if(!response.DefaultRoute) {
-                return new AppFailure();
-            }
-            this.router.navigate([], {
-                queryParams: { [ViewTypeQueryParam]: response.DefaultRoute }
-            });
-
-            return new FetchDefaultRouteSuccess({ defaultRoute: response.DefaultRoute });
         }),
         catchError(error => of(new AppFailure()))
     );

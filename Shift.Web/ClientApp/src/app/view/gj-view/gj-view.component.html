@@ -1,4 +1,4 @@
-<div class="flex-column-center">
+<div *ngIf="!(isViewLoading$ | async)" class="flex-column-center">
     <div class="container journal-container journal-border">
         <div class="flex-column-center">
             <div>

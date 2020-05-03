@@ -1,10 +1,15 @@
 import { Component, Input, SimpleChanges, OnInit, OnChanges } from "@angular/core";
 import { GJournal } from "src/app/infrastracture/entities/gjournal/GJournal";
 import { FormGroup } from "@angular/forms";
-import { Store } from "@ngrx/store";
-import { StudentState } from "src/app/core/store/student/student.state";
+import { Store, select } from "@ngrx/store";
+import { StudentState, selectGJournal } from "src/app/core/store/student/student.state";
 import * as _ from 'lodash';
 import { GJHelperService } from "./gj-helper.service";
+import { Observable } from "rxjs";
+import { selectViewLoading } from "src/app/core/store/app/app.state";
+import { StorageService } from "src/app/services/storage/storage.service";
+import { UserIdKey } from "src/app/services/storage/StorageKeys";
+import { ExecuteLoadGJournal } from "src/app/core/store/student/student.actions";
 
 @Component({
     selector: 'pac-gj-view',
@@ -12,19 +17,26 @@ import { GJHelperService } from "./gj-helper.service";
     templateUrl: './gj-view.component.html',
     providers: [GJHelperService]
 })
-export class GraduateJournalComponent implements OnChanges {
-    @Input() public journal: GJournal;
+export class GraduateJournalComponent implements OnInit {
+    public isViewLoading$: Observable<boolean>;
     public journalOptions: FormGroup;
 
     constructor(
         private studentState: Store<StudentState>,
-        private gjHelper: GJHelperService
-    ){}
+        private gjHelper: GJHelperService,
+        private storage: StorageService,
+    ){
+        this.studentState.pipe(select(selectGJournal)).subscribe(result => {
+            if(result) {
+                this.journalOptions = this.gjHelper.generateFormGroup(result);
+            }
+        });
+        this.isViewLoading$ = this.studentState.pipe(select(selectViewLoading));
+    }
 
-    ngOnChanges (changes: SimpleChanges ): void {
-        if(changes.journal.currentValue) {
-            this.journalOptions = this.gjHelper.generateFormGroup(changes.journal.currentValue);
-        }
+    public ngOnInit() {
+        let userId = +this.storage.getValue(UserIdKey);
+        this.studentState.dispatch(new ExecuteLoadGJournal({ userId: userId }));
     }
 
     public submitJournal() {

@@ -79,4 +79,24 @@ export class UJHelperService {
         const control = this.options.get('ReportResults') as FormArray;
         control.push(this.initReportResults());
     }
+
+    public deleteResearchWork(index: number) {
+        const control = this.options.get('PreparationInfo').get('ResearchWorks') as FormArray;
+        control.removeAt(index);
+    }
+
+    public deleteReportResult(index: number) {
+        const control = this.options.get('ReportResults') as FormArray;
+        control.removeAt(index);
+    }
+
+    get getRWFormControls() {
+        const control = this.options.get('PreparationInfo').get('ResearchWorks') as FormArray;
+        return control;
+    }
+
+    get getRRFormControls() {
+        const control = this.options.get('ReportResults') as FormArray;
+        return control;
+    }
 }

@@ -3,7 +3,7 @@ import { collapseByWidth } from "src/app/shared/animations/sidenav.animation";
 import { MenuState, selectIsOpen } from "src/app/core/store/menu/menu.state";
 import { Store, select } from '@ngrx/store';
 import { Router } from "@angular/router";
-import { ViewTypeQueryParam } from "src/app/infrastracture/config";
+import { RootPage } from "src/app/infrastracture/config";
 
 @Component({
     selector: 'pac-menu-item',
@@ -26,9 +26,6 @@ export class MenuItemComponent {
     }
 
     openView() {
-        let queryParameter = {};
-        queryParameter[ViewTypeQueryParam] = this.link;
-
-        this.router.navigate([], { queryParams: queryParameter });
+        this.router.navigate([RootPage, this.link]);
     }
 }

@@ -12,20 +12,22 @@ import { URegisterComponent } from "./components/register/u-register/u-register.
 import { RegisterComponent } from "./components/register/register.component";
 import { GRegisterComponent } from "./components/register/g-register/g-register.component";
 import { ERegisterComponent } from "./components/register/e-register/e-register.component";
-import { UJWrapperComponent } from "./components/uj-wrapper/uj-wrapper.component";
-import { GJWrapperComponent } from "./components/gj-wrapper/gj-wrapper.component";
+import { UndergraduateComponent } from "./components/undergraduate/undergraduate.component";
+import { GraduateComponent } from "./components/graduate/graduate.component";
+import { NotFoundComponent } from "./components/not-found/not-found.component";
 
 @NgModule({
     declarations: [
         ToolbarComponent,
         RootViewComponent,
         LoginComponent,
-        UJWrapperComponent,
-        GJWrapperComponent,
+        UndergraduateComponent,
+        GraduateComponent,
         URegisterComponent,
         RegisterComponent,
         ERegisterComponent,
         GRegisterComponent,
+        NotFoundComponent,
     ],
     imports: [
         CoreStoreModule,
@@ -38,6 +40,7 @@ import { GJWrapperComponent } from "./components/gj-wrapper/gj-wrapper.component
     ],
     exports: [
         RootViewComponent,
+        NotFoundComponent,
     ]
 })
 export class CoreModule {

@@ -8,8 +8,6 @@ import { onMainContentChange } from "src/app/shared/animations/sidenav.animation
 import { Observable, Subscription } from "rxjs";
 import { ActivatedRoute, Router } from "@angular/router";
 import * as _ from 'lodash';
-import { ViewTypeQueryParam } from "src/app/infrastracture/config";
-import { ViewType } from "src/app/infrastracture/entities/ViewType";
 
 @Component({
     selector: 'pac-root-view',
@@ -17,22 +15,15 @@ import { ViewType } from "src/app/infrastracture/entities/ViewType";
     templateUrl: './root-view.component.html',
 	animations: [ onMainContentChange ]
 })
-export class RootViewComponent implements OnInit, OnDestroy, AfterContentInit {
+export class RootViewComponent implements OnInit {
     public isMenuOpened$: Observable<boolean>;
-    public currentViewType: string;
     public isLoadingApp$: Observable<boolean>;
     public isViewLoading: boolean = false;
     public defaultRoute: string;
 
-    viewTypes = ViewType;
-    private onRouteChange: Subscription;
-
     constructor(
         private appStore: Store<AppState>, 
-        private menuStore: Store<MenuState>, 
-        private route: ActivatedRoute, 
-        private router: Router,
-        private cd: ChangeDetectorRef
+        private menuStore: Store<MenuState>,
     ) {
         this.isMenuOpened$ = this.menuStore.pipe(select(selectIsOpen));
         this.isLoadingApp$ = this.appStore.pipe(select(selectAppLoading));
@@ -42,25 +33,6 @@ export class RootViewComponent implements OnInit, OnDestroy, AfterContentInit {
     public ngOnInit() {
         this.appStore.pipe(select(selectViewLoading)).subscribe(r => setTimeout(() => this.isViewLoading = r));
         this.appStore.dispatch(new LoadApp());
-
-        this.onRouteChange = this.route.queryParams.subscribe((params) => {
-            var viewParam = params[ViewTypeQueryParam];
-            if(!!viewParam) {
-                this.currentViewType = viewParam;
-            } else {
-                this.router.navigate([], {
-                    queryParams: { [ViewTypeQueryParam]: this.defaultRoute }
-                });
-            }
-        });
-    }
-
-    ngAfterContentInit (): void {
-        this.cd.detectChanges();
-    }
-
-    public ngOnDestroy() {
-        this.onRouteChange.unsubscribe();
     }
 
     public onSideNavToggle() {

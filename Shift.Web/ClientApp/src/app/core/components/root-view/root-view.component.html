@@ -16,9 +16,8 @@
     
         <mat-sidenav-content [@onMainContentChange]="(isMenuOpened$ | async) ? 'open': 'close'">
             <mat-progress-bar *ngIf="isViewLoading" style="position: absolute;" mode="indeterminate"></mat-progress-bar>
-            <div class="main-content content-color" [ngSwitch]="currentViewType">
-                <pac-gj-wrapper *ngSwitchCase="viewTypes.GJournal"></pac-gj-wrapper>
-                <pac-uj-wrapper *ngSwitchCase="viewTypes.UJournal"></pac-uj-wrapper>
+            <div class="main-content content-color">
+                <router-outlet></router-outlet>
             </div>
         </mat-sidenav-content>
     </mat-sidenav-container>

@@ -1,11 +1,14 @@
-import { Component, Input, OnChanges, SimpleChanges, ChangeDetectionStrategy } from "@angular/core";
-import { StudentState } from "src/app/core/store/student/student.state";
-import { Store } from "@ngrx/store";
-import { UJournal } from "src/app/infrastracture/entities/ujournal/UJournal";
-import { SaveUJournal } from "src/app/core/store/student/student.actions";
-import { FormGroup, FormArray, FormControl } from "@angular/forms";
+import { Component, OnInit } from "@angular/core";
+import { StudentState, selectUJournal } from "src/app/core/store/student/student.state";
+import { Store, select } from "@ngrx/store";
+import { SaveUJournal, ExecuteLoadUJournal } from "src/app/core/store/student/student.actions";
+import { FormGroup, FormControl } from "@angular/forms";
 import * as _ from 'lodash';
 import { UJHelperService } from "./uj-helper.service";
+import { StorageService } from "src/app/services/storage/storage.service";
+import { UserIdKey } from "src/app/services/storage/StorageKeys";
+import { Observable } from "rxjs";
+import { selectViewLoading } from "src/app/core/store/app/app.state";
 
 @Component({
     selector: 'pac-uj-view',
@@ -13,23 +16,28 @@ import { UJHelperService } from "./uj-helper.service";
     templateUrl: './uj-view.component.html',
     providers: [UJHelperService],
 })
-export class UndergraduateJournalComponent implements OnChanges {
-    @Input() public journal: UJournal;
-
+export class UndergraduateJournalComponent implements OnInit {
     public journalOptions: FormGroup;
+    public isViewLoading$: Observable<boolean>;
     
     constructor(
         private studentState: Store<StudentState>,
         public ujHelper: UJHelperService,
-    ) {}
+        private storage: StorageService,
+    ) {
+        this.isViewLoading$ = this.studentState.pipe(select(selectViewLoading));
+        this.studentState.pipe(select(selectUJournal)).subscribe(result => {
+            if(result) {
+                this.journalOptions = this.ujHelper.generateFormOptions(result);
+                this.ujHelper.addResearchWork();
+                this.ujHelper.addReportResults();
+            }
+        });
+    }
 
-    ngOnChanges (changes: SimpleChanges ): void {
-        if(changes.journal.currentValue) {
-            this.journalOptions = this.ujHelper.generateFormOptions(changes.journal.currentValue);
-
-            this.addReport();
-            this.addResearchWork();
-        }
+    public ngOnInit() {
+        let userId = +this.storage.getValue(UserIdKey);
+        this.studentState.dispatch(new ExecuteLoadUJournal({ userId: userId }));
     }
 
     public submitJournal() {
@@ -48,43 +56,5 @@ export class UndergraduateJournalComponent implements OnChanges {
     public submitPreparation() {
         const control = this.journalOptions.get('PreparationInfo').get('PreparationSubmittedDate') as FormControl;
         control.setValue(new Date());
-    }
-
-    public addResearchWork() {
-        const control = this.journalOptions.get('PreparationInfo').get('ResearchWorks') as FormArray;
-        control.push(this.initialeResearchWork())
-    }
-
-    public deleteResearchWork(index: number) {
-        const control = this.journalOptions.get('PreparationInfo').get('ResearchWorks') as FormArray;
-        control.removeAt(index);
-    }
-
-    public addReport() {
-        const control = this.journalOptions.get('ReportResults') as FormArray;
-        control.push(this.initialeReportResult());
-    }
-
-    public deleteReport(index: number) {
-        const control = this.journalOptions.get('ReportResults') as FormArray;
-        control.removeAt(index);
-    }
-
-    public initialeResearchWork(): FormGroup {
-        return this.ujHelper.initResearchWork();
-    }
-
-    public initialeReportResult(): FormGroup {
-        return this.ujHelper.initReportResults();
-    }
-
-    get getRWFormControls() {
-        const control = this.journalOptions.get('PreparationInfo').get('ResearchWorks') as FormArray;
-        return control;
-    }
-
-    get getRRFormControls() {
-        const control = this.journalOptions.get('ReportResults') as FormArray;
-        return control;
     }
 }

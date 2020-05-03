@@ -1,4 +1,4 @@
-<div class="flex-column-center">
+<div *ngIf="!(isViewLoading$ | async)" class="flex-column-center">
     <div class="container journal-container journal-border">
         <div class="flex-column-center">
             <div>
@@ -70,7 +70,7 @@
                         <th></th>
                     </thead>
                     <tbody>
-                        <ng-container formArrayName="ResearchWorks" *ngFor="let group of getRWFormControls.controls; let i=index">
+                        <ng-container formArrayName="ResearchWorks" *ngFor="let group of ujHelper.getRWFormControls.controls; let i=index">
                             <tr [formGroupName]='i'>
                                 <td>
                                     <mat-form-field class="width-full">
@@ -97,14 +97,14 @@
                                     </mat-form-field>
                                 </td>
                                 <td>
-                                    <mat-icon class="red-icon" (click)="deleteResearchWork(i)">delete_forever</mat-icon>
+                                    <mat-icon class="red-icon" (click)="ujHelper.deleteResearchWork(i)">delete_forever</mat-icon>
                                 </td>
                             </tr>
                         </ng-container>
                     </tbody>
                 </table>
                 <div class="action-container">
-                    <button mat-raised-button (click)="addResearchWork()">Добавить мероприятие</button>
+                    <button mat-raised-button (click)="ujHelper.addResearchWork()">Добавить мероприятие</button>
                 </div>
             </div>
             <div>
@@ -112,7 +112,7 @@
                 <h4 class="chapter-header">
                     2. Контрольные мероприятия
                 </h4>
-                <ng-container formArrayName="ReportResults" *ngFor="let group of getRRFormControls.controls; let i=index">
+                <ng-container formArrayName="ReportResults" *ngFor="let group of ujHelper.getRRFormControls.controls; let i=index">
                     <div [formGroupName]='i'>
                         <h5 class="section-header">
                             Результаты отчета магистранта на заседании выпускающей кафедры
