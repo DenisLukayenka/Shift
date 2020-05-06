@@ -41,6 +41,7 @@ export class GraduateJournalComponent implements OnInit {
 
     public submitJournal() {
         let formJournal = _.cloneDeep(this.journalOptions.value);
+        
         this.studentState.dispatch(new SaveGJournal({ journal: formJournal }));
         console.log(formJournal);
     }

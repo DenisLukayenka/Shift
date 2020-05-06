@@ -28,15 +28,7 @@ namespace Shift.Web.Controllers
             var userRole = this._userManager.FetchUserRole(request.UserId);
             var menu = this._menuService.GetRootMenu(userRole);
 
-            string defaultRoute = userRole switch
-            {
-                RoleNames.Graduate => "/gj",
-                RoleNames.Employee => "/u-list",
-                RoleNames.Undergraduate => "/uj",
-                _ => throw new ApplicationException(),
-            };
-
-            return Ok(new { RootMenu = menu, DefaultRoute = string.Concat("/", userRole, defaultRoute) });
+            return Ok(new { RootMenu = menu, Role = userRole });
         }
     }
 }
