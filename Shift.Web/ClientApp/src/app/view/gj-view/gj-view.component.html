@@ -7,8 +7,537 @@
             </div>
         </div>
         
-       <!-- <form [formGroup]="journalOptions" autocomplete="off">
-            
-        </form>-->
+        <form [formGroup]="journalOptions" autocomplete="off">
+            <div formGroupName="RationalInfo">
+                <h4 class="flex-column-center chapter-header">
+                    {{ 'Обоснование темы диссертации' | uppercase }}
+                </h4>
+
+                <mat-form-field class="width-full section-element">
+                    <mat-label>Цель исследования:</mat-label>
+                    <textarea class="non-scrollable-textarea" cdkTextareaAutosize cdkAutosizeMinRows="2" matInput formControlName="StudyPurpose"></textarea>
+                </mat-form-field>
+                <mat-form-field class="width-full section-element">
+                    <mat-label>Объект исследования:</mat-label>
+                    <textarea class="non-scrollable-textarea" cdkTextareaAutosize cdkAutosizeMinRows="2" matInput formControlName="StudyObject"></textarea>
+                </mat-form-field>
+                <mat-form-field class="width-full section-element">
+                    <mat-label>Предмет исследования:</mat-label>
+                    <textarea class="non-scrollable-textarea" cdkTextareaAutosize cdkAutosizeMinRows="2" matInput formControlName="StudySubject"></textarea>
+                </mat-form-field>
+
+                <h5 class="flex-column-center section-header">
+                    Текст обоснования
+                </h5>
+                <mat-form-field class="width-full section-element">
+                    <mat-label>Текст обоснования:</mat-label>
+                    <textarea class="non-scrollable-textarea" cdkTextareaAutosize cdkAutosizeMinRows="2" matInput formControlName="Justification"></textarea>
+                </mat-form-field>
+                <mat-form-field class="width-full section-element">
+                    <mat-label>Список публикаций по теме диссертации:</mat-label>
+                    <textarea class="non-scrollable-textarea" cdkTextareaAutosize cdkAutosizeMinRows="2" matInput formControlName="ThesisPublications"></textarea>
+                </mat-form-field>
+                <mat-form-field class="width-full section-element">
+                    <p class="section-label"><b>Другие сведения, характеризующие степень участия в найчных исследованиях по избранной специальности до поступления в аспирантуру</b><i> (гранты, патенты, акты внедрений, участие в НИР, магистерская (дипломная) работа и пр.)</i></p>
+                    <textarea class="non-scrollable-textarea" cdkTextareaAutosize cdkAutosizeMinRows="2" matInput formControlName="ResearchParticipation"></textarea>
+                </mat-form-field>
+
+                <!--TODO exam info-->
+                <mat-form-field class="width-full section-element">
+                    <mat-label>Тема диссертации:</mat-label>
+                    <textarea class="non-scrollable-textarea" cdkTextareaAutosize cdkAutosizeMinRows="2" matInput formControlName="DissertationTopic"></textarea>
+                </mat-form-field>
+
+                <mat-form-field class="width-full section-element">
+                    <mat-label>Научный руководитель:</mat-label>
+                    <textarea class="non-scrollable-textarea" cdkTextareaAutosize cdkAutosizeMinRows="2" matInput formControlName="Adviser"></textarea>
+                </mat-form-field>
+
+                
+                <div formGroupName="Protocol" class="inline-fields align-baseline">
+                    <p>Одобрены научно-техническим советом БНТУ </p>
+
+                    <mat-form-field class="inline section-element">
+                        <mat-label>от</mat-label>
+                        <input matInput [matDatepicker]="protocolDatepicker" formControlName="Date">
+                        <mat-datepicker-toggle matSuffix [for]="protocolDatepicker"></mat-datepicker-toggle>
+                        <mat-datepicker #protocolDatepicker></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field class="inline section-element">
+                        <mat-label>№ </mat-label>
+                        <input matInput formControlName="Number">
+                    </mat-form-field>
+                </div>
+
+                <div class="inline-fields align-baseline">
+                    <p class="mr-4">Заведующий кафедрой </p>
+                    <mat-form-field class="inline section-element">
+                        <input matInput formControlName="DepartmentHead">
+                    </mat-form-field>
+                    <mat-form-field class="inline section-element">
+                        <input matInput [matDatepicker]="dhApproveDatepicker" formControlName="DepartmentHeadApproveDate">
+                        <mat-datepicker-toggle matSuffix [for]="dhApproveDatepicker"></mat-datepicker-toggle>
+                        <mat-datepicker #dhApproveDatepicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="inline-fields align-end">
+                    <p class="mr-4">Начальник управления <br/>подготовки кадров<br/>высшей квалификации </p>
+                    <mat-form-field class="inline section-element">
+                        <input matInput formControlName="TrainingHead">
+                    </mat-form-field>
+                    <mat-form-field class="inline section-element">
+                        <input matInput [matDatepicker]="trainerApproveDatepicker" formControlName="TrainingHeadApproveDate">
+                        <mat-datepicker-toggle matSuffix [for]="trainerApproveDatepicker"></mat-datepicker-toggle>
+                        <mat-datepicker #trainerApproveDatepicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div formGroupName="ThesisPlan">
+                <div class="flex-column-center">
+                    <h4 class="chapter-header">
+                        {{ 'План диссертации' | uppercase }}
+                    </h4>
+                    <h5 class="section-label">
+                        <i>Составляется план диссертации с указанием глав и параграфов</i>
+                    </h5>
+                </div>
+                <mat-form-field class="width-full section-element">
+                    <mat-label>План диссертации:</mat-label>
+                    <textarea class="non-scrollable-textarea" cdkTextareaAutosize cdkAutosizeMinRows="10" matInput formControlName="Info"></textarea>
+                </mat-form-field>
+
+                <div class="mt-4">
+                    <div class="inline-fields align-end">
+                        <mat-form-field class="inline section-element">
+                            <mat-label>Научный руководитель:</mat-label>
+                            <input matInput formControlName="Adviser">
+                        </mat-form-field>
+                        <mat-form-field class="inline section-element">
+                            <input matInput [matDatepicker]="adviserApproveDatepicker" formControlName="AdviserApproveDate">
+                            <mat-datepicker-toggle matSuffix [for]="adviserApproveDatepicker"></mat-datepicker-toggle>
+                            <mat-datepicker #adviserApproveDatepicker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="inline-fields align-end">
+                        <mat-form-field class="inline section-element">
+                            <mat-label>Дата выполнения:</mat-label>
+                            <input matInput [matDatepicker]="submitDatepicker" formControlName="SubmitDate">
+                            <mat-datepicker-toggle matSuffix [for]="submitDatepicker"></mat-datepicker-toggle>
+                            <mat-datepicker #submitDatepicker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+            <ng-container formArrayName="WorkPlans" *ngFor="let group of gjHelper.getWorkPlansFormControls.controls; let i=index">
+                <div [formGroupName]='i'>
+                    <div class="flex-column-center">
+                        <h4 class="chapter-header">
+                            {{ 'Общий план работы' | uppercase }}
+                        </h4>
+                        <h5 class="section-header">
+                            План научно-исследовательской работы по теме диссертации
+                        </h5>
+                        <p class="section-label">
+                            <i>(содержание этапов работы формируется на основе названий глав диссертации)</i>
+                        </p>
+                    </div>
+                    <table class="table table-bordered mb-2 mt-4">
+                        <thead>
+                            <th>Содержание работы</th>
+                            <th>Дата начала работ</th>
+                            <th>Дата окончания работ</th>
+                            <th>Примечания</th>
+                            <th></th>
+                        </thead>
+                        <tbody>
+                            <ng-container formArrayName="WorkStages" *ngFor="let workStage of group.get('WorkStages').controls; let wsIndex=index">
+                                <tr [formGroupName]='wsIndex'>
+                                    <td>
+                                        <mat-form-field class="width-full">
+                                            <textarea class="non-scrollable-textarea" cdkTextareaAutosize matInput formControlName="JobInfo"></textarea>
+                                        </mat-form-field>
+                                    </td>
+                                    <td>
+                                        <mat-form-field class="width-full">
+                                            <input matInput [matDatepicker]="startDatePicker" formControlName="StartDate">
+                                            <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                                            <mat-datepicker #startDatePicker></mat-datepicker>
+                                        </mat-form-field>
+                                    </td>
+                                    <td>
+                                        <mat-form-field class="width-full">
+                                            <input matInput [matDatepicker]="finishDatePicker" formControlName="FinishDate">
+                                            <mat-datepicker-toggle matSuffix [for]="finishDatePicker"></mat-datepicker-toggle>
+                                            <mat-datepicker #finishDatePicker></mat-datepicker>
+                                        </mat-form-field>
+                                    </td>
+                                    <td>
+                                        <mat-form-field class="width-full">
+                                            <textarea class="non-scrollable-textarea" cdkTextareaAutosize matInput formControlName="Note"></textarea>
+                                        </mat-form-field>
+                                    </td>
+                                    <td>
+                                        <mat-icon class="red-icon" (click)="gjHelper.deleteWorkStage(i, wsIndex)">delete_forever</mat-icon>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                            <tr>
+                                <td>
+                                    Итоговая аттестация<br/>
+                                    государственной аттестационной комиссией
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <mat-form-field class="width-full">
+                                        <textarea class="non-scrollable-textarea" cdkTextareaAutosize matInput formControlName="FinalCertification"></textarea>
+                                    </mat-form-field>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Рассмотрение в совете по защите диссертаций<br/>
+                                    <i>(указать шифр Совета)</i>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <mat-form-field class="width-full">
+                                        <textarea class="non-scrollable-textarea" cdkTextareaAutosize matInput formControlName="CouncilNumber"></textarea>
+                                    </mat-form-field>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <mat-grid-list cols="2" rowHeight="50px" class="col-md-5">
+                        <mat-grid-tile>
+                            <p class="mr-4 zero-margin">Аспирант (соискатель) </p>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-form-field class="inline section-element">
+                                <input matInput [matDatepicker]="submitDatepicker" formControlName="SubmitDate">
+                                <mat-datepicker-toggle matSuffix [for]="submitDatepicker"></mat-datepicker-toggle>
+                                <mat-datepicker #submitDatepicker></mat-datepicker>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <p class="mr-4 zero-margin">Научный руководитель </p>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-form-field class="inline section-element">
+                                <input matInput [matDatepicker]="approveDatepicker" formControlName="AdviserApproveDate">
+                                <mat-datepicker-toggle matSuffix [for]="approveDatepicker"></mat-datepicker-toggle>
+                                <mat-datepicker #approveDatepicker></mat-datepicker>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <p class="mr-4 zero-margin">Начальник УПНКВК </p>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-form-field class="inline section-element">
+                                <input matInput [matDatepicker]="trainerDatepicker" formControlName="TrainingHeadApproveDate">
+                                <mat-datepicker-toggle matSuffix [for]="trainerDatepicker"></mat-datepicker-toggle>
+                                <mat-datepicker #trainerDatepicker></mat-datepicker>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                    </mat-grid-list>
+                </div>
+            </ng-container>
+            <ng-container formArrayName="EducationYears" *ngFor="let group of gjHelper.getEducationYearsFormControls.controls; let i=index">
+                <div [formGroupName]='i'>
+                    <div class="flex-column-center">
+                        <h4 class="chapter-header">
+                            {{ i + 1 }} {{ 'Год обучения' | uppercase }}
+                        </h4>
+                        <h5 class="section-header">
+                            {{ 'Календарный план' | uppercase }}
+                        </h5>
+                        <p class="section-header">
+                            научно-исследовательской работы по теме диссертации
+                        </p>
+                    </div>
+
+                    <table class="table table-bordered mb-2 mt-4">
+                        <thead>
+                            <th>№ этапа</th>
+                            <th>Наименование этапа</th>
+                            <th>Дата начала работ</th>
+                            <th>Дата окончания работ</th>
+                            <th>Ожидаемые результаты</th>
+                            <th></th>
+                        </thead>
+                        <tbody>
+                            <ng-container formArrayName="CalendarStages" *ngFor="let stage of group.get('CalendarStages').controls; let cIndex=index">
+                                <tr [formGroupName]='cIndex'>
+                                    <td>{{cIndex + 1}}</td>
+                                    <td>
+                                        <mat-form-field class="width-full">
+                                            <textarea class="non-scrollable-textarea" cdkTextareaAutosize matInput formControlName="StageName"></textarea>
+                                        </mat-form-field>
+                                    </td>
+                                    <td>
+                                        <mat-form-field class="width-full">
+                                            <input matInput [matDatepicker]="startDatePicker" formControlName="StartDate">
+                                            <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                                            <mat-datepicker #startDatePicker></mat-datepicker>
+                                        </mat-form-field>
+                                    </td>
+                                    <td>
+                                        <mat-form-field class="width-full">
+                                            <input matInput [matDatepicker]="finishDatePicker" formControlName="FinishDate">
+                                            <mat-datepicker-toggle matSuffix [for]="finishDatePicker"></mat-datepicker-toggle>
+                                            <mat-datepicker #finishDatePicker></mat-datepicker>
+                                        </mat-form-field>
+                                    </td>
+                                    <td>
+                                        <mat-form-field class="width-full">
+                                            <textarea class="non-scrollable-textarea" cdkTextareaAutosize matInput formControlName="WaitResult"></textarea>
+                                        </mat-form-field>
+                                    </td>
+                                    <td>
+                                        <mat-icon class="red-icon" (click)="gjHelper.deleteCalendarStage(i, cIndex)">delete_forever</mat-icon>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+
+                    <div class="flex-column-center">
+                        <h5 class="section-header">
+                            Научно-исследовательская работа
+                        </h5>
+                    </div>
+                    <h4 class="section-label">
+                        <b>1. Участие в научных мероприятиях</b><i> (конференции, симпозиумы, семинары и т.п.)</i>
+                    </h4>
+                    <table class="table table-bordered mb-4 mt-4">
+                        <thead>
+                            <th>Наименование научного мероприятия</th>
+                            <th>Сроки</th>
+                            <th>Место проведения</th>
+                            <th>Планируемые результаты<br/>(тезисы, статьи, доклады,<br/>стендовые и др. выступления)</th>
+                            <th></th>
+                        </thead>
+                        <tbody>
+                            <ng-container formArrayName="ScienceActivities" *ngFor="let activity of group.get('ScienceActivities').controls; let aIndex=index">
+                                <tr [formGroupName]='aIndex'>
+                                    <td>
+                                        <mat-form-field class="width-full">
+                                            <textarea class="non-scrollable-textarea" cdkTextareaAutosize matInput formControlName="Title"></textarea>
+                                        </mat-form-field>
+                                    </td>
+                                    <td>
+                                        <mat-form-field class="width-full">
+                                            <mat-label>Дата начала</mat-label>
+                                            <input matInput [matDatepicker]="startDatePicker" formControlName="StartDate">
+                                            <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                                            <mat-datepicker #startDatePicker></mat-datepicker>
+                                        </mat-form-field>
+                                        <br/>
+                                        <mat-form-field class="width-full">
+                                            <mat-label>Дата окончания</mat-label>
+                                            <input matInput [matDatepicker]="finishDatePicker" formControlName="FinishDate">
+                                            <mat-datepicker-toggle matSuffix [for]="finishDatePicker"></mat-datepicker-toggle>
+                                            <mat-datepicker #finishDatePicker></mat-datepicker>
+                                        </mat-form-field>
+                                    </td>
+                                    <td>
+                                        <mat-form-field class="width-full">
+                                            <textarea class="non-scrollable-textarea" cdkTextareaAutosize matInput formControlName="Address"></textarea>
+                                        </mat-form-field>
+                                    </td>
+                                    <td>
+                                        <mat-form-field class="width-full">
+                                            <textarea class="non-scrollable-textarea" cdkTextareaAutosize matInput formControlName="PlanResult"></textarea>
+                                        </mat-form-field>
+                                    </td>
+                                    <td>
+                                        <mat-icon class="red-icon" (click)="gjHelper.deleteScienceActivity(i, aIndex)">delete_forever</mat-icon>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+
+                    <h4 class="section-label">
+                        <b>2. Командировки, стажировки по теме диссертации</b><i> (указать цель, сроки и место командирования)</i>
+                    </h4>
+                    <mat-form-field class="inline section-element">
+                        <mat-label>Командировки и стажировки:</mat-label>
+                        <textarea class="non-scrollable-textarea" cdkTextareaAutosize cdkAutosizeMinRows="2" matInput formControlName="TripsInternships"></textarea>
+                    </mat-form-field>
+
+                    <h4 class="section-label">
+                        <b>3. Другие виды работ</b>
+                    </h4>
+                    <mat-form-field class="inline section-element">
+                        <mat-label>Другие работы:</mat-label>
+                        <textarea class="non-scrollable-textarea" cdkTextareaAutosize cdkAutosizeMinRows="2" matInput formControlName="SubWorks"></textarea>
+                    </mat-form-field>
+
+                    <div class="flex-column-center justify-center">
+                        <h4 class="chapter-header">
+                            {{ 'Отчет аспиранта (соискателя)' | uppercase }} 
+                            {{ 'за' | uppercase }} {{ i + 1 }} {{ 'Год обучения' | uppercase }}
+                        </h4>
+                    </div>
+
+                    <h4 class="section-header">
+                        1. Выполнение календарного плана научных исследований
+                    </h4>
+                    <table class="table table-bordered mb-2 mt-4">
+                        <thead>
+                            <th>№ этапа</th>
+                            <th>Наименование этапа</th>
+                            <th>Краткая характеристика достигнутых результатов</th>
+                            <th></th>
+                        </thead>
+                        <tbody>
+                            <ng-container formArrayName="CalendarStages" *ngFor="let stage of group.get('CalendarStages').controls; let cIndex=index">
+                                <tr [formGroupName]='cIndex'>
+                                    <td>{{cIndex + 1}}</td>
+                                    <td>
+                                        <mat-form-field class="width-full">
+                                            <textarea class="non-scrollable-textarea" cdkTextareaAutosize matInput formControlName="StageName"></textarea>
+                                        </mat-form-field>
+                                    </td>
+                                    <td>
+                                        <mat-form-field class="width-full">
+                                            <textarea class="non-scrollable-textarea" cdkTextareaAutosize matInput formControlName="OutcomeResult"></textarea>
+                                        </mat-form-field>
+                                    </td>
+                                    <td>
+                                        <mat-icon class="red-icon" (click)="gjHelper.deleteCalendarStage(i, cIndex)">delete_forever</mat-icon>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+
+                    <h4 class="section-header">
+                        2. Список публикаций, авторские свидетельства, акты внедрения и др.
+                    </h4>
+                    <mat-form-field class="inline section-element">
+                        <mat-label>Публикации, свидетельства, акты внедрения</mat-label>
+                        <textarea class="non-scrollable-textarea" cdkTextareaAutosize cdkAutosizeMinRows="2" matInput formControlName="Publications"></textarea>
+                    </mat-form-field>
+
+                    <h4 class="section-header">
+                        3. Участие в выполнении НИР. грантов и т.п.
+                    </h4>
+                    <mat-form-field class="inline section-element">
+                        <mat-label>Участие в выполнении НИР</mat-label>
+                        <textarea class="non-scrollable-textarea" cdkTextareaAutosize cdkAutosizeMinRows="2" matInput formControlName="ScienceParticipations"></textarea>
+                    </mat-form-field>
+
+                    <h4 class="section-header">
+                        4. Другие результаты научно-исследовательской работы по теме диссертации 
+                    </h4>
+                    <mat-form-field class="inline section-element">
+                        <mat-label>Другие результаты работы:</mat-label>
+                        <textarea class="non-scrollable-textarea" cdkTextareaAutosize cdkAutosizeMinRows="2" matInput formControlName="SubResearchResults"></textarea>
+                    </mat-form-field>
+
+                    <mat-grid-list cols="2" rowHeight="50px" class="col-md-5">
+                        <mat-grid-tile>
+                            <p class="mr-4 zero-margin">Аспирант (соискатель) </p>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-form-field class="inline section-element">
+                                <input matInput [matDatepicker]="submitDatepicker" formControlName="SubmitDate">
+                                <mat-datepicker-toggle matSuffix [for]="submitDatepicker"></mat-datepicker-toggle>
+                                <mat-datepicker #submitDatepicker></mat-datepicker>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <p class="mr-4 zero-margin">Научный руководитель </p>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-form-field class="inline section-element">
+                                <input matInput [matDatepicker]="approveDatepicker" formControlName="AdviserApproveDate">
+                                <mat-datepicker-toggle matSuffix [for]="approveDatepicker"></mat-datepicker-toggle>
+                                <mat-datepicker #approveDatepicker></mat-datepicker>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                    </mat-grid-list>
+
+                    <ng-container formArrayName="Attestations" *ngFor="let attestation of group.get('Attestations').controls; let atIndex=index">
+                        <div formGroupName="atIndex">
+                            <div class="flex-column-center justify-center mt-4">
+                                <h4 class="chapter-header zero-margin">
+                                    {{ 'Основные результаты' | uppercase }} 
+                                </h4>
+                                <h4 class="chapter-header zero-margin">
+                                    {{ 'текущей аттестации аспиранта (соискателя)' | uppercase }} 
+                                </h4>
+                                <h4 class="section-header">
+                                    по итогам полугодия
+                                </h4>
+                            </div>
+                            <mat-form-field class="width-full section-element">
+                                <textarea class="non-scrollable-textarea" cdkTextareaAutosize cdkAutosizeMinRows="2" matInput formControlName="AttestationResult"></textarea>
+                            </mat-form-field>
+
+                            <h5 class="section-label">
+                                Результаты научно-исследовательской работы аспиранта (соискателя) заслушаны и обсуждены на заседании кафедры <i>(указать наименование)</i>
+                            </h5>
+                            <!--TODO Add department here-->
+
+                            <div formGroupName="Protocol" class="inline-fields">
+                                <mat-form-field class="inline section-element">
+                                    <mat-label>Протокол от</mat-label>
+                                    <input matInput [matDatepicker]="protocolDatepicker" formControlName="Date">
+                                    <mat-datepicker-toggle matSuffix [for]="protocolDatepicker"></mat-datepicker-toggle>
+                                    <mat-datepicker #protocolDatepicker></mat-datepicker>
+                                </mat-form-field>
+                                <mat-form-field class="inline section-element">
+                                    <mat-label>№ </mat-label>
+                                    <input matInput formControlName="Number">
+                                </mat-form-field>
+                            </div>
+
+                            <mat-grid-list cols="2" rowHeight="50px" class="col-md-5">
+                                <mat-grid-tile>
+                                    <p class="mr-4 zero-margin">Научный руководитель</p>
+                                </mat-grid-tile>
+                                <mat-grid-tile>
+                                    <mat-form-field class="inline section-element">
+                                        <input matInput [matDatepicker]="approveDatepicker" formControlName="AdviserApproveDate">
+                                        <mat-datepicker-toggle matSuffix [for]="approveDatepicker"></mat-datepicker-toggle>
+                                        <mat-datepicker #approveDatepicker></mat-datepicker>
+                                    </mat-form-field>
+                                </mat-grid-tile>
+
+                                <mat-grid-tile>
+                                    <p class="mr-4 zero-margin">Заведующий кафедрой</p>
+                                </mat-grid-tile>
+                                <mat-grid-tile>
+                                    <mat-form-field class="inline section-element">
+                                        <input matInput [matDatepicker]="dhDatepicker" formControlName="DepartmentHeadApproveDate">
+                                        <mat-datepicker-toggle matSuffix [for]="dhDatepicker"></mat-datepicker-toggle>
+                                        <mat-datepicker #dhDatepicker></mat-datepicker>
+                                    </mat-form-field>
+                                </mat-grid-tile>
+                               
+                                <mat-grid-tile>
+                                    <p class="mr-4 zero-margin">Начальник УПНКВК </p>
+                                </mat-grid-tile>
+                                <mat-grid-tile>
+                                    <mat-form-field class="inline section-element">
+                                        <input matInput [matDatepicker]="trainerDatepicker" formControlName="TrainingHeadApproveDate">
+                                        <mat-datepicker-toggle matSuffix [for]="trainerDatepicker"></mat-datepicker-toggle>
+                                        <mat-datepicker #trainerDatepicker></mat-datepicker>
+                                    </mat-form-field>
+                                </mat-grid-tile>
+                            </mat-grid-list>
+                        </div>
+                    </ng-container>
+                </div>
+            </ng-container>
+        </form>
     </div>
 </div>

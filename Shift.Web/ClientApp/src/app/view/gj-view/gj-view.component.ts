@@ -8,7 +8,7 @@ import { Observable } from "rxjs";
 import { selectViewLoading } from "src/app/core/store/app/app.state";
 import { StorageService } from "src/app/services/storage/storage.service";
 import { UserIdKey } from "src/app/services/storage/StorageKeys";
-import { ExecuteLoadGJournal } from "src/app/core/store/student/student.actions";
+import { ExecuteLoadGJournal, SaveGJournal } from "src/app/core/store/student/student.actions";
 
 @Component({
     selector: 'pac-gj-view',
@@ -22,12 +22,13 @@ export class GraduateJournalComponent implements OnInit {
 
     constructor(
         private studentState: Store<StudentState>,
-        private gjHelper: GJHelperService,
+        public gjHelper: GJHelperService,
         private storage: StorageService,
     ){
         this.studentState.pipe(select(selectGJournal)).subscribe(result => {
             if(result) {
                 this.journalOptions = this.gjHelper.generateFormGroup(result);
+                this.gjHelper.addWorkPlan();
             }
         });
         this.isViewLoading$ = this.studentState.pipe(select(selectViewLoading));
@@ -40,6 +41,7 @@ export class GraduateJournalComponent implements OnInit {
 
     public submitJournal() {
         let formJournal = _.cloneDeep(this.journalOptions.value);
+        this.studentState.dispatch(new SaveGJournal({ journal: formJournal }));
         console.log(formJournal);
     }
 }

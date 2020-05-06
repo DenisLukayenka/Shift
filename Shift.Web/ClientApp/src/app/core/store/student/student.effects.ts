@@ -1,15 +1,15 @@
 import { Injectable } from "@angular/core";
 import { Actions, Effect, ofType } from "@ngrx/effects";
 import { HttpProcessorService } from "src/app/services/http-processor/http-processor.service";
-import { StudentActionTypes, LoadUJournal, LoadUJournalSuccess, SaveUJournalSuccess, SaveUJournal, LoadGJournal, LoadGJournalSuccess, ExecuteLoadUJournal, ExecuteLoadGJournal } from "./student.actions";
+import { StudentActionTypes, LoadUJournal, LoadUJournalSuccess, SaveUJournalSuccess, SaveUJournal, LoadGJournal, LoadGJournalSuccess, ExecuteLoadUJournal, ExecuteLoadGJournal, SaveGJournal, SaveGJournalSuccess } from "./student.actions";
 import { map, exhaustMap, catchError, switchMap } from "rxjs/operators";
 import { FetchUJournalReq } from "src/app/infrastracture/requests/FetchUJournalReq";
 import { AppFailure, ViewStartLoading, ViewFinishLoading } from "../app/app.actions";
-import { of, from } from "rxjs";
+import { of } from "rxjs";
 import { SaveUJournalReq } from "src/app/infrastracture/requests/SaveUJournalReq";
 import { StorageService } from "src/app/services/storage/storage.service";
-import { UserIdKey } from "src/app/services/storage/StorageKeys";
 import { FetchGJournalReq } from "src/app/infrastracture/requests/FetchGJournalReq";
+import { SaveGJournalReq } from "src/app/infrastracture/requests/SaveGJournalReq";
 
 @Injectable()
 export class StudentEffects {
@@ -54,14 +54,11 @@ export class StudentEffects {
         ofType<SaveUJournal>(StudentActionTypes.SaveUJournal),
         map(action => action.payload.journal),
         exhaustMap(journal => this.httpProcessor.execute(new SaveUJournalReq(journal))),
-        switchMap(response => {
+        map(response => {
             if(response && response.Message) {
-                return [
-                    new SaveUJournalSuccess({ journal: response.Journal }),
-                    new LoadUJournal({ userId: +this.storage.getValue(UserIdKey) }),
-                ];
+                return new SaveUJournalSuccess({ journal: response.Journal });
             }
-            return [new AppFailure()];
+            return new AppFailure();
         }),
         catchError(error => of(new AppFailure()))
     );
@@ -80,8 +77,21 @@ export class StudentEffects {
         catchError(error => of(new AppFailure()))
     );
 
+    @Effect()
+    saveGJournal$ = this.actions$.pipe(
+        ofType<SaveGJournal>(StudentActionTypes.SaveGJournal),
+        map(action => action.payload.journal),
+        exhaustMap(journal => this.httpProcessor.execute(new SaveGJournalReq(journal))),
+        map(response => {
+            if(response && response.Message) {
+                return new SaveGJournalSuccess({ journal: response.Journal });
+            }
+            return new AppFailure();
+        }),
+        catchError(error => of(new AppFailure()))
+    );
+
     constructor(
         private actions$: Actions, 
-        private httpProcessor: HttpProcessorService,
-        private storage: StorageService) {}
+        private httpProcessor: HttpProcessorService) {}
 }

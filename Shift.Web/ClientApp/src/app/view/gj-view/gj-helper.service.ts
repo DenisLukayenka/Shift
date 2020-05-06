@@ -12,16 +12,16 @@ export class GJHelperService {
     public generateFormGroup(journal: GJournal) {
         this.options = this.initJournal();
 
-        journal.EducationYears.forEach(phase => {
+        journal.EducationYears.forEach((phase, i) => {
             this.addEducationYear();
-            phase.CalendarStages.forEach(s => this.addCalendarStage());
-            phase.ScienceActivities.forEach(s => this.addScienceActivity());
-            phase.Attestations.forEach(s => this.addAttestation());
+            phase.CalendarStages.forEach(s => this.addCalendarStage(i));
+            phase.ScienceActivities.forEach(s => this.addScienceActivity(i));
+            phase.Attestations.forEach(s => this.addAttestation(i));
         });
 
-        journal.WorkPlans.forEach(plan => {
-            this.addWorkStage();
-            plan.WorkStages.forEach(() => this.addWorkPlan());
+        journal.WorkPlans.forEach((plan, i) => {
+            this.addWorkPlan();
+            plan.WorkStages.forEach(() => this.addWorkStage(i));
         })
 
         this.options.patchValue(journal);
@@ -94,6 +94,7 @@ export class GJHelperService {
             WorkPlanId: [''],
             IsSubmitted: [false],
             SubmitDate: [null],
+
             Adviser: [''],
             AdviserApproveDate: [null],
             IsAdviserApproved: [false],
@@ -190,23 +191,63 @@ export class GJHelperService {
         control.push(this.initWorkPlan());
     }
 
-    public addWorkStage() {
-        const control = this.options.get('WorkPlans').get('WorkStages') as FormArray;
+    public addWorkStage(planIndex: number) {
+        const control = this.options.get('WorkPlans')[planIndex].get('WorkStages') as FormArray;
         control.push(this.initWorkStage());
     }
 
-    public addCalendarStage() {
-        const control = this.options.get('EducationYears').get('CalendarStages') as FormArray;
+    public addCalendarStage(phaseIndex: number) {
+        const control = this.options.get('EducationYears')[phaseIndex].get('CalendarStages') as FormArray;
         control.push(this.initCalendarStage());
     }
 
-    public addScienceActivity() {
-        const control = this.options.get('EducationYears').get('ScienceActivities') as FormArray;
+    public addScienceActivity(phaseIndex: number) {
+        const control = this.options.get('EducationYears')[phaseIndex].get('ScienceActivities') as FormArray;
         control.push(this.initScienceActivity());
     }
 
-    public addAttestation() {
-        const control = this.options.get('EducationYears').get('Attestations') as FormArray;
+    public addAttestation(phaseIndex: number) {
+        const control = this.options.get('EducationYears')[phaseIndex].get('Attestations') as FormArray;
         control.push(this.initAttestation());
+    }
+
+    get getWorkPlansFormControls() {
+        const control = this.options.get('WorkPlans') as FormArray;
+        return control;
+    }
+
+    get getEducationYearsFormControls() {
+        const control = this.options.get('EducationYears') as FormArray;
+        return control;
+    }
+
+    get getWorkStagesFormControls() {
+        const control = this.options.get('WorkPlans').get('WorkStages') as FormArray;
+        return control;
+    }
+
+    get getScienceActivitiesFormControls() {
+        const control = this.options.get('EducationYears').get('ScienceActivities') as FormArray;
+        return control;
+    }
+
+    get getAttestationsFormControls() {
+        const control = this.options.get('EducationYears').get('Attestations') as FormArray;
+        return control;
+    }
+
+    public deleteWorkStage(workPlanIndex: number, workStageIndex: number) {
+        const control = this.options.get('WorkPlans')[workPlanIndex] as FormArray;
+        control.removeAt(workStageIndex);
+    }
+
+    public deleteCalendarStage(EducationPhaseIndex: number, calendarStageIndex: number) {
+        const control = this.options.get('EducationYears')[EducationPhaseIndex] as FormArray;
+        control.removeAt(calendarStageIndex);
+    }
+
+    public deleteScienceActivity(EducationPhaseIndex: number, activityIndex: number) {
+        const control = this.options.get('EducationYears')[EducationPhaseIndex] as FormArray;
+        control.removeAt(activityIndex);
     }
 }

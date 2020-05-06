@@ -18,6 +18,6 @@ export class SaveGJournalReq extends BaseRequest {
         return journalJson;
     }
     get TargetReqUrl (): string {
-        return 'api/undergraduate/journal';
+        return 'api/graduate/journal';
     }
 }

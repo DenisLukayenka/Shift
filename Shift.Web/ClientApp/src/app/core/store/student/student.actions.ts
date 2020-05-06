@@ -63,7 +63,7 @@ export class SaveGJournal implements Action {
 export class SaveGJournalSuccess implements Action {
     readonly type = StudentActionTypes.SaveGJournalSuccess;
 
-    constructor(public payload: { message: string }){}
+    constructor(public payload: { journal: GJournal }){}
 };
 
 export class ExecuteLoadUJournal implements Action {

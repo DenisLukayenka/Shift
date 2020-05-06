@@ -1,1 +1,15 @@
 @import 'src/app/scss/journals.scss';
+
+.align-baseline {
+    align-items: baseline;
+}
+.justify-center {
+    justify-content: center;
+}
+
+.align-end {
+    align-items: flex-end;
+}
+.display-flex {
+    display: flex;
+}
