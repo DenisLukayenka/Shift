@@ -20,9 +20,12 @@ const routes: Routes = [
         runGuardsAndResolvers: 'paramsOrQueryParamsChange',
         canActivate: [AuthGuard],
         children: [
+            { path: UndergraduatePage, redirectTo: `${UndergraduatePage}/${UJournalPage}` },
             { path: UndergraduatePage, component: UndergraduateComponent, children: [
                 { path: UJournalPage, component: UndergraduateJournalComponent },
             ]},
+
+            { path: GraduatePage, redirectTo: `${GraduatePage}/${GJournalPage}` },
             { path: GraduatePage, component: GraduateComponent, children: [
                 { path: GJournalPage, component: GraduateJournalComponent },
             ]}

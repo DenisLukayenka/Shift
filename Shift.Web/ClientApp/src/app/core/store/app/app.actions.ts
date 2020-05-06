@@ -14,8 +14,6 @@ export enum AppActionTypes {
     TryAuth = '[Pac] Try Auth',
     AuthFailure = '[Pac] Auth Failure',
 
-    FetchDefaultRoute = '[Pac] Fetch Default Route',
-    FetchDefaultRouteSuccess = '[Pac] Fetch Default Route Success',
     ViewStartLoading = '[Pac] View Start Loading',
     ViewFinishLoading = '[Pac] View Finish Loading',
 }
@@ -62,18 +60,6 @@ export class AuthFailure implements Action {
     constructor(public payload: { alert: string }) {}
 }
 
-export class FetchDefaultRoute implements Action {
-    readonly type = AppActionTypes.FetchDefaultRoute;
-
-    constructor(public payload: { userId: number }) {}
-}
-
-export class FetchDefaultRouteSuccess implements Action {
-    readonly type = AppActionTypes.FetchDefaultRouteSuccess;
-
-    constructor(public payload: { defaultRoute: string }) {}
-}
-
 export class ErrorPageNavigated implements Action {
     readonly type = AppActionTypes.ErrorPageNavigated;
 }
@@ -96,8 +82,6 @@ export type AppActionsUnion =
     | AuthSuccess
     | TryAuth
     | AuthFailure
-    | FetchDefaultRoute
-    | FetchDefaultRouteSuccess
     
     | AppFailure
     | ErrorPageNavigated

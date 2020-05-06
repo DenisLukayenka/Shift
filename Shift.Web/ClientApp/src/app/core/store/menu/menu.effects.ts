@@ -7,7 +7,7 @@ import { exhaustMap, map, catchError, switchMap } from 'rxjs/operators';
 import { HttpProcessorService } from "src/app/services/http-processor/http-processor.service";
 import { FetchRootMenuResp } from "src/app/infrastracture/responses/FetchRootMenuResp";
 import { FetchRootMenuReq } from "src/app/infrastracture/requests/FetchRootMenuReq";
-import { LoadSuccess, AppFailure, FetchDefaultRouteSuccess } from "../app/app.actions";
+import { LoadSuccess, AppFailure } from "../app/app.actions";
 import { Router } from "@angular/router";
 import { RootPage } from "src/app/infrastracture/config";
 
@@ -19,10 +19,10 @@ export class MenuEffects {
         map(action => action.payload.userId),
         exhaustMap((userId) => from(this.httpProcessor.execute(new FetchRootMenuReq(userId)))),
         switchMap((response: FetchRootMenuResp) => {
-            if(!!response && response.RootMenu && response.DefaultRoute) {
-                this.router.navigateByUrl(RootPage + response.DefaultRoute);
+            if(!!response && response.RootMenu && response.Role) {
+                this.router.navigateByUrl(RootPage + '/' + response.Role);
 
-                return [ new FetchRootMenuSuccess({ menu: response.RootMenu }), new FetchDefaultRouteSuccess({ defaultRoute: response.DefaultRoute }), new LoadSuccess() ];
+                return [ new FetchRootMenuSuccess({ menu: response.RootMenu }), new LoadSuccess() ];
             } else {
                 return [ new FetchRootMenuFailure() ];
             }

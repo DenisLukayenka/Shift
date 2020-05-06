@@ -1,5 +1,4 @@
-import { Component, Input, SimpleChanges, OnInit, OnChanges } from "@angular/core";
-import { GJournal } from "src/app/infrastracture/entities/gjournal/GJournal";
+import { Component, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { Store, select } from "@ngrx/store";
 import { StudentState, selectGJournal } from "src/app/core/store/student/student.state";

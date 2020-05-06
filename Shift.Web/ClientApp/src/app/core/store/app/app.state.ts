@@ -7,7 +7,6 @@ export interface AppState {
     isErrorOccurs: boolean;
     userContext: UserContext;
     authAlert: string;
-    defaultRoute: string;
 }
 
 export const initialState: AppState = {
@@ -16,7 +15,6 @@ export const initialState: AppState = {
     isErrorOccurs: false,
     userContext: undefined,
     authAlert: '',
-    defaultRoute: '',
 }
 
 export const selectApp = createFeatureSelector<AppState>('app');
@@ -24,6 +22,5 @@ export const selectAppLoading = createSelector(selectApp, state => state.appLoad
 export const selectIsErrorOccurs = createSelector(selectApp, state => state.isErrorOccurs);
 export const selectUserContext = createSelector(selectApp, state => state.userContext);
 export const selectAuthAlert = createSelector(selectApp, state => state.authAlert);
-export const selectDefaultRoute = createSelector(selectApp, state => state.defaultRoute);
 export const selectViewLoading = createSelector(selectApp, state => state.viewLoading);
 
