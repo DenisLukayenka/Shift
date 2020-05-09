@@ -1,19 +1,16 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using AutoMapper;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 
 namespace Shift.Web
 {
-	using AutoMapper;
-	using Microsoft.EntityFrameworkCore;
-	using Shift.Services.Contexts;
-	using Shift.Web.ServicesExtensions;
+	using Shift.DI;
+	using Shift.Infrastructure.Models.SharedData;
 
 	public class Startup
 	{
@@ -26,8 +23,6 @@ namespace Shift.Web
 
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.ConfigureJwtAuth();
-
 			services.AddCors(options =>
 			{
 				options.AddPolicy("CorsPolicy",
@@ -44,10 +39,8 @@ namespace Shift.Web
 				configuration.RootPath = "ClientApp/dist";
 			});
 
-			services.ConfigureSqlServerDbContext(Configuration);
-			services.ConfigureServices();
-			services.ConfigureRepositoryWrapper();
-			services.AddAutoMapper(typeof(Infrastructure.Config).Assembly);
+			RegisterDependencies.InjectDependencies(services, Configuration);
+			services.AddAutoMapper(typeof(Config).Assembly);
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

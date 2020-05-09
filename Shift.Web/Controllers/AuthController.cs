@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shift.Infrastructure;
+using Shift.Infrastructure.Models.SharedData;
 using Shift.Infrastructure.Models.ViewModels.Auth;
 using Shift.Services.Managers.User;
 using Shift.Services.Providers.Token;

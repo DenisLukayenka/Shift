@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shift.Infrastructure;
-using Shift.Infrastructure.Models;
+using Shift.Infrastructure.Models.SharedData;
 using Shift.Infrastructure.Models.ViewModels.Journals;
 using Shift.Services.Managers.Journals.GJournals;
 
@@ -12,7 +12,7 @@ namespace Shift.Web.Controllers
     [ApiController]
     public class GJournalController : ControllerBase
     {
-        private IGJournalManager _journalManager;
+        private readonly IGJournalManager _journalManager;
 
         public GJournalController(IGJournalManager manager)
         {

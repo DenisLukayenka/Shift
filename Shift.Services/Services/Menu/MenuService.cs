@@ -1,4 +1,4 @@
-﻿using Shift.Infrastructure.Models;
+﻿using Shift.Infrastructure.Models.ViewModels.SiteConfig;
 using System;
 
 namespace Shift.Services.Services.Menu

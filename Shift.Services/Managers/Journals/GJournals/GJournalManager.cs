@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
-using Shift.Infrastructure.Models.ViewModels.Journals;
-using Shift.Services.Services.Repositories;
+
 using System;
-using System.Linq;
 
 namespace Shift.Services.Managers.Journals.GJournals
 {
+	using Shift.Infrastructure.Models.ViewModels.Journals;
+	using Shift.Repository.Repositories;
+
 	public class GJournalManager : IGJournalManager
 	{
 		private readonly IRepositoryWrapper _repository;
@@ -19,9 +20,7 @@ namespace Shift.Services.Managers.Journals.GJournals
 
 		public GJournal FetchJournal(int userId)
 		{
-			var dbJournal = this._repository.GJournals
-				.Get(journal => journal.Graduate.UserId == userId)
-				.FirstOrDefault();
+			var dbJournal = this._repository.GJournals.GetByUserId(userId);
 
 			if (dbJournal != null)
 			{

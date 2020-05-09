@@ -1,17 +1,16 @@
-﻿using System.Linq;
+﻿using AutoMapper;
+
+using System.Linq;
 
 namespace Shift.Services.Managers.User
 {
-	using DAL.Models.UserModels.UserData;
-
-	using Shift.Infrastructure;
-	using Shift.Infrastructure.Models;
 	using Shift.DAL.Models.UserModels.UndergraduateData;
 	using Shift.Infrastructure.Models.ViewModels.Auth;
-	using Shift.Services.Services.Repositories;
 	using Shift.DAL.Models.UserModels.EmployeeData;
 	using Shift.DAL.Models.UserModels.GraduateData;
-	using AutoMapper;
+	using Shift.Repository.Repositories;
+	using Shift.Infrastructure.Models.SharedData;
+	using Shift.DAL.Models.UserModels.UserData;
 
 	public class UserManager : IUserManager
 	{

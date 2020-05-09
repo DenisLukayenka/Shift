@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shift.Infrastructure.Models;
-using Shift.Infrastructure.Requests;
 using Shift.Services.Managers.User;
 using Shift.Services.Services.Menu;
-using System;
 
 namespace Shift.Web.Controllers
 {
@@ -23,9 +20,9 @@ namespace Shift.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get([FromQuery] RootMenuRequest request)
+        public IActionResult Get([FromQuery] int userId)
         {
-            var userRole = this._userManager.FetchUserRole(request.UserId);
+            var userRole = this._userManager.FetchUserRole(userId);
             var menu = this._menuService.GetRootMenu(userRole);
 
             return Ok(new { RootMenu = menu, Role = userRole });

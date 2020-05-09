@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
-using Shift.Infrastructure.Models.ViewModels.Journals;
-using Shift.Services.Services.Repositories;
+
 using System;
-using System.Linq;
 
 namespace Shift.Services.Managers.Journals.UJournals
 {
+	using Shift.Infrastructure.Models.ViewModels.Journals;
+	using Shift.Repository.Repositories;
+
 	public class UJournalManager : IUJournalManager
 	{
 		private readonly IRepositoryWrapper _repository;
@@ -19,9 +20,7 @@ namespace Shift.Services.Managers.Journals.UJournals
 
 		public UJournal FetchJournal(int userId)
 		{
-			var dbJournal = this._repository.UJournals
-				.Get(journal => journal.Undergraduate.UserId == userId)
-				.FirstOrDefault();
+			var dbJournal = this._repository.UJournals.GetByUserId(userId);
 
 			if(dbJournal != null)
 			{
