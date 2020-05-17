@@ -16,11 +16,11 @@ export class MainSidenavComponent {
     public menu$: Observable<RootMenu>;
 
     constructor(private menuStore: Store<MenuState>) {
+        this.menu$ = this.menuStore.pipe(select(selectRootMenu));
         this.menuStore.pipe(select(selectIsOpen)).subscribe(isOpen => {
             setTimeout(() => {
                 this.isShow = isOpen;
             }, 0);
         });
-        this.menu$ = this.menuStore.pipe(select(selectRootMenu));
     }
 }

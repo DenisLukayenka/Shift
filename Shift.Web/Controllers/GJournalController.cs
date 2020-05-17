@@ -22,7 +22,7 @@ namespace Shift.Web.Controllers
         [HttpGet]
         public IActionResult Get([FromQuery] int userId)
         {
-            var journal = this._journalManager.FetchJournal(userId);
+           var journal = this._journalManager.FetchJournal(userId);
 
             if (journal != null)
             {

@@ -11,8 +11,9 @@ namespace Shift.Services.Managers.User
 	using Shift.Repository.Repositories;
 	using Shift.Infrastructure.Models.SharedData;
 	using Shift.DAL.Models.UserModels.UserData;
+    using Shift.Infrastructure.Models.ViewModels.Users;
 
-	public class UserManager : IUserManager
+    public class UserManager : IUserManager
 	{
 		private readonly IRepositoryWrapper _repository;
 		private readonly IMapper _mapper;
@@ -27,7 +28,9 @@ namespace Shift.Services.Managers.User
 		{
 			var dbUser = this._repository.Users.Get(u =>
 				u.LoginData.FirstOrDefault(ld =>
-					ld.Login == user.Login && ld.HashPassword == user.Password) != null).FirstOrDefault();
+					ld.Login == user.Login && 
+					ld.HashPassword == user.Password) != null)
+			.FirstOrDefault();
 
 			var context = new AuthResponse();
 

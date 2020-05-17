@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { UserContext } from "src/app/infrastracture/responses/UserContext";
+import { UserContext } from "src/app/infrastracture/entities/users/UserContext";
 
 export interface AppState {
     appLoading: boolean;

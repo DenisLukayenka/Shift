@@ -8,6 +8,7 @@ namespace Shift.DI
 	{
 		public static void InjectDependencies(IServiceCollection services, IConfiguration config)
 		{
+			services.ConfigureCors();
 			services.ConfigureSqlServerDbContext(config);
 			services.ConfigureRepositoryWrapper();
 			services.ConfigureServices();

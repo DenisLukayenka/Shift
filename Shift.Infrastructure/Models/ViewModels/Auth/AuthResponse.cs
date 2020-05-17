@@ -1,4 +1,6 @@
-﻿namespace Shift.Infrastructure.Models.ViewModels.Auth
+﻿using Shift.Infrastructure.Models.ViewModels.Users;
+
+namespace Shift.Infrastructure.Models.ViewModels.Auth
 {
 	public class AuthResponse
 	{

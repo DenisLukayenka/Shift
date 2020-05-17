@@ -5,43 +5,55 @@ import { RootViewComponent } from "./core/components/root-view/root-view.compone
 import { AuthGuard } from "./infrastracture/guards/AuthGuard";
 import { ErrorPageComponent } from "./shared/components/error-page/error-page.component";
 import { ErrorPageGuard } from "./infrastracture/guards/error-page.guard";
-import { RegisterPage, LoginPage, RootPage, ErrorPage, UndergraduatePage, GraduatePage, UJournalPage, GJournalPage } from "./infrastracture/config";
+import * as Config from "./infrastracture/config";
 import { RegisterComponent } from "./core/components/register/register.component";
 import { UndergraduateComponent } from "./core/components/undergraduate/undergraduate.component";
 import { GraduateComponent } from "./core/components/graduate/graduate.component";
 import { NotFoundComponent } from "./core/components/not-found/not-found.component";
 import { UndergraduateJournalComponent } from "./view/uj-view/uj-view.component";
 import { GraduateJournalComponent } from "./view/gj-view/gj-view.component";
+import { EmployeeComponent } from "./core/components/employee/employee.component";
+import { UJournalListComponent } from "./view/uj-list/uj-list.component";
+import { GJournalListComponent } from "./view/gj-list/gj-list.component";
 
 const routes: Routes = [
     { 
-        path: RootPage, 
+        path: Config.RootPage, 
         component: RootViewComponent,
         runGuardsAndResolvers: 'paramsOrQueryParamsChange',
         canActivate: [AuthGuard],
         children: [
-            { path: UndergraduatePage, redirectTo: `${UndergraduatePage}/${UJournalPage}` },
-            { path: UndergraduatePage, component: UndergraduateComponent, children: [
-                { path: UJournalPage, component: UndergraduateJournalComponent },
+            { path: Config.UndergraduatePage, redirectTo: `${Config.UndergraduatePage}/${Config.UJournalPage}` },
+            { path: Config.UndergraduatePage, component: UndergraduateComponent, children: [
+                { path: Config.UJournalPage, component: UndergraduateJournalComponent },
             ]},
 
-            { path: GraduatePage, redirectTo: `${GraduatePage}/${GJournalPage}` },
-            { path: GraduatePage, component: GraduateComponent, children: [
-                { path: GJournalPage, component: GraduateJournalComponent },
-            ]}
+            { path: Config.GraduatePage, redirectTo: `${Config.GraduatePage}/${Config.GJournalPage}` },
+            { path: Config.GraduatePage, component: GraduateComponent, children: [
+                { path: Config.GJournalPage, component: GraduateJournalComponent },
+            ]},
+
+            { path: Config.EmployeePage, redirectTo: `${Config.EmployeePage}/${Config.UJournalList}`},
+            { path: Config.EmployeePage, component: EmployeeComponent, children: [
+                { path: Config.UJournalList, component: UJournalListComponent },
+                { path: Config.GJournalList, component: GJournalListComponent}
+            ]},
         ]
     },
 
-    { path: LoginPage, component: LoginComponent },
-    { path: RegisterPage, component: RegisterComponent, runGuardsAndResolvers: 'paramsOrQueryParamsChange' },
+    { path: Config.LoginPage, component: LoginComponent },
+    { path: Config.RegisterPage, component: RegisterComponent, runGuardsAndResolvers: 'paramsOrQueryParamsChange' },
 
-    { path: '', redirectTo: RootPage, pathMatch: 'full' },
-    { path: ErrorPage, component: ErrorPageComponent, canActivate: [ErrorPageGuard] },
+    { path: '', redirectTo: Config.RootPage, pathMatch: 'full' },
+    { path: Config.ErrorPage, component: ErrorPageComponent, canActivate: [ErrorPageGuard] },
     { path: '**', component: NotFoundComponent },
 ]
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [RouterModule.forRoot(routes, {
+        useHash: false,
+        initialNavigation: 'enabled',
+    })],
     exports: [RouterModule]
 })
 export class AppRoutingModule {

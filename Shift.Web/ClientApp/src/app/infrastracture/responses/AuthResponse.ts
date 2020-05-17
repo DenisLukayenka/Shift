@@ -1,4 +1,4 @@
-import { UserContext } from "./UserContext";
+import { UserContext } from "../entities/users/UserContext";
 
 export class AuthResponse {
     User: UserContext;

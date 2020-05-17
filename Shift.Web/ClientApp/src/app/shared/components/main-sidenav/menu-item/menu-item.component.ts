@@ -17,7 +17,7 @@ export class MenuItemComponent {
     @Input() link: string;
     public isShow: boolean;
 
-    constructor(private menuStore: Store<MenuState>, private router: Router){
+    constructor(private menuStore: Store<MenuState>, private router: Router) {
         this.menuStore.pipe(select(selectIsOpen)).subscribe(isOpen => {
             setTimeout(() => {
                 this.isShow = isOpen;
@@ -26,6 +26,6 @@ export class MenuItemComponent {
     }
 
     openView() {
-        this.router.navigate([RootPage, this.link]);
+        this.router.navigateByUrl('/' + RootPage + '/' + this.link);
     }
 }

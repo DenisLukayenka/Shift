@@ -8,21 +8,27 @@ import { AppEffects } from './app/app.effects';
 import { StudentState } from './student/student.state';
 import { studentReducer } from './student/student.reducer';
 import { StudentEffects } from './student/student.effects';
+import { EmployeeState } from './employee/employee.state';
+import { employeeReducer } from './employee/employee.reducer';
+import { EmployeeEffects } from './employee/employee.effects';
 
 export interface State {
     menu: MenuState;
     app: AppState;
     student: StudentState;
+    employee: EmployeeState;
 }
 
 export const CoreReducers: ActionReducerMap<State> = {
     menu: menuReducer,
     app: appReducer,
     student: studentReducer,
+    employee: employeeReducer,
 }
 
 export const CoreEffects = [
     MenuEffects,
     AppEffects,
     StudentEffects,
+    EmployeeEffects,
 ]

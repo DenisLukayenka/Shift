@@ -15,6 +15,7 @@ import { ERegisterComponent } from "./components/register/e-register/e-register.
 import { UndergraduateComponent } from "./components/undergraduate/undergraduate.component";
 import { GraduateComponent } from "./components/graduate/graduate.component";
 import { NotFoundComponent } from "./components/not-found/not-found.component";
+import { EmployeeComponent } from "./components/employee/employee.component";
 
 @NgModule({
     declarations: [
@@ -28,6 +29,7 @@ import { NotFoundComponent } from "./components/not-found/not-found.component";
         ERegisterComponent,
         GRegisterComponent,
         NotFoundComponent,
+        EmployeeComponent,
     ],
     imports: [
         CoreStoreModule,

@@ -11,6 +11,7 @@ using Shift.Infrastructure.Models.ViewModels.Journals;
 using Shift.Infrastructure.Models.ViewModels.Journals.GJournalData;
 using Shift.Infrastructure.Models.ViewModels.Journals.UJournalData;
 using Shift.Infrastructure.Models.ViewModels.Journals.University;
+using Shift.Infrastructure.Models.ViewModels.Users;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -75,7 +76,8 @@ namespace Shift.Infrastructure.Mappings
 			CreateMap<User, UserContext>()
 				.ForMember(dest => dest.Login, opt => opt.MapFrom((src, dest) => src.LoginData.FirstOrDefault()?.Login ?? ""))
 				.ForMember(dest => dest.Role, opt => opt.MapFrom((src, dest) => src.Role?.Caption ?? ""))
-				.ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
+				.ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id))
+				.ForMember(dest => dest.SpecifiesUserId, opt => opt.MapFrom((src, dest) => src.EmployeeId ?? src.UndergraduateId ?? src.GraduateId));
 
 			CreateMap<RationalInfoVM, RationalInfo>()
 				.ForMember(dest => dest.Protocol, opt => opt.MapFrom(src => src.Protocol))
@@ -112,6 +114,23 @@ namespace Shift.Infrastructure.Mappings
 				.ForMember(dest => dest.EducationYears, opt => opt.MapFrom(src => src.EducationYears))
 				.ForMember(dest => dest.WorkPlans, opt => opt.MapFrom(src => src.WorkPlans))
 				.ReverseMap();
+		}
+
+		public void RegisterUndergraduateMappings()
+		{
+			CreateMap<Graduate, GraduateContext>()
+				.ForMember(dest => dest.Login, opt => opt.MapFrom((src, dest) => src.User.LoginData.FirstOrDefault()?.Login ?? ""))
+				.ForMember(dest => dest.Role, opt => opt.MapFrom((src, dest) => src.User.Role?.Caption ?? ""))
+				.ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.User.Id))
+				.ForMember(dest => dest.SpecifiesUserId, opt => opt.MapFrom((src, dest) => src.GraduateId))
+				.ForMember(dest => dest.JournalId, opt => opt.MapFrom((src, dest) => src.GraduateJournals.FirstOrDefault()?.Id));
+
+			CreateMap<Undergraduate, UndergraduateContext>()
+				.ForMember(dest => dest.Login, opt => opt.MapFrom((src, dest) => src.User.LoginData.FirstOrDefault()?.Login ?? ""))
+				.ForMember(dest => dest.Role, opt => opt.MapFrom((src, dest) => src.User.Role?.Caption ?? ""))
+				.ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.User.Id))
+				.ForMember(dest => dest.SpecifiesUserId, opt => opt.MapFrom((src, dest) => src.UndergraduateId))
+				.ForMember(dest => dest.JournalId, opt => opt.MapFrom((src, dest) => src.Journals.FirstOrDefault()?.Id));
 		}
 	}
 }

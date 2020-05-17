@@ -23,15 +23,15 @@
                     <button 
                         mat-icon-button 
                         matSuffix (click)="hidePassword = !hidePassword" 
-                        [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
-                            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    >
+                        <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
                     <mat-error *ngIf="passwordControl.invalid">{{validatePassword()}}</mat-error>
                 </mat-form-field>
                 <br />
 
                 <div class="action-footer">
-                    <button class="form-element action-element" button mat-raised-button color="primary" (click)='login()'>Вход</button>
+                    <button type="submit" class="form-element action-element" button mat-raised-button color="primary" (click)='login()'>Вход</button>
                     <button class="form-element action-element" button mat-raised-button (click)='register()'>Регистрация</button>
                 </div>
             </form>

@@ -8,10 +8,12 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Shift.DI.Extensions
 {
+	using Shift.Infrastructure.Models.SharedData;
 	using Shift.Repository.Database;
 	using Shift.Repository.Repositories;
 	using Shift.Repository.Repositories.Implementations;
 	using Shift.Repository.Repositories.Interfaces;
+	using Shift.Services.Managers.Employee;
 	using Shift.Services.Managers.Journals.GJournals;
 	using Shift.Services.Managers.Journals.UJournals;
 	using Shift.Services.Managers.User;
@@ -47,6 +49,7 @@ namespace Shift.DI.Extensions
 			services.AddTransient<IUserManager, UserManager>();
 			services.AddTransient<IUJournalManager, UJournalManager>();
 			services.AddTransient<IGJournalManager, GJournalManager>();
+			services.AddTransient<IEmployeeManager, EmployeeManager>();
 		}
 
 		public static void ConfigureJwtAuth(this IServiceCollection services)
@@ -60,15 +63,21 @@ namespace Shift.DI.Extensions
 			{
 				opt.TokenValidationParameters = new TokenValidationParameters
 				{
-					ValidateIssuer = true,
-					ValidateAudience = true,
-					ValidateLifetime = true,
-					ValidateIssuerSigningKey = true,
-
-					ValidIssuer = "http://localhost:4200",
-					ValidAudience = "http://localhost:50280",
-					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("qwertgdhgy@1gfdhhhfd11")),
+					ValidIssuer = Config.Issuer,
+					ValidAudience = Config.Audience,
+					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Config.Secret)),
 				};
+			}) ;
+		}
+
+		public static void ConfigureCors(this IServiceCollection services)
+		{
+			services.AddCors(options =>
+			{
+				options.AddPolicy("CorsPolicy",
+					builder => builder.AllowAnyOrigin()
+						.AllowAnyMethod()
+						.AllowAnyHeader());
 			});
 		}
 	}

@@ -22,8 +22,13 @@ namespace Shift.DAL.Models.UserModels.UserData
 
 		public virtual ICollection<LoginInfo> LoginData { get; set; } = new List<LoginInfo>();
 
+		public int? EmployeeId { get; set; }
 		public virtual Employee Employee { get; set; }
+
+		public int? GraduateId { get; set; }
 		public virtual Graduate Graduate { get; set; }
+
+		public int? UndergraduateId { get; set; }
 		public virtual Undergraduate Undergraduate { get; set; }
 
 		public int RoleId { get; set; }

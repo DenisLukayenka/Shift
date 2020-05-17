@@ -6,12 +6,11 @@ import { of } from "rxjs";
 import { Router } from "@angular/router";
 import { FetchRootMenu } from "../menu/menu.action";
 import { StorageService } from "src/app/services/storage/storage.service";
-import { UserIdKey, TokenKey } from "src/app/services/storage/StorageKeys";
+import { UserIdKey, TokenKey, SpecifiedUserIdKey } from "src/app/services/storage/StorageKeys";
 import { LoginPage, RootPage, ErrorPage } from "src/app/infrastracture/config";
 import { HttpProcessorService } from "src/app/services/http-processor/http-processor.service";
 import { AuthReq } from "src/app/infrastracture/requests/AuthReq";
 import { AuthResponse } from "src/app/infrastracture/responses/AuthResponse";
-import { FetchDefaultRouteReq } from "src/app/infrastracture/requests/FetchDefaultRouteReq";
 
 @Injectable()
 export class AppEffects {
@@ -51,6 +50,7 @@ export class AppEffects {
             }
             this.storage.setValue(TokenKey, response.Token);
             this.storage.setValue(UserIdKey, response.User.UserId.toString());
+            this.storage.setValue(SpecifiedUserIdKey, response.User.SpecifiedUserId.toString());
             this.router.navigate([RootPage]);
 
             return new AuthSuccess({ userContext: response.User });

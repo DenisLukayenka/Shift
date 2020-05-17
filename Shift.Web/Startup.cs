@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Shift.Web
 {
 	using Shift.DI;
 	using Shift.Infrastructure.Models.SharedData;
+	using System.Text;
 
 	public class Startup
 	{
@@ -23,14 +25,6 @@ namespace Shift.Web
 
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddCors(options =>
-			{
-				options.AddPolicy("CorsPolicy",
-					builder => builder.AllowAnyOrigin()
-						.AllowAnyMethod()
-						.AllowAnyHeader());
-			});
-
 			services.AddControllersWithViews()
 				.AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
 

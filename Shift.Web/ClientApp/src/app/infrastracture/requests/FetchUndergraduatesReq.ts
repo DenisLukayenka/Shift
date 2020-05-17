@@ -2,30 +2,27 @@ import { BaseRequest } from "./BaseRequest";
 import { RequestType } from "./requestType";
 import { HttpParams } from "@angular/common/http";
 
-export class FetchDefaultRouteReq extends BaseRequest {
-    public userId: number;
-    constructor(userId: number) {
+export class FetchUndergraduatesReq extends BaseRequest {
+    employeeId: number;
+
+    constructor(employeeId: number) {
         super();
-        this.userId = userId;
+        this.employeeId = employeeId;
     }
 
     get ReqType (): RequestType {
         return RequestType.GET;
-    }    
-    
+    }
     get Body (): any {
         throw new Error( "Method not implemented." );
     }
     get TargetReqUrl (): string {
-        return 'api/app/defaultRoute';
+        return 'api/employee/undergraduates';
     }
 
     get Options() {
-        const params = new HttpParams()
-            .set('userId', this.userId.toString());
-            
         return {
-            params: params
+            params: new HttpParams().set('userId', this.employeeId.toString())
         };
     }
 }

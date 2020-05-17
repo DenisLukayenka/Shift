@@ -81,6 +81,20 @@ namespace Shift.Repository.Database
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			modelBuilder.Entity<Undergraduate>()
+				.HasOne<User>(u => u.User)
+				.WithOne(u => u.Undergraduate)
+				.HasForeignKey<User>(u => u.UndergraduateId);
+
+			modelBuilder.Entity<Employee>()
+				.HasOne<User>(u => u.User)
+				.WithOne(u => u.Employee)
+				.HasForeignKey<User>(u => u.EmployeeId);
+
+			modelBuilder.Entity<Graduate>()
+				.HasOne<User>(u => u.User)
+				.WithOne(u => u.Graduate)
+				.HasForeignKey<User>(u => u.GraduateId);
 		}
 	}
 }
