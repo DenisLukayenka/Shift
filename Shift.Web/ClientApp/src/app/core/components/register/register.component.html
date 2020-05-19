@@ -1,6 +1,6 @@
 <div class="light-background height-full">
     <div class="center">
-        <div class="auth-wrapper auth-border" [ngSwitch]="currentType">
+        <div class="auth-wrapper auth-register-container auth-border" [ngSwitch]="currentType">
             <ng-container *ngSwitchCase="RegisterTypes.UnSelected">
                 <ng-container *ngTemplateOutlet="registerSelect"></ng-container>
             </ng-container>
@@ -13,6 +13,7 @@
 
 <ng-template #registerSelect>
     <h3 class="form-header">Регистрация</h3>
+    <mat-divider></mat-divider>
     <label id="register-selector-label" class="mt-2">Выберите тип регистрации:</label>
     <mat-radio-group
         aria-labelledby="register-selector-label"

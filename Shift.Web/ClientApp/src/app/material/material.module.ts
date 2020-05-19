@@ -33,7 +33,7 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatTreeModule } from "@angular/material/tree";
 
-import { MatNativeDateModule, MatRippleModule } from "@angular/material/core";
+import { MatNativeDateModule, MatRippleModule, ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from "@angular/material/core";
 import { CommonModule } from "@angular/common";
 import { A11yModule } from '@angular/cdk/a11y';
 import { CdkStepperModule } from '@angular/cdk/stepper';
@@ -44,6 +44,9 @@ import { PortalModule } from '@angular/cdk/portal';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
+    providers: [
+        { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
+    ],
     imports: [],
     exports: [
         CommonModule,

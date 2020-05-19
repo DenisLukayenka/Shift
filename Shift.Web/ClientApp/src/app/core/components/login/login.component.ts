@@ -41,9 +41,9 @@ export class LoginComponent implements OnInit {
 
     public validateLogin() {
         if(this.loginControl.hasError('required')) {
-            return 'Логин не может быть пустым!';
+            return 'Логин не может быть пустым';
         } else if(this.loginControl.hasError('minlength') || this.loginControl.hasError('maxlength')) {
-            return `Логин должен содержать от 2 до 32 символов!`;
+            return `Логин должен содержать от 2 до 32 символов`;
         }
     }
 
@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
         if(this.passwordControl.hasError('required')) {
             return 'Пароль не может быть пустым!';
         } else if(this.passwordControl.hasError('minlength') || this.passwordControl.hasError('maxlength')) {
-            return 'Пароль должен содержать от 8 до 64 символов!'
+            return 'Пароль должен содержать от 8 до 32 символов'
         }
     }
 
@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
         ]);
         this.passwordControl = new FormControl('', [
             Validators.minLength(8),
-            Validators.maxLength(64),
+            Validators.maxLength(32),
             Validators.required,
         ]);
 

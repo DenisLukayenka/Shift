@@ -1,0 +1,22 @@
+<form [formGroup]="userRegisterOptions" autocomplete="off">
+    <mat-form-field class="width-full">
+        <mat-label>Имя</mat-label>
+        <input matInput placeholder="Имя пользователя" formControlName="FirstName">
+        <mat-error *ngIf="getFirstNameControl.invalid">{{ validateFirstName() }}</mat-error>
+    </mat-form-field>
+    <mat-form-field class="width-full">
+        <mat-label>Фамилия</mat-label>
+        <input matInput placeholder="Фамилия пользователя" formControlName="LastName">
+        <mat-error *ngIf="getLastNameControl.invalid">{{ validateLastName() }}</mat-error>
+    </mat-form-field>
+    <mat-form-field class="width-full">
+        <mat-label>Отчество</mat-label>
+        <input matInput placeholder="Отчество пользователя" formControlName="PatronymicName">
+    </mat-form-field>
+
+    <mat-form-field class="width-full">
+        <mat-label>Почта</mat-label>
+        <input matInput placeholder="Электронная почта" formControlName="Email">
+        <mat-error *ngIf="getEmailControl.invalid">{{ validateEmail() }}</mat-error>
+    </mat-form-field>
+</form>

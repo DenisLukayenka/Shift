@@ -1,14 +1,14 @@
 
 <div class="light-background height-full">
     <div class="center">
-        <div class="auth-wrapper auth-border">
+        <div class="auth-wrapper auth-border auth-login-container">
             <div>
                 <h2 class="form-header">Вход</h2>
             </div>
             <mat-error *ngIf="!isAuth">{{authAlert }}</mat-error>
             <mat-divider></mat-divider>
 
-            <form [formGroup]="options" class="auth-form" autocomplete="off">
+            <form [formGroup]="options" class="auth-form" autocomplete="off" (submit)="login()">
                 <mat-form-field class="width-full form-element">
                     <mat-label>Введите логин</mat-label>
                     <input matInput placeholder="Логин" [formControl]="loginControl">
@@ -31,7 +31,7 @@
                 <br />
 
                 <div class="action-footer">
-                    <button type="submit" class="form-element action-element" button mat-raised-button color="primary" (click)='login()'>Вход</button>
+                    <button type="submit" class="form-element action-element" button mat-raised-button color="primary">Вход</button>
                     <button class="form-element action-element" button mat-raised-button (click)='register()'>Регистрация</button>
                 </div>
             </form>

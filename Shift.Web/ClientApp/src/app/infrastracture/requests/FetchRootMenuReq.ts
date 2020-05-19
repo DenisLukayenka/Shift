@@ -1,21 +1,17 @@
-import { BaseRequest } from "./BaseRequest";
-import { RequestType } from "./requestType";
 import { ReqOptions } from "./ReqOptions";
 import { HttpParams } from "@angular/common/http";
+import { BaseGetRequest } from "./BaseGetRequest";
 
-export class FetchRootMenuReq extends BaseRequest {
+export class FetchRootMenuReq extends BaseGetRequest {
     UserId: number;
 
-    get ReqType (): RequestType {
-        return RequestType.GET;
+    constructor(userId: number) {
+        super();
+        this.UserId = userId;
     }
 
     get TargetReqUrl (): string {
         return 'api/RootMenu';
-    }
-
-    get Body (): any {
-        throw new Error( "Method not implemented." );
     }
 
     get Options (): ReqOptions {
@@ -25,10 +21,5 @@ export class FetchRootMenuReq extends BaseRequest {
         return {
             params: params
         };
-    }
-
-    constructor(userId: number) {
-        super();
-        this.UserId = userId;
     }
 }

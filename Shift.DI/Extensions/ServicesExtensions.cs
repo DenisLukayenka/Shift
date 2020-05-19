@@ -40,6 +40,9 @@ namespace Shift.DI.Extensions
 			services.AddScoped<IUJournalRepository, UJournalRepository>();
 			services.AddScoped<IUndergraduateRepository, UndergraduateRepository>();
 			services.AddScoped<IUserRepository, UserRepository>();
+			services.AddScoped<IAcademicDegreeRepository, AcademicDegreeRepository>();
+			services.AddScoped<IAcademicRankRepository, AcademicRankRepository>();
+			services.AddScoped<IJobPositionRepository, JobPositionRepository>();
 		}
 
 		public static void ConfigureServices(this IServiceCollection services)

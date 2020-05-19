@@ -1,0 +1,51 @@
+<h3 class="form-header">Регистрация преподавателя</h3>
+<mat-divider></mat-divider>
+<form [formGroup]="eRegisterGroup" (submit)="submit()">
+    <pac-user-register (onUserRegisterConfigured)="addFormGroup('user', $event)"></pac-user-register>
+    <mat-divider></mat-divider>
+    <mat-form-field>
+        <input type="text"
+            placeholder="Научная степень"
+            aria-label="Научная степень"
+            matInput
+            formControlName="AcademicDegree"
+            [matAutocomplete]="autoDegree">
+        <mat-autocomplete autoActiveFirstOption #autoDegree="matAutocomplete" [displayWith]="displayWithDegree" class="autocomplete-options-font">
+            <mat-option *ngFor="let degree of filteredDegrees$ | async" [value]="degree">
+                {{ degree.DegreeName }}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input type="text"
+            placeholder="Научное звание"
+            aria-label="Научное звание"
+            matInput
+            formControlName="AcademicRank"
+            [matAutocomplete]="autoRank">
+        <mat-autocomplete autoActiveFirstOption #autoRank="matAutocomplete" [displayWith]="displayWithRank" class="autocomplete-options-font">
+            <mat-option *ngFor="let rank of filteredRanks$ | async" [value]="rank">
+                {{ rank.RankName }}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input type="text"
+            placeholder="Должность"
+            aria-label="Должность"
+            matInput
+            formControlName="JobPosition"
+            [matAutocomplete]="autoPosition">
+        <mat-autocomplete autoActiveFirstOption #autoPosition="matAutocomplete" [displayWith]="displayWithPosition" class="autocomplete-options-font">
+            <mat-option *ngFor="let position of filteredPositions$ | async" [value]="position">
+                {{ position.Name }}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+
+
+    <pac-login-register (onLoginFormConfigured)="addFormGroup('login', $event)"></pac-login-register>
+    <button type="submit" mat-flat-button>AAA</button>
+</form>

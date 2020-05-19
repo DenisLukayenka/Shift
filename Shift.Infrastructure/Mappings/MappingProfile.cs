@@ -7,6 +7,7 @@ using Shift.DAL.Models.UserModels.UndergraduateData;
 using Shift.DAL.Models.UserModels.UndergraduateData.JournalData;
 using Shift.DAL.Models.UserModels.UserData;
 using Shift.Infrastructure.Models.ViewModels.Auth;
+using Shift.Infrastructure.Models.ViewModels.Data;
 using Shift.Infrastructure.Models.ViewModels.Journals;
 using Shift.Infrastructure.Models.ViewModels.Journals.GJournalData;
 using Shift.Infrastructure.Models.ViewModels.Journals.UJournalData;
@@ -84,6 +85,8 @@ namespace Shift.Infrastructure.Mappings
 				.ReverseMap();
 
 			this.RegisterGJournalMappings();
+			this.RegisterUndergraduateMappings();
+			this.RegisterDataMappings();
 		}
 
 		public void RegisterGJournalMappings()
@@ -131,6 +134,13 @@ namespace Shift.Infrastructure.Mappings
 				.ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.User.Id))
 				.ForMember(dest => dest.SpecifiesUserId, opt => opt.MapFrom((src, dest) => src.UndergraduateId))
 				.ForMember(dest => dest.JournalId, opt => opt.MapFrom((src, dest) => src.Journals.FirstOrDefault()?.Id));
+		}
+
+		public void RegisterDataMappings()
+		{
+			CreateMap<AcademicDegree, AcademicDegreeVM>().ReverseMap();
+			CreateMap<AcademicRank, AcademicRankVM>().ReverseMap();
+			CreateMap<JobPosition, JobPositionVM>().ReverseMap();
 		}
 	}
 }

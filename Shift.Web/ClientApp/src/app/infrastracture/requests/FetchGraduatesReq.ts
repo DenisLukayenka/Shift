@@ -1,8 +1,7 @@
-import { BaseRequest } from "./BaseRequest";
-import { RequestType } from "./requestType";
 import { HttpParams } from "@angular/common/http";
+import { BaseGetRequest } from "./BaseGetRequest";
 
-export class FetchGraduatesReq extends BaseRequest {
+export class FetchGraduatesReq extends BaseGetRequest {
     employeeId: number;
 
     constructor(employeeId: number) {
@@ -10,12 +9,6 @@ export class FetchGraduatesReq extends BaseRequest {
         this.employeeId = employeeId;
     }
 
-    get ReqType (): RequestType {
-        return RequestType.GET;
-    }
-    get Body (): any {
-        throw new Error( "Method not implemented." );
-    }
     get TargetReqUrl (): string {
         return 'api/employee/graduates';
     }

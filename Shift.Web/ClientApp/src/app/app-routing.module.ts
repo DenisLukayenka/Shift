@@ -42,9 +42,10 @@ const routes: Routes = [
     },
 
     { path: Config.LoginPage, component: LoginComponent },
-    { path: Config.RegisterPage, component: RegisterComponent, runGuardsAndResolvers: 'paramsOrQueryParamsChange' },
+    { path: Config.RegisterPage, component: RegisterComponent },
 
     { path: '', redirectTo: Config.RootPage, pathMatch: 'full' },
+    
     { path: Config.ErrorPage, component: ErrorPageComponent, canActivate: [ErrorPageGuard] },
     { path: '**', component: NotFoundComponent },
 ]

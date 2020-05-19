@@ -11,6 +11,9 @@ namespace Shift.Repository.Repositories
 		IEmployeeRepository Employees { get; }
 		IUJournalRepository UJournals { get; }
 		IGJournalRepository GJournals { get; }
+		IAcademicDegreeRepository Degrees { get; }
+		IAcademicRankRepository Ranks { get; }
+		IJobPositionRepository Positions { get; }
 
 
 		void Save();

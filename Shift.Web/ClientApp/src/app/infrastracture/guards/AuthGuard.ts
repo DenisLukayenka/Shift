@@ -18,10 +18,10 @@ export class AuthGuard implements CanActivate {
         }
         let navigateCommands = [LoginPage];
 
-        let tokenObj = this.jwtHelper.decodeToken(token);
+        /*let tokenObj = this.jwtHelper.decodeToken(token);
         if(tokenObj && tokenObj[RoleTokenKey]) {
             navigateCommands.push(tokenObj[RoleTokenKey]);
-        }
+        }*/
 
         this.router.navigate(navigateCommands);
         return false;
