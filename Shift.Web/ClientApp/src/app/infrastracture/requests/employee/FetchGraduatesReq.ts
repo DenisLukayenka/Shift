@@ -1,5 +1,5 @@
 import { HttpParams } from "@angular/common/http";
-import { BaseGetRequest } from "./BaseGetRequest";
+import { BaseGetRequest } from "../BaseGetRequest";
 
 export class FetchGraduatesReq extends BaseGetRequest {
     employeeId: number;

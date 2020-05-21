@@ -56,8 +56,8 @@ namespace Shift.Infrastructure.Mappings
 					{
 					new LoginInfo()
 					{
-						HashPassword = src.Password,
-						Login = src.Login,
+						HashPassword = src.Login.Password,
+						Login = src.Login.Login,
 					}
 				}));
 
@@ -71,8 +71,15 @@ namespace Shift.Infrastructure.Mappings
 
 			CreateMap<EmployeeViewModel, Employee>()
 				.ForMember(dest => dest.User, opt => opt.MapFrom(src => src))
-				.ForMember(dest => dest.AcademicDegreeId, opt => opt.MapFrom(src => src.DegreeId))
-				.ForMember(dest => dest.AcademicRankId, opt => opt.MapFrom(src => src.RankId));
+				.ForMember(dest => dest.AcademicDegreeId, opt => opt.MapFrom((src, dest) => src.AcademicDegree?.Id))
+				.ForMember(dest => dest.AcademicRankId, opt => opt.MapFrom((src, dest) => src.AcademicRank?.Id))
+				.ForMember(dest => dest.DepartmentId, opt => opt.MapFrom((src, dest) => src.Department?.Id))
+				.ForMember(dest => dest.JobPositionId, opt => opt.MapFrom((src, dest) => src.JobPosition?.Id))
+
+				.ForMember(dest => dest.AcademicDegree, opt => opt.MapFrom(src => src.AcademicDegree))
+				.ForMember(dest => dest.AcademicRank, opt => opt.MapFrom(src => src.AcademicRank))
+				.ForMember(dest => dest.JobPosition, opt => opt.MapFrom(src => src.JobPosition))
+				.ForMember(dest => dest.Department, opt => opt.MapFrom(src => src.Department));
 
 			CreateMap<User, UserContext>()
 				.ForMember(dest => dest.Login, opt => opt.MapFrom((src, dest) => src.LoginData.FirstOrDefault()?.Login ?? ""))
@@ -141,6 +148,7 @@ namespace Shift.Infrastructure.Mappings
 			CreateMap<AcademicDegree, AcademicDegreeVM>().ReverseMap();
 			CreateMap<AcademicRank, AcademicRankVM>().ReverseMap();
 			CreateMap<JobPosition, JobPositionVM>().ReverseMap();
+			CreateMap<Department, DepartmentVM>().ReverseMap();
 		}
 	}
 }

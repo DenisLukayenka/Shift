@@ -1,19 +1,16 @@
-﻿namespace Shift.Infrastructure.Models.ViewModels.Auth
+﻿using Shift.Infrastructure.Models.ViewModels.Data;
+
+namespace Shift.Infrastructure.Models.ViewModels.Auth
 {
 	public class EmployeeViewModel
 	{
-		public string FirstName { get; set; }
-		public string LastName { get; set; }
-		public string PatronymicName { get; set; }
+		public UserVM User { get; set; }
 
-		public string Email { get; set; }
+		public LoginVM Login { get; set; }
 
-		public string Login { get; set; }
-		public string Password { get; set; }
-
-		public int? JobPositionId { get; set; }
-		public int? DegreeId { get; set; }
-		public int? RankId { get; set; }
-		public int? DepartmentId { get; set; }
+		public AcademicDegreeVM AcademicDegree { get; set; }
+		public AcademicRankVM AcademicRank { get; set; }
+		public JobPositionVM JobPosition { get; set; }
+		public DepartmentVM Department { get; set; }
 	}
 }

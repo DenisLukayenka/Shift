@@ -27,6 +27,9 @@ export class UserRegisterComponent implements OnInit {
         }
     }
     public get getFirstNameControl(): FormControl {
+        let a = this.userRegisterOptions.get('FirstName') as FormControl;;
+        let b = a.invalid;
+        
         return this.userRegisterOptions.get('FirstName') as FormControl;
     }
 
@@ -54,16 +57,16 @@ export class UserRegisterComponent implements OnInit {
 
     private initializeForm() {
         this.userRegisterOptions = this.fb.group({
-            FirstName: this.fb.control(null, [
+            FirstName: this.fb.control('', [
                 Validators.minLength(2),
                 Validators.required
             ]),
-            LastName: this.fb.control(null, [
+            LastName: this.fb.control('', [
                 Validators.minLength(2),
                 Validators.required
             ]),
-            PatronymicName: this.fb.control(null),
-            Email: this.fb.control(null, [Validators.email, Validators.required]),
+            PatronymicName: this.fb.control(''),
+            Email: this.fb.control('', [Validators.email, Validators.required]),
         });
     }
 }

@@ -5,10 +5,10 @@ import { Router } from "@angular/router";
 import { HttpProcessorService } from "src/app/services/http-processor/http-processor.service";
 import { EmployeeActionTypes, LoadGraduates, LoadGraduatesSuccess, LoadUndergraduatesSuccess, LoadUndergraduates } from "./employee.action";
 import { map, exhaustMap, catchError } from "rxjs/operators";
-import { FetchGraduatesReq } from "src/app/infrastracture/requests/FetchGraduatesReq";
+import { FetchGraduatesReq } from "src/app/infrastracture/requests/employee/FetchGraduatesReq";
 import { AppFailure } from "../app/app.actions";
 import { of } from "rxjs";
-import { FetchUndergraduatesReq } from "src/app/infrastracture/requests/FetchUndergraduatesReq";
+import { FetchUndergraduatesReq } from "src/app/infrastracture/requests/employee/FetchUndergraduatesReq";
 
 @Injectable()
 export class EmployeeEffects {

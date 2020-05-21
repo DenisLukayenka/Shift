@@ -4,7 +4,7 @@ namespace Shift.Services.Managers.User
 {
 	public interface IUserManager
 	{
-		AuthResponse Login(LoginViewModel user);
+		AuthResponse Login(LoginVM user);
 		AuthResponse RegisterUndergraduate(UndergraduateViewModel undergraduate);
 		AuthResponse RegisterGraduate(GraduateViewModel graduate);
 		AuthResponse RegisterEmployee(EmployeeViewModel employee);

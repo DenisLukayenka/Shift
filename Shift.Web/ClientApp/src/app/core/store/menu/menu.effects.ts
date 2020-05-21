@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 import { exhaustMap, map, catchError, switchMap } from 'rxjs/operators';
 import { HttpProcessorService } from "src/app/services/http-processor/http-processor.service";
 import { FetchRootMenuResp } from "src/app/infrastracture/responses/FetchRootMenuResp";
-import { FetchRootMenuReq } from "src/app/infrastracture/requests/FetchRootMenuReq";
+import { FetchRootMenuReq } from "src/app/infrastracture/requests/web-view/FetchRootMenuReq";
 import { LoadSuccess, AppFailure } from "../app/app.actions";
 import { Router } from "@angular/router";
 import { RootPage } from "src/app/infrastracture/config";

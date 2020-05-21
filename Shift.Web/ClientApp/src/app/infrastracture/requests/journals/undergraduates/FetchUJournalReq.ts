@@ -1,5 +1,5 @@
 import { HttpParams } from "@angular/common/http";
-import { BaseGetRequest } from "./BaseGetRequest";
+import { BaseGetRequest } from "../../BaseGetRequest";
 
 export class FetchUJournalReq extends BaseGetRequest {
     userId: number;
@@ -14,11 +14,8 @@ export class FetchUJournalReq extends BaseGetRequest {
     }
 
     get Options() {
-        const params = new HttpParams()
-            .set('userId', this.userId.toString());
-            
         return {
-            params: params
+            params: new HttpParams().set('userId', this.userId.toString())
         };
     }
 }

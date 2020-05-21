@@ -1,6 +1,6 @@
 ﻿namespace Shift.Infrastructure.Models.ViewModels.Auth
 {
-	public class LoginViewModel
+	public class LoginVM
 	{
 		public string Login { get; set; }
 		public string Password { get; set; }

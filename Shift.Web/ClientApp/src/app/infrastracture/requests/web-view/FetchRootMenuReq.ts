@@ -1,6 +1,6 @@
-import { ReqOptions } from "./ReqOptions";
+import { ReqOptions } from "../ReqOptions";
 import { HttpParams } from "@angular/common/http";
-import { BaseGetRequest } from "./BaseGetRequest";
+import { BaseGetRequest } from "../BaseGetRequest";
 
 export class FetchRootMenuReq extends BaseGetRequest {
     UserId: number;
@@ -15,11 +15,8 @@ export class FetchRootMenuReq extends BaseGetRequest {
     }
 
     get Options (): ReqOptions {
-        const params = new HttpParams()
-            .set('UserId', this.UserId.toString());
-            
         return {
-            params: params
+            params: new HttpParams().set('UserId', this.UserId.toString())
         };
     }
 }

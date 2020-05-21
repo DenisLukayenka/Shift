@@ -57,16 +57,16 @@ export class LoginRegisterComponent implements OnInit {
 
     public initializeForm() {
         this.passwordsOptions = this.fb.group({
-            Password: [null, [
+            Password: ['', [
                 Validators.minLength(8),
                 Validators.maxLength(32),
                 Validators.required,
             ]],
-            ConfirmPassword: [],
+            ConfirmPassword: [''],
         }, { validator: this.checkPasswords });
 
         this.loginOptions = this.fb.group({
-            Login: [null, [
+            Login: ['', [
                 Validators.minLength(2),
                 Validators.maxLength(32),
                 Validators.required,

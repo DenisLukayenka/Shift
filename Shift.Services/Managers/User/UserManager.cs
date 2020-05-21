@@ -24,7 +24,7 @@ namespace Shift.Services.Managers.User
 			this._mapper = mapper;
 		}
 
-		public AuthResponse Login(LoginViewModel user)
+		public AuthResponse Login(LoginVM user)
 		{
 			var dbUser = this._repository.Users.Get(u =>
 				u.LoginData.FirstOrDefault(ld =>
@@ -50,14 +50,14 @@ namespace Shift.Services.Managers.User
 		public AuthResponse RegisterEmployee(EmployeeViewModel employee)
 		{
 			var dbEmployee = this._repository.Employees
-				.Get(u => u.User.LoginData.FirstOrDefault(ld => ld.Login == employee.Login) != null)
+				.Get(u => u.User.LoginData.FirstOrDefault(ld => ld.Login == employee.Login.Login) != null)
 				.FirstOrDefault();
 			var context = new AuthResponse();
 
 			if(dbEmployee == null)
 			{
 				var entity = this._mapper.Map<Employee>(employee);
-				entity.User.RoleId = this.GetOrAddRole(RoleNames.Employee);
+				entity.User.Role = this.GetOrAddRole(RoleNames.Employee);
 
 				this._repository.Employees.Add(entity);
 				this._repository.Save();
@@ -82,7 +82,7 @@ namespace Shift.Services.Managers.User
 			if (dbGradute == null)
 			{
 				var entity = this._mapper.Map<Graduate>(graduate);
-				entity.User.RoleId = this.GetOrAddRole(RoleNames.Graduate);
+				entity.User.Role = this.GetOrAddRole(RoleNames.Graduate);
 
 				this._repository.Graduates.Add(entity);
 				this._repository.Save();
@@ -106,7 +106,7 @@ namespace Shift.Services.Managers.User
 			if (dbUndergraduate == null)
 			{
 				var entity = this._mapper.Map<Undergraduate>(undergraduate);
-				entity.User.RoleId = this.GetOrAddRole(RoleNames.Undergraduate);
+				entity.User.Role = this.GetOrAddRole(RoleNames.Undergraduate);
 
 				this._repository.Undergraduates.Add(entity);
 				this._repository.Save();
@@ -132,7 +132,7 @@ namespace Shift.Services.Managers.User
 			return null;
 		}
 
-		protected int GetOrAddRole(string roleCaption)
+		protected Role GetOrAddRole(string roleCaption)
 		{
 			var role = this._repository.Roles.Get(r => r.Caption == roleCaption).FirstOrDefault();
 
@@ -149,7 +149,7 @@ namespace Shift.Services.Managers.User
 				role = roleEntity;
 			}
 
-			return role.Id;
+			return role;
 		}
 	}
 }

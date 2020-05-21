@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { RegisterType } from "src/app/infrastracture/entities/auth/register-types";
+import { Router } from "@angular/router";
+import { LoginPage } from "src/app/infrastracture/config";
 
 @Component({
     selector: 'pac-register',
@@ -13,7 +15,7 @@ export class RegisterComponent implements OnInit {
     readonly SelectRegisterTypes = [RegisterType.EmployeeRegister, RegisterType.GraduateRegister, RegisterType.UndergraduateRegister];
     readonly RegisterTypes = RegisterType;
 
-    constructor(){}
+    constructor(private router: Router){}
 
     ngOnInit() {
     }
@@ -24,5 +26,9 @@ export class RegisterComponent implements OnInit {
 
     public resetCurrentType() {
         this.currentType = RegisterType.UnSelected;
+    }
+
+    public goToLogin() {
+        this.router.navigateByUrl(LoginPage);
     }
 }

@@ -3,13 +3,13 @@ import { Actions, Effect, ofType } from "@ngrx/effects";
 import { HttpProcessorService } from "src/app/services/http-processor/http-processor.service";
 import { StudentActionTypes, LoadUJournal, LoadUJournalSuccess, SaveUJournalSuccess, SaveUJournal, LoadGJournal, LoadGJournalSuccess, ExecuteLoadUJournal, ExecuteLoadGJournal, SaveGJournal, SaveGJournalSuccess } from "./student.actions";
 import { map, exhaustMap, catchError, switchMap } from "rxjs/operators";
-import { FetchUJournalReq } from "src/app/infrastracture/requests/FetchUJournalReq";
+import { FetchUJournalReq } from "src/app/infrastracture/requests/journals/undergraduates/FetchUJournalReq";
 import { AppFailure, ViewStartLoading, ViewFinishLoading } from "../app/app.actions";
 import { of } from "rxjs";
-import { SaveUJournalReq } from "src/app/infrastracture/requests/SaveUJournalReq";
+import { SaveUJournalReq } from "src/app/infrastracture/requests/journals/undergraduates/SaveUJournalReq";
 import { StorageService } from "src/app/services/storage/storage.service";
-import { FetchGJournalReq } from "src/app/infrastracture/requests/FetchGJournalReq";
-import { SaveGJournalReq } from "src/app/infrastracture/requests/SaveGJournalReq";
+import { FetchGJournalReq } from "src/app/infrastracture/requests/journals/graduates/FetchGJournalReq";
+import { SaveGJournalReq } from "src/app/infrastracture/requests/journals/graduates/SaveGJournalReq";
 
 @Injectable()
 export class StudentEffects {

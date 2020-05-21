@@ -9,7 +9,7 @@ import { StorageService } from "src/app/services/storage/storage.service";
 import { UserIdKey, TokenKey, SpecifiedUserIdKey } from "src/app/services/storage/StorageKeys";
 import { LoginPage, RootPage, ErrorPage } from "src/app/infrastracture/config";
 import { HttpProcessorService } from "src/app/services/http-processor/http-processor.service";
-import { AuthReq } from "src/app/infrastracture/requests/AuthReq";
+import { AuthReq } from "src/app/infrastracture/requests/auth/AuthReq";
 import { AuthResponse } from "src/app/infrastracture/responses/AuthResponse";
 
 @Injectable()

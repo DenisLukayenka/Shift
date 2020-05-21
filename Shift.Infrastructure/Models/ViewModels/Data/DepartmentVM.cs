@@ -1,8 +1,8 @@
 ﻿namespace Shift.Infrastructure.Models.ViewModels.Data
 {
-	public class AcademicDegreeVM
+	public class DepartmentVM
 	{
 		public int? Id { get; set; }
-		public string DegreeName { get; set; }
+		public string Name { get; set; }
 	}
 }

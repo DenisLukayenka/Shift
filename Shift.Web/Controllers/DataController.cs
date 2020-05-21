@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Shift.DAL.Models.UserModels.EmployeeData;
 using Shift.Infrastructure.Models.ViewModels.Data;
 using Shift.Repository.Repositories;
 using System.Collections.Generic;
@@ -12,8 +11,8 @@ namespace Shift.Web.Controllers
 	[ApiController]
 	public class DataController: ControllerBase
 	{
-		private IRepositoryWrapper _repository;
-		private IMapper _mapper;
+		private readonly IRepositoryWrapper _repository;
+		private readonly IMapper _mapper;
 
 		public DataController(IRepositoryWrapper repository, IMapper mapper)
 		{
@@ -49,6 +48,16 @@ namespace Shift.Web.Controllers
 			var positions = this._mapper.Map<IEnumerable<JobPositionVM>>(positionsDb);
 
 			return Ok(positions);
+		}
+
+		[HttpGet]
+		[Route("departments")]
+		public IActionResult GetDepartments()
+		{
+			var departmentsDb = this._repository.Departments.GetAll();
+			var departments = this._mapper.Map<IEnumerable<DepartmentVM>>(departmentsDb);
+
+			return Ok(departments);
 		}
 	}
 }

@@ -16,6 +16,7 @@ namespace Shift.Repository.Repositories
 		private readonly IAcademicDegreeRepository _degreeRepository;
 		private readonly IAcademicRankRepository _rankRepository;
 		private readonly IJobPositionRepository _positionRepository;
+		private readonly IDepartmentRepository _departmentRepository;
 
 		public RepositoryWrapper(
 			CoreContext repositoryContext,
@@ -28,7 +29,8 @@ namespace Shift.Repository.Repositories
 			IGJournalRepository gJournalRepository,
 			IAcademicDegreeRepository degreeRepository,
 			IAcademicRankRepository rankRepository,
-			IJobPositionRepository positionRepository
+			IJobPositionRepository positionRepository,
+			IDepartmentRepository departmentRepository
 			)
 		{
 			this._dbContext = repositoryContext;
@@ -43,6 +45,7 @@ namespace Shift.Repository.Repositories
 			this._degreeRepository = degreeRepository;
 			this._rankRepository = rankRepository;
 			this._positionRepository = positionRepository;
+			this._departmentRepository = departmentRepository;
 		}
 
 		public virtual IUserRepository Users => this._userRepository;
@@ -56,6 +59,7 @@ namespace Shift.Repository.Repositories
 		public virtual IAcademicDegreeRepository Degrees => this._degreeRepository;
 		public virtual IAcademicRankRepository Ranks => this._rankRepository;
 		public virtual IJobPositionRepository Positions => this._positionRepository;
+		public virtual IDepartmentRepository Departments => this._departmentRepository;
 
 		public virtual void Save()
 		{

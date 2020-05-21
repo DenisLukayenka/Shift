@@ -14,7 +14,7 @@ namespace Shift.Repository.Repositories
 		IAcademicDegreeRepository Degrees { get; }
 		IAcademicRankRepository Ranks { get; }
 		IJobPositionRepository Positions { get; }
-
+		IDepartmentRepository Departments { get; }
 
 		void Save();
 	}

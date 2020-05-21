@@ -23,7 +23,7 @@ namespace Shift.Web.Controllers
 		[HttpPost]
 		[AllowAnonymous]
 		[Route("login")]
-		public IActionResult Login([FromBody] LoginViewModel user)
+		public IActionResult Login([FromBody] LoginVM user)
 		{
 			if(user is null)
 			{
@@ -81,7 +81,7 @@ namespace Shift.Web.Controllers
 			return Ok(authContext);
 		}
 
-		[HttpPut]
+		[HttpPost]
 		[AllowAnonymous]
 		[Route("register/employee")]
 		public IActionResult RegisterEmployee([FromBody] EmployeeViewModel employee)

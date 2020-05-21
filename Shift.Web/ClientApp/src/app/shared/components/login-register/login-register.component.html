@@ -12,13 +12,14 @@
             <mat-label>Введите пароль</mat-label>
             <input [type]="hidePassword ? 'password': 'text'" matInput placeholder="Пароль" formControlName="Password">
             <button 
+                type="button"
                 mat-icon-button 
                 matSuffix (click)="hidePassword = !hidePassword" 
             >
                 <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
     
-            <mat-error *ngIf="PasswordControl.invalid">{{validatePassword()}}</mat-error>
+            <mat-error>{{validatePassword()}}</mat-error>
         </mat-form-field>
         <br />
 
@@ -31,13 +32,14 @@
                 formControlName="ConfirmPassword" 
                 [errorStateMatcher]="passwordMatcher">
             <button 
+                type="button"
                 mat-icon-button 
                 matSuffix (click)="hideConfirmPassword = !hideConfirmPassword" 
             >
                 <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
 
-            <mat-error *ngIf="passwordsOptions.hasError('notSame')">Пароли не совпадают</mat-error>
+            <mat-error>Пароли не совпадают</mat-error>
         </mat-form-field>
         <br />
     </div>

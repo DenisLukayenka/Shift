@@ -1,5 +1,5 @@
-import { BaseRequest } from "./BaseRequest";
-import { RequestType } from "./requestType";
+import { BaseRequest } from "../BaseRequest";
+import { RequestType } from "../requestType";
 
 export class AuthReq extends BaseRequest {
     Login: string;

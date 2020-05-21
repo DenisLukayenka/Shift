@@ -2,7 +2,7 @@
 {
 	public class AcademicRankVM
 	{
-		public int Id { get; set; }
+		public int? Id { get; set; }
 		public string RankName { get; set; }
 	}
 }

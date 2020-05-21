@@ -1,8 +1,7 @@
-import { BaseRequest } from "./BaseRequest";
-import { RequestType } from "./requestType";
-import { UJournal } from "../entities/ujournal/UJournal";
+import { UJournal } from "../../../entities/ujournal/UJournal";
+import { BasePostRequest } from "../../BasePostRequest";
 
-export class SaveUJournalReq extends BaseRequest {
+export class SaveUJournalReq extends BasePostRequest {
     public journal: UJournal;
 
     constructor(journal: UJournal) {
@@ -10,9 +9,6 @@ export class SaveUJournalReq extends BaseRequest {
         this.journal = journal;
     }
 
-    get ReqType (): RequestType {
-        return RequestType.POST;
-    }
     get Body (): any {
         let journalJson = JSON.stringify(this.journal);
         return journalJson;
