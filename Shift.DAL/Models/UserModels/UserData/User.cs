@@ -12,7 +12,7 @@ namespace Shift.DAL.Models.UserModels.UserData
 	{
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		public int Id { get; set; }
+		public int UserId { get; set; }
 
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
@@ -22,13 +22,8 @@ namespace Shift.DAL.Models.UserModels.UserData
 
 		public virtual ICollection<LoginInfo> LoginData { get; set; } = new List<LoginInfo>();
 
-		public int? EmployeeId { get; set; }
 		public virtual Employee Employee { get; set; }
-
-		public int? GraduateId { get; set; }
 		public virtual Graduate Graduate { get; set; }
-
-		public int? UndergraduateId { get; set; }
 		public virtual Undergraduate Undergraduate { get; set; }
 
 		public int RoleId { get; set; }

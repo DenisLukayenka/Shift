@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Shift.Services.Managers.User
 {
@@ -12,8 +13,9 @@ namespace Shift.Services.Managers.User
 	using Shift.Infrastructure.Models.SharedData;
 	using Shift.DAL.Models.UserModels.UserData;
     using Shift.Infrastructure.Models.ViewModels.Users;
+	using Shift.Repository.Database;
 
-    public class UserManager : IUserManager
+	public class UserManager : IUserManager
 	{
 		private readonly IRepositoryWrapper _repository;
 		private readonly IMapper _mapper;
@@ -26,43 +28,35 @@ namespace Shift.Services.Managers.User
 
 		public AuthResponse Login(LoginVM user)
 		{
-			var dbUser = this._repository.Users.Get(u =>
-				u.LoginData.FirstOrDefault(ld =>
-					ld.Login == user.Login && 
-					ld.HashPassword == user.Password) != null)
-			.FirstOrDefault();
-
+			var dbUser = this._repository.Users.FindByLoginPassword(user.Login, user.Password);
 			var context = new AuthResponse();
 
 			if(dbUser != null)
 			{
-				var loginInfo = dbUser.LoginData.FirstOrDefault();
-
 				context.User = this._mapper.Map<UserContext>(dbUser);
 				return context;
 			}
 
 			context.Alert = Config.InvalidAuth;
-
 			return context;
 		}
 
-		public AuthResponse RegisterEmployee(EmployeeViewModel employee)
+		public AuthResponse RegisterEmployee(EmployeeRegisterVM employee)
 		{
-			var dbEmployee = this._repository.Employees
-				.Get(u => u.User.LoginData.FirstOrDefault(ld => ld.Login == employee.Login.Login) != null)
-				.FirstOrDefault();
+			var dbUser = this._repository.Users.FindByLoginPassword(employee.User.Login.Login, employee.User.Login.Password);
 			var context = new AuthResponse();
 
-			if(dbEmployee == null)
+			if(dbUser == null)
 			{
 				var entity = this._mapper.Map<Employee>(employee);
-				entity.User.Role = this.GetOrAddRole(RoleNames.Employee);
+				entity.User.RoleId = this.GetOrAddRole(RoleNames.Employee);
 
 				this._repository.Employees.Add(entity);
 				this._repository.Save();
 
 				context.User = this._mapper.Map<UserContext>(entity.User);
+				context.User.Role = RoleNames.Employee;
+				context.User.SpecifiedUserId = entity.EmployeeId;
 
 				return context;
 			}
@@ -73,21 +67,20 @@ namespace Shift.Services.Managers.User
 
 		public AuthResponse RegisterGraduate(GraduateViewModel graduate)
 		{
-			var dbGradute = this._repository.Graduates
-				.Get(u => u.User.LoginData.FirstOrDefault(ld => ld.Login == graduate.Login) != null)
-				.FirstOrDefault();
-
+			var dbUser = this._repository.Users.FindByLoginPassword(graduate.Login, graduate.Password);
 			var context = new AuthResponse();
 
-			if (dbGradute == null)
+			if (dbUser == null)
 			{
 				var entity = this._mapper.Map<Graduate>(graduate);
-				entity.User.Role = this.GetOrAddRole(RoleNames.Graduate);
+				entity.User.RoleId = this.GetOrAddRole(RoleNames.Graduate);
 
 				this._repository.Graduates.Add(entity);
 				this._repository.Save();
 
 				context.User = this._mapper.Map<UserContext>(entity.User);
+				context.User.Role = RoleNames.Graduate;
+				context.User.SpecifiedUserId = entity.GraduateId;
 
 				return context;
 			}
@@ -96,22 +89,22 @@ namespace Shift.Services.Managers.User
 			return context;
 		}
 
-		public AuthResponse RegisterUndergraduate(UndergraduateViewModel undergraduate)
+		public AuthResponse RegisterUndergraduate(UndergraduateRegisterVM undergraduate)
 		{
-			var dbUndergraduate = this._repository.Undergraduates
-				.Get(u => u.User.LoginData.FirstOrDefault(ld => ld.Login == undergraduate.Login) != null)
-				.FirstOrDefault();
+			var dbUser = this._repository.Users.FindByLoginPassword(undergraduate.User.Login.Login, undergraduate.User.Login.Password);
 			var context = new AuthResponse();
 
-			if (dbUndergraduate == null)
+			if (dbUser == null)
 			{
 				var entity = this._mapper.Map<Undergraduate>(undergraduate);
-				entity.User.Role = this.GetOrAddRole(RoleNames.Undergraduate);
+				entity.User.RoleId = this.GetOrAddRole(RoleNames.Undergraduate);
 
 				this._repository.Undergraduates.Add(entity);
 				this._repository.Save();
 
 				context.User = this._mapper.Map<UserContext>(entity.User);
+				context.User.Role = RoleNames.Undergraduate;
+				context.User.SpecifiedUserId = entity.UndergraduateId;
 
 				return context;
 			}
@@ -122,7 +115,7 @@ namespace Shift.Services.Managers.User
 
 		public string FetchUserRole(int userId)
 		{
-			var dbUser = this._repository.Users.Get(u => u.Id == userId).FirstOrDefault();
+			var dbUser = this._repository.Users.Get(u => u.UserId == userId).FirstOrDefault();
 
 			if(dbUser != null)
 			{
@@ -132,7 +125,7 @@ namespace Shift.Services.Managers.User
 			return null;
 		}
 
-		protected Role GetOrAddRole(string roleCaption)
+		protected int GetOrAddRole(string roleCaption)
 		{
 			var role = this._repository.Roles.Get(r => r.Caption == roleCaption).FirstOrDefault();
 
@@ -149,7 +142,7 @@ namespace Shift.Services.Managers.User
 				role = roleEntity;
 			}
 
-			return role;
+			return role.Id;
 		}
 	}
 }

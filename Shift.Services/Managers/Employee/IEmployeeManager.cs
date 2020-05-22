@@ -7,5 +7,7 @@ namespace Shift.Services.Managers.Employee
 	{
 		IEnumerable<GraduateContext> GetGraduates(int userId);
 		IEnumerable<UndergraduateContext> GetUndergraduates(int userId);
+
+		IEnumerable<AdviserListItem> GetAdvisersList();
 	}
 }

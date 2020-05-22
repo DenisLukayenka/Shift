@@ -39,7 +39,7 @@ export class LoginRegisterComponent implements OnInit {
 
     public validatePassword() {
         if(this.PasswordControl.hasError('required')) {
-            return 'Пароль не может быть пустым!';
+            return 'Пароль не может быть пустым';
         } else if(this.PasswordControl.hasError('minlength') || this.PasswordControl.hasError('maxlength')) {
             return 'Пароль должен содержать от 8 до 32 символов'
         }

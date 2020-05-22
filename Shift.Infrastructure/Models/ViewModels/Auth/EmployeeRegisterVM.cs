@@ -2,11 +2,9 @@
 
 namespace Shift.Infrastructure.Models.ViewModels.Auth
 {
-	public class EmployeeViewModel
+	public class EmployeeRegisterVM
 	{
-		public UserVM User { get; set; }
-
-		public LoginVM Login { get; set; }
+		public UserRegisterVM User { get; set; }
 
 		public AcademicDegreeVM AcademicDegree { get; set; }
 		public AcademicRankVM AcademicRank { get; set; }

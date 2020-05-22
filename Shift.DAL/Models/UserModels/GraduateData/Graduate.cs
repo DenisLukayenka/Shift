@@ -16,12 +16,12 @@ namespace Shift.DAL.Models.UserModels.GraduateData
 		public int GraduateId { get; set; }
 
 		public int UserId { get; set; }
-		public User User { get; set; }
+		public virtual User User { get; set; }
 
 		public EducationForm EducationForm { get; set; } = EducationForm.DAILY;
 
-		public DateTime StartEducationDate { get; set; }
-		public DateTime FinishEducationDate { get; set; }
+		public DateTime? StartEducationDate { get; set; }
+		public DateTime? FinishEducationDate { get; set; }
 
 		public int? ScienceAdviserId { get; set; }
 		public virtual Employee ScienceAdviser { get; set; }

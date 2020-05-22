@@ -8,7 +8,7 @@ namespace Shift.Infrastructure.Models.ViewModels.Users
 	public class UserContext
 	{
 		public int UserId { get; set; }
-		public int SpecifiesUserId { get; set; }
+		public int SpecifiedUserId { get; set; }
 		public string Login { get; set; }
 		public string FirstName { get; set; }
 		public string LastName { get; set; }

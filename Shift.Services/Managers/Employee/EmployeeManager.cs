@@ -31,5 +31,11 @@ namespace Shift.Services.Managers.Employee
 
 			return undergraduateContexts;
 		}
+
+		public IEnumerable<AdviserListItem> GetAdvisersList()
+		{
+			var employeesDb = this._repository.Employees.GetAdvisersList();
+			return this._mapper.Map<IEnumerable<AdviserListItem>>(employeesDb);
+		}
 	}
 }

@@ -142,6 +142,50 @@ namespace Shift.Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    PatronymicName = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    RoleId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.UserId);
+                    table.ForeignKey(
+                        name: "FK_Users_Roles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Roles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Specialties",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: true),
+                    DepartmentId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Specialties", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Specialties_Departments_DepartmentId",
+                        column: x => x.DepartmentId,
+                        principalTable: "Departments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Employees",
                 columns: table => new
                 {
@@ -180,26 +224,33 @@ namespace Shift.Repository.Migrations
                         principalTable: "JobPositions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Employees_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Specialties",
+                name: "LoginInfo",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Code = table.Column<string>(nullable: true),
-                    Title = table.Column<string>(nullable: true),
-                    DepartmentId = table.Column<int>(nullable: true)
+                    Login = table.Column<string>(nullable: true),
+                    HashPassword = table.Column<string>(nullable: true),
+                    Salt = table.Column<string>(nullable: true),
+                    UserId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Specialties", x => x.Id);
+                    table.PrimaryKey("PK_LoginInfo", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Specialties_Departments_DepartmentId",
-                        column: x => x.DepartmentId,
-                        principalTable: "Departments",
-                        principalColumn: "Id",
+                        name: "FK_LoginInfo_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -211,8 +262,8 @@ namespace Shift.Repository.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(nullable: false),
                     EducationForm = table.Column<int>(nullable: false),
-                    StartEducationDate = table.Column<DateTime>(nullable: false),
-                    FinishEducationDate = table.Column<DateTime>(nullable: false),
+                    StartEducationDate = table.Column<DateTime>(nullable: true),
+                    FinishEducationDate = table.Column<DateTime>(nullable: true),
                     ScienceAdviserId = table.Column<int>(nullable: true),
                     SpecialtyId = table.Column<int>(nullable: true),
                     DepartmentId = table.Column<int>(nullable: true)
@@ -238,6 +289,12 @@ namespace Shift.Repository.Migrations
                         principalTable: "Specialties",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Graduates_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -248,9 +305,8 @@ namespace Shift.Repository.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(nullable: false),
                     EducationForm = table.Column<int>(nullable: false),
-                    StudyTerm = table.Column<int>(nullable: false),
-                    StartEducationDate = table.Column<DateTime>(nullable: false),
-                    FinishEducationDate = table.Column<DateTime>(nullable: false),
+                    StartEducationDate = table.Column<DateTime>(nullable: true),
+                    FinishEducationDate = table.Column<DateTime>(nullable: true),
                     ScienceAdviserId = table.Column<int>(nullable: true),
                     SpecialtyId = table.Column<int>(nullable: true),
                     DepartmentId = table.Column<int>(nullable: true)
@@ -276,6 +332,12 @@ namespace Shift.Repository.Migrations
                         principalTable: "Specialties",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Undergraduates_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -355,50 +417,6 @@ namespace Shift.Repository.Migrations
                         column: x => x.UniversitySettingsId,
                         principalTable: "UniversitySettings",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    PatronymicName = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    EmployeeId = table.Column<int>(nullable: true),
-                    GraduateId = table.Column<int>(nullable: true),
-                    UndergraduateId = table.Column<int>(nullable: true),
-                    RoleId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Users_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employees",
-                        principalColumn: "EmployeeId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Users_Graduates_GraduateId",
-                        column: x => x.GraduateId,
-                        principalTable: "Graduates",
-                        principalColumn: "GraduateId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Users_Roles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "Roles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Users_Undergraduates_UndergraduateId",
-                        column: x => x.UndergraduateId,
-                        principalTable: "Undergraduates",
-                        principalColumn: "UndergraduateId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -612,28 +630,6 @@ namespace Shift.Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "LoginInfo",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Login = table.Column<string>(nullable: true),
-                    HashPassword = table.Column<string>(nullable: true),
-                    Salt = table.Column<string>(nullable: true),
-                    UserId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_LoginInfo", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_LoginInfo_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Attestations",
                 columns: table => new
                 {
@@ -813,6 +809,12 @@ namespace Shift.Repository.Migrations
                 column: "JobPositionId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Employees_UserId",
+                table: "Employees",
+                column: "UserId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ExamInfo_DisciplineId",
                 table: "ExamInfo",
                 column: "DisciplineId");
@@ -846,6 +848,12 @@ namespace Shift.Repository.Migrations
                 name: "IX_Graduates_SpecialtyId",
                 table: "Graduates",
                 column: "SpecialtyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Graduates_UserId",
+                table: "Graduates",
+                column: "UserId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_LoginInfo_UserId",
@@ -936,30 +944,15 @@ namespace Shift.Repository.Migrations
                 column: "SpecialtyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_EmployeeId",
-                table: "Users",
-                column: "EmployeeId",
-                unique: true,
-                filter: "[EmployeeId] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_GraduateId",
-                table: "Users",
-                column: "GraduateId",
-                unique: true,
-                filter: "[GraduateId] IS NOT NULL");
+                name: "IX_Undergraduates_UserId",
+                table: "Undergraduates",
+                column: "UserId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_RoleId",
                 table: "Users",
                 column: "RoleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_UndergraduateId",
-                table: "Users",
-                column: "UndergraduateId",
-                unique: true,
-                filter: "[UndergraduateId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_WorkPlans_GraduateJournalId",
@@ -1011,9 +1004,6 @@ namespace Shift.Repository.Migrations
                 name: "Disciplines");
 
             migrationBuilder.DropTable(
-                name: "Users");
-
-            migrationBuilder.DropTable(
                 name: "Protocol");
 
             migrationBuilder.DropTable(
@@ -1024,9 +1014,6 @@ namespace Shift.Repository.Migrations
 
             migrationBuilder.DropTable(
                 name: "WorkPlans");
-
-            migrationBuilder.DropTable(
-                name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "UndergraduateJournal");
@@ -1059,7 +1046,13 @@ namespace Shift.Repository.Migrations
                 name: "JobPositions");
 
             migrationBuilder.DropTable(
+                name: "Users");
+
+            migrationBuilder.DropTable(
                 name: "Departments");
+
+            migrationBuilder.DropTable(
+                name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "Faculties");

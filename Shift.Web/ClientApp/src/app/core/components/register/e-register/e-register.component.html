@@ -1,6 +1,7 @@
 <h3 class="form-header">Регистрация преподавателя</h3>
+<mat-error *ngIf="authAlert">{{ authAlert }}</mat-error>
 <mat-divider></mat-divider>
-<form [formGroup]="eRegisterGroup" (submit)="submit()">
+<form [formGroup]="eRegisterGroup">
     <pac-user-register (onUserRegisterConfigured)="addFormGroup('User', $event)"></pac-user-register>
     <mat-divider></mat-divider>
 
@@ -62,11 +63,8 @@
     </div>
 
     <mat-divider></mat-divider>
-    <pac-login-register (onLoginFormConfigured)="addFormGroup('Login', $event)"></pac-login-register>
-
-    <mat-divider></mat-divider>
     <div class="width-full action-footer">
-        <button class="width-full mr-2" mat-raised-button (click)="resetTarget()">Назад</button>
-        <button class="width-full ml-2" type="submit" mat-raised-button color="primary">Регистрация</button>
+        <button class="width-full mr-2" type="button" mat-raised-button (click)="resetTarget()">Назад</button>
+        <button class="width-full ml-2" type="button" mat-raised-button color="primary" (click)="submit()">Регистрация</button>
     </div>
 </form>

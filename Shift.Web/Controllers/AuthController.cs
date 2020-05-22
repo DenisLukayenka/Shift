@@ -44,7 +44,7 @@ namespace Shift.Web.Controllers
 		[HttpPut]
 		[AllowAnonymous]
 		[Route("register/undergraduate")]
-		public IActionResult RegisterUndergraduate([FromBody] UndergraduateViewModel undergraduate)
+		public IActionResult RegisterUndergraduate([FromBody] UndergraduateRegisterVM undergraduate)
 		{
 			if(undergraduate is null)
 			{
@@ -84,7 +84,7 @@ namespace Shift.Web.Controllers
 		[HttpPost]
 		[AllowAnonymous]
 		[Route("register/employee")]
-		public IActionResult RegisterEmployee([FromBody] EmployeeViewModel employee)
+		public IActionResult RegisterEmployee([FromBody] EmployeeRegisterVM employee)
 		{
 			if (employee is null)
 			{

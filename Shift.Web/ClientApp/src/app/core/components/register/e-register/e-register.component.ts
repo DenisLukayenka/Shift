@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, FormControl } from "@angular/forms";
+import { FormBuilder, FormGroup, FormControl, Validators } from "@angular/forms";
 import { HttpProcessorService } from "src/app/services/http-processor/http-processor.service";
 import { Observable, from, combineLatest } from "rxjs";
 import { AcademicDegree } from "src/app/infrastracture/entities/users/AcademicDegree";
@@ -14,6 +14,12 @@ import { DepartmentsReq } from "src/app/infrastracture/requests/data/Departments
 import * as _ from 'lodash';
 import { LoginVM } from "src/app/infrastracture/entities/auth/LoginVM";
 import { RegisterEmployeeReq } from "src/app/infrastracture/requests/auth/register/RegisterEmployeeReq";
+import { markGroupAsDirty } from "src/app/infrastracture/utilities/markAsDirty";
+import { AuthResponse } from "src/app/infrastracture/responses/AuthResponse";
+import { StorageService } from "src/app/services/storage/storage.service";
+import { TokenKey, UserIdKey, SpecifiedUserIdKey } from "src/app/services/storage/StorageKeys";
+import { RootPage } from "src/app/infrastracture/config";
+import { Router } from "@angular/router";
 
 @Component({
     selector: 'pac-e-register',
@@ -29,13 +35,19 @@ export class ERegisterComponent implements OnInit {
     public filteredRanks$: Observable<AcademicRank[]>;
     public filteredPositions$: Observable<JobPosition[]>;
     public filteredDepartments$: Observable<Department[]>;
+    public authAlert: string;
 
     private degrees$: Observable<AcademicDegree[]>;
     private ranks$: Observable<AcademicRank[]>;
     private positions$: Observable<JobPosition[]>;
     private departments$: Observable<Department[]>;
 
-    constructor(private fb: FormBuilder, private http: HttpProcessorService) {
+    constructor(
+        private fb: FormBuilder, 
+        private http: HttpProcessorService, 
+        private storage: StorageService, 
+        private router: Router
+    ) {
         this.initializeForm();
 
         this.degrees$ = from(this.http.execute(new DegreesReq()));
@@ -67,19 +79,29 @@ export class ERegisterComponent implements OnInit {
     }
 
     public submit() {
-        /*if(this.eRegisterGroup.invalid) {
+        markGroupAsDirty(this.eRegisterGroup);
+
+        if(this.eRegisterGroup.invalid) {
             return;
-        }*/
+        }
 
         let employeeModel = this.eRegisterGroup.value;
         employeeModel.AcademicDegree = this.DegreeModel;
         employeeModel.AcademicRank = this.RankModel;
         employeeModel.JobPosition = this.PositionModel;
         employeeModel.Department = this.DepartmentModel;
-        employeeModel.Login = this.LoginModel;
+        employeeModel.User.Login = this.LoginModel;
 
-        from(this.http.execute(new RegisterEmployeeReq(employeeModel))).subscribe(result => {
-            console.log(result);
+        from(this.http.execute(new RegisterEmployeeReq(employeeModel))).subscribe((authResp: AuthResponse) => {
+            if(authResp.Alert) {
+                this.authAlert = authResp.Alert;
+                return;
+            }
+
+            this.storage.setValue(TokenKey, authResp.Token);
+            this.storage.setValue(UserIdKey, authResp.User.UserId.toString());
+            this.storage.setValue(SpecifiedUserIdKey, authResp.User.SpecifiedUserId.toString());
+            this.router.navigate([RootPage]);
         });
     }
 
@@ -98,10 +120,10 @@ export class ERegisterComponent implements OnInit {
 
     private initializeForm() {
         this.eRegisterGroup = this.fb.group({
-            AcademicDegree: this.fb.control(null),
-            AcademicRank: this.fb.control(null),
-            JobPosition: this.fb.control(null),
-            Department: this.fb.control(null),
+            AcademicDegree: [null],
+            AcademicRank: [null],
+            JobPosition: [null],
+            Department: [null],
         });
     }
 
@@ -118,7 +140,7 @@ export class ERegisterComponent implements OnInit {
         return this.eRegisterGroup.get('Department') as FormControl;
     }
     public get LoginGroup(): FormGroup {
-        return this.eRegisterGroup.get('Login') as FormGroup;
+        return this.eRegisterGroup.get('User').get('Login') as FormGroup;
     }
 
     private _filterDegrees(degrees: AcademicDegree[], value: any): AcademicDegree[] {
@@ -144,6 +166,10 @@ export class ERegisterComponent implements OnInit {
 
     private get DegreeModel(): AcademicDegree {
         let controlValue = _.cloneDeep(this.AcademicDegreeControl.value);
+        if (!controlValue) {
+            return null;
+        }
+
         if (!controlValue || !controlValue.Id) {
             return {
                 DegreeName: controlValue,
@@ -155,7 +181,11 @@ export class ERegisterComponent implements OnInit {
     }
     private get RankModel(): AcademicRank {
         let controlValue = _.cloneDeep(this.AcademicRankControl.value);
-        if (!controlValue || !controlValue.Id) {
+        if (!controlValue) {
+            return null;
+        }
+
+        if (!controlValue.Id) {
             return {
                 RankName: controlValue,
                 Id: null,
@@ -166,7 +196,11 @@ export class ERegisterComponent implements OnInit {
     }
     private get PositionModel(): JobPosition {
         let controlValue = _.cloneDeep(this.JobPositionControl.value);
-        if (!controlValue || !controlValue.Id) {
+        if (!controlValue) {
+            return null;
+        }
+
+        if (!controlValue.Id) {
             return {
                 Name: controlValue,
                 Id: null,
@@ -177,7 +211,11 @@ export class ERegisterComponent implements OnInit {
     }
     private get DepartmentModel(): Department {
         let controlValue = _.cloneDeep(this.DepartmentControl.value);
-        if (!controlValue || !controlValue.Id) {
+        if (!controlValue) {
+            return null;
+        }
+
+        if (!controlValue.Id) {
             return {
                 Name: controlValue,
                 Id: null,

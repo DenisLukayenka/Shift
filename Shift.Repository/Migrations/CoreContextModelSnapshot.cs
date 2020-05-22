@@ -211,6 +211,9 @@ namespace Shift.Repository.Migrations
 
                     b.HasIndex("JobPositionId");
 
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
                     b.ToTable("Employees");
                 });
 
@@ -245,7 +248,7 @@ namespace Shift.Repository.Migrations
                     b.Property<int>("EducationForm")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("FinishEducationDate")
+                    b.Property<DateTime?>("FinishEducationDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("ScienceAdviserId")
@@ -254,7 +257,7 @@ namespace Shift.Repository.Migrations
                     b.Property<int?>("SpecialtyId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("StartEducationDate")
+                    b.Property<DateTime?>("StartEducationDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("UserId")
@@ -267,6 +270,9 @@ namespace Shift.Repository.Migrations
                     b.HasIndex("ScienceAdviserId");
 
                     b.HasIndex("SpecialtyId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Graduates");
                 });
@@ -815,7 +821,7 @@ namespace Shift.Repository.Migrations
                     b.Property<int>("EducationForm")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("FinishEducationDate")
+                    b.Property<DateTime?>("FinishEducationDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("ScienceAdviserId")
@@ -824,11 +830,8 @@ namespace Shift.Repository.Migrations
                     b.Property<int?>("SpecialtyId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("StartEducationDate")
+                    b.Property<DateTime?>("StartEducationDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("StudyTerm")
-                        .HasColumnType("int");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -840,6 +843,9 @@ namespace Shift.Repository.Migrations
                     b.HasIndex("ScienceAdviserId");
 
                     b.HasIndex("SpecialtyId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Undergraduates");
                 });
@@ -937,7 +943,7 @@ namespace Shift.Repository.Migrations
 
             modelBuilder.Entity("Shift.DAL.Models.UserModels.UserData.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -945,14 +951,8 @@ namespace Shift.Repository.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("EmployeeId")
-                        .HasColumnType("int");
-
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("GraduateId")
-                        .HasColumnType("int");
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
@@ -963,24 +963,9 @@ namespace Shift.Repository.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UndergraduateId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EmployeeId")
-                        .IsUnique()
-                        .HasFilter("[EmployeeId] IS NOT NULL");
-
-                    b.HasIndex("GraduateId")
-                        .IsUnique()
-                        .HasFilter("[GraduateId] IS NOT NULL");
+                    b.HasKey("UserId");
 
                     b.HasIndex("RoleId");
-
-                    b.HasIndex("UndergraduateId")
-                        .IsUnique()
-                        .HasFilter("[UndergraduateId] IS NOT NULL");
 
                     b.ToTable("Users");
                 });
@@ -1016,6 +1001,12 @@ namespace Shift.Repository.Migrations
                     b.HasOne("Shift.DAL.Models.UserModels.EmployeeData.JobPosition", "JobPosition")
                         .WithMany("Employees")
                         .HasForeignKey("JobPositionId");
+
+                    b.HasOne("Shift.DAL.Models.UserModels.UserData.User", "User")
+                        .WithOne("Employee")
+                        .HasForeignKey("Shift.DAL.Models.UserModels.EmployeeData.Employee", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Shift.DAL.Models.UserModels.GraduateData.Graduate", b =>
@@ -1031,6 +1022,12 @@ namespace Shift.Repository.Migrations
                     b.HasOne("Shift.DAL.Models.University.Specialty", "Specialty")
                         .WithMany("Graduates")
                         .HasForeignKey("SpecialtyId");
+
+                    b.HasOne("Shift.DAL.Models.UserModels.UserData.User", "User")
+                        .WithOne("Graduate")
+                        .HasForeignKey("Shift.DAL.Models.UserModels.GraduateData.Graduate", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Shift.DAL.Models.UserModels.GraduateData.GraduateJournal", b =>
@@ -1153,6 +1150,12 @@ namespace Shift.Repository.Migrations
                     b.HasOne("Shift.DAL.Models.University.Specialty", "Specialty")
                         .WithMany("Undergraduates")
                         .HasForeignKey("SpecialtyId");
+
+                    b.HasOne("Shift.DAL.Models.UserModels.UserData.User", "User")
+                        .WithOne("Undergraduate")
+                        .HasForeignKey("Shift.DAL.Models.UserModels.UndergraduateData.Undergraduate", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Shift.DAL.Models.UserModels.UndergraduateData.UndergraduateJournal", b =>
@@ -1186,23 +1189,11 @@ namespace Shift.Repository.Migrations
 
             modelBuilder.Entity("Shift.DAL.Models.UserModels.UserData.User", b =>
                 {
-                    b.HasOne("Shift.DAL.Models.UserModels.EmployeeData.Employee", "Employee")
-                        .WithOne("User")
-                        .HasForeignKey("Shift.DAL.Models.UserModels.UserData.User", "EmployeeId");
-
-                    b.HasOne("Shift.DAL.Models.UserModels.GraduateData.Graduate", "Graduate")
-                        .WithOne("User")
-                        .HasForeignKey("Shift.DAL.Models.UserModels.UserData.User", "GraduateId");
-
                     b.HasOne("Shift.DAL.Models.UserModels.UserData.Role", "Role")
                         .WithMany("Users")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Shift.DAL.Models.UserModels.UndergraduateData.Undergraduate", "Undergraduate")
-                        .WithOne("User")
-                        .HasForeignKey("Shift.DAL.Models.UserModels.UserData.User", "UndergraduateId");
                 });
 #pragma warning restore 612, 618
         }

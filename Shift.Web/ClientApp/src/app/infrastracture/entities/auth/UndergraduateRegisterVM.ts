@@ -1,19 +1,12 @@
 import { EducationForm } from "./EducationForm";
+import { UserRegisterVM } from "./UserRegisterVM";
 
-export class UViewModel {
-    public FirstName: string;
-    public LastName:  string;
-    public PatronymicName: string
-
-    public Email: string
-
-    public Login: string;
-    public Password: string;
+export class UndergraduateRegisterVM {
+    public User: UserRegisterVM;
 
     public  EducationForm: EducationForm;
 
     public SpecialtyId: number;
-
     public AdviserId: number;
 
     public StartEducationDate: Date;

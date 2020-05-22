@@ -1,6 +1,42 @@
-<div class="inline-flex align-center">
-    <button mat-icon-button aria-label="Переход на предыдущую форму" (click)='resetTarget()'>
-        <mat-icon>arrow_back</mat-icon>
-      </button>
-    <h3 class="form-header">Регистрация магистранта</h3>
-</div>
+<h3 class="form-header">Регистрация магистранта</h3>
+<mat-error *ngIf="authAlert">{{ authAlert }}</mat-error>
+<mat-divider></mat-divider>
+<form [formGroup]="uRegisterGroup">
+    <pac-user-register (onUserRegisterConfigured)="addFormGroup('User', $event)"></pac-user-register>
+    <mat-divider></mat-divider>
+
+    <div class="width-full flex-justify">
+        <mat-form-field class="width-full mr-2">
+            <input type="text"
+                placeholder="Специальность"
+                aria-label="Специальность"
+                matInput
+                formControlName="Specialty"
+                [matAutocomplete]="autoSpecialty">
+            <mat-autocomplete autoActiveFirstOption #autoSpecialty="matAutocomplete" [displayWith]="displayWithSpecialty" class="autocomplete-options-font">
+                <mat-option *ngFor="let specialty of specialties$ | async" [value]="specialty">
+                    {{ specialty.Title }}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field class="width-full ml-2">
+            <input type="text"
+                placeholder="Руководитель"
+                aria-label="Руководитель"
+                matInput
+                formControlName="Adviser"
+                [matAutocomplete]="autoAdviser">
+            <mat-autocomplete autoActiveFirstOption #autoAdviser="matAutocomplete" [displayWith]="displayWithAdviser" class="autocomplete-options-font">
+                <mat-option *ngFor="let adviser of filteredAdvisers$ | async" [value]="adviser">
+                    {{ adviser.Name }}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </div>
+
+    <mat-divider></mat-divider>
+    <div class="width-full action-footer">
+        <button class="width-full mr-2" type="button" mat-raised-button (click)="resetTarget()">Назад</button>
+        <button class="width-full ml-2" type="button" mat-raised-button color="primary" (click)="submit()">Регистрация</button>
+    </div>
+</form>

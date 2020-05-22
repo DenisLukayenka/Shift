@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Shift.Infrastructure.Models.ViewModels.Data;
+using Shift.Infrastructure.Models.ViewModels.University;
+using Shift.Infrastructure.Models.ViewModels.Users;
 using Shift.Repository.Repositories;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,6 +60,26 @@ namespace Shift.Web.Controllers
 			var departments = this._mapper.Map<IEnumerable<DepartmentVM>>(departmentsDb);
 
 			return Ok(departments);
+		}
+
+		[HttpGet]
+		[Route("specialties")]
+		public IActionResult GetSpecialties()
+		{
+			var specialtiesDb = this._repository.Specialties.GetAll();
+			var specialties = this._mapper.Map<IEnumerable<SpecialtyVM>>(specialtiesDb);
+
+			return Ok(specialties);
+		}
+
+		[HttpGet]
+		[Route("adviserList")]
+		public IActionResult GetEmployeeList()
+		{
+			var employeesDb = this._repository.Employees.GetAdvisersList();
+			var employees = this._mapper.Map<IEnumerable<AdviserListItem>>(employeesDb);
+
+			return Ok(employees);
 		}
 	}
 }

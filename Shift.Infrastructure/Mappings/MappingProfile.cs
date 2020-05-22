@@ -1,17 +1,11 @@
 ﻿using AutoMapper;
-using Shift.DAL.Models.University;
-using Shift.DAL.Models.UserModels.EmployeeData;
 using Shift.DAL.Models.UserModels.GraduateData;
 using Shift.DAL.Models.UserModels.GraduateData.JournalData;
 using Shift.DAL.Models.UserModels.UndergraduateData;
-using Shift.DAL.Models.UserModels.UndergraduateData.JournalData;
 using Shift.DAL.Models.UserModels.UserData;
 using Shift.Infrastructure.Models.ViewModels.Auth;
-using Shift.Infrastructure.Models.ViewModels.Data;
 using Shift.Infrastructure.Models.ViewModels.Journals;
 using Shift.Infrastructure.Models.ViewModels.Journals.GJournalData;
-using Shift.Infrastructure.Models.ViewModels.Journals.UJournalData;
-using Shift.Infrastructure.Models.ViewModels.Journals.University;
 using Shift.Infrastructure.Models.ViewModels.Users;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,26 +16,12 @@ namespace Shift.Infrastructure.Mappings
 	{
 		public MappingProfile()
 		{
-			CreateMap<Protocol, ProtocolVM>().ReverseMap();
-			CreateMap<PreparationInfo, PreparationInfoVM>().ReverseMap();
-			CreateMap<ThesisCertification, ThesisCertificationVM>().ReverseMap();
-			CreateMap<Report, ReportVM>().ReverseMap();
-
 			CreateMap<UndergraduateJournal, UJournal>()
 				.ForMember(dest => dest.PreparationInfo, opt => opt.MapFrom(src => src.PreparationInfo))
 				.ForMember(dest => dest.ReportResults, opt => opt.MapFrom(src => src.ReportResults))
 				.ForMember(dest => dest.ThesisCertification, opt => opt.MapFrom(src => src.ThesisCertification))
 				.ReverseMap();
 
-			CreateMap<UndergraduateViewModel, User>()
-				.ForMember(dest => dest.LoginData, opt => opt.MapFrom((src, dest) => new List<LoginInfo>()
-				{
-					new LoginInfo()
-					{
-						HashPassword = src.Password,
-						Login = src.Login,
-					}
-				}));
 			CreateMap<GraduateViewModel, User>()
 				.ForMember(dest => dest.LoginData, opt => opt.MapFrom((src, dest) => new List<LoginInfo>()
 				{
@@ -51,41 +31,29 @@ namespace Shift.Infrastructure.Mappings
 						Login = src.Login,
 					}
 				}));
-			CreateMap<EmployeeViewModel, User>()
-				.ForMember(dest => dest.LoginData, opt => opt.MapFrom((src, dest) => new List<LoginInfo>()
-					{
-					new LoginInfo()
-					{
-						HashPassword = src.Login.Password,
-						Login = src.Login.Login,
-					}
-				}));
-
-			CreateMap<UndergraduateViewModel, Undergraduate>()
-				.ForMember(dest => dest.User, opt => opt.MapFrom(src => src))
-				.ForMember(dest => dest.ScienceAdviserId, opt => opt.MapFrom(src => src.AdviserId));
 
 			CreateMap<GraduateViewModel, Graduate>()
 				.ForMember(dest => dest.User, opt => opt.MapFrom(src => src))
 				.ForMember(dest => dest.ScienceAdviserId, opt => opt.MapFrom(src => src.AdviserId));
 
-			CreateMap<EmployeeViewModel, Employee>()
-				.ForMember(dest => dest.User, opt => opt.MapFrom(src => src))
-				.ForMember(dest => dest.AcademicDegreeId, opt => opt.MapFrom((src, dest) => src.AcademicDegree?.Id))
-				.ForMember(dest => dest.AcademicRankId, opt => opt.MapFrom((src, dest) => src.AcademicRank?.Id))
-				.ForMember(dest => dest.DepartmentId, opt => opt.MapFrom((src, dest) => src.Department?.Id))
-				.ForMember(dest => dest.JobPositionId, opt => opt.MapFrom((src, dest) => src.JobPosition?.Id))
-
-				.ForMember(dest => dest.AcademicDegree, opt => opt.MapFrom(src => src.AcademicDegree))
-				.ForMember(dest => dest.AcademicRank, opt => opt.MapFrom(src => src.AcademicRank))
-				.ForMember(dest => dest.JobPosition, opt => opt.MapFrom(src => src.JobPosition))
-				.ForMember(dest => dest.Department, opt => opt.MapFrom(src => src.Department));
 
 			CreateMap<User, UserContext>()
 				.ForMember(dest => dest.Login, opt => opt.MapFrom((src, dest) => src.LoginData.FirstOrDefault()?.Login ?? ""))
 				.ForMember(dest => dest.Role, opt => opt.MapFrom((src, dest) => src.Role?.Caption ?? ""))
-				.ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id))
-				.ForMember(dest => dest.SpecifiesUserId, opt => opt.MapFrom((src, dest) => src.EmployeeId ?? src.UndergraduateId ?? src.GraduateId));
+				.ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
+				.ForMember(dest => dest.SpecifiedUserId, opt => opt.MapFrom((src, dest) => 
+				{
+					if (src.Undergraduate != null)
+					{
+						return src.Undergraduate.UndergraduateId;
+					}
+					if (src.Graduate != null)
+					{
+						return src.Graduate.GraduateId;
+					}
+					
+					return src.Employee?.EmployeeId;
+				}));
 
 			CreateMap<RationalInfoVM, RationalInfo>()
 				.ForMember(dest => dest.Protocol, opt => opt.MapFrom(src => src.Protocol))
@@ -93,7 +61,6 @@ namespace Shift.Infrastructure.Mappings
 
 			this.RegisterGJournalMappings();
 			this.RegisterUndergraduateMappings();
-			this.RegisterDataMappings();
 		}
 
 		public void RegisterGJournalMappings()
@@ -131,24 +98,16 @@ namespace Shift.Infrastructure.Mappings
 			CreateMap<Graduate, GraduateContext>()
 				.ForMember(dest => dest.Login, opt => opt.MapFrom((src, dest) => src.User.LoginData.FirstOrDefault()?.Login ?? ""))
 				.ForMember(dest => dest.Role, opt => opt.MapFrom((src, dest) => src.User.Role?.Caption ?? ""))
-				.ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.User.Id))
-				.ForMember(dest => dest.SpecifiesUserId, opt => opt.MapFrom((src, dest) => src.GraduateId))
+				.ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.User.UserId))
+				.ForMember(dest => dest.SpecifiedUserId, opt => opt.MapFrom((src, dest) => src.GraduateId))
 				.ForMember(dest => dest.JournalId, opt => opt.MapFrom((src, dest) => src.GraduateJournals.FirstOrDefault()?.Id));
 
 			CreateMap<Undergraduate, UndergraduateContext>()
 				.ForMember(dest => dest.Login, opt => opt.MapFrom((src, dest) => src.User.LoginData.FirstOrDefault()?.Login ?? ""))
 				.ForMember(dest => dest.Role, opt => opt.MapFrom((src, dest) => src.User.Role?.Caption ?? ""))
-				.ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.User.Id))
-				.ForMember(dest => dest.SpecifiesUserId, opt => opt.MapFrom((src, dest) => src.UndergraduateId))
+				.ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.User.UserId))
+				.ForMember(dest => dest.SpecifiedUserId, opt => opt.MapFrom((src, dest) => src.UndergraduateId))
 				.ForMember(dest => dest.JournalId, opt => opt.MapFrom((src, dest) => src.Journals.FirstOrDefault()?.Id));
-		}
-
-		public void RegisterDataMappings()
-		{
-			CreateMap<AcademicDegree, AcademicDegreeVM>().ReverseMap();
-			CreateMap<AcademicRank, AcademicRankVM>().ReverseMap();
-			CreateMap<JobPosition, JobPositionVM>().ReverseMap();
-			CreateMap<Department, DepartmentVM>().ReverseMap();
 		}
 	}
 }
