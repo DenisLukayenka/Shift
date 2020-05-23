@@ -1,6 +1,8 @@
 import { Injectable } from "@angular/core";
 import { FormBuilder, FormGroup, Validators, FormArray } from "@angular/forms";
 import { UJournal } from "src/app/infrastracture/entities/ujournal/UJournal";
+import * as _ from 'lodash';
+import { isPropertyDefined } from "src/app/infrastracture/utilities/isPropertyDefined";
 
 @Injectable()
 export class UJHelperService {
@@ -11,10 +13,15 @@ export class UJHelperService {
     public generateFormOptions(journal: UJournal): FormGroup {
         this.options = this.initJournal();
 
-        journal.ReportResults.forEach(r => this.addReportResults());
-        journal.PreparationInfo.ResearchWorks.forEach(w => this.addResearchWork());
+        if(journal && journal.ReportResults) {
+            journal.ReportResults.forEach(r => this.addReportResults());
+        }
+        if(journal && journal.PreparationInfo && journal.PreparationInfo.ResearchWorks) {
+            journal.PreparationInfo.ResearchWorks.forEach(w => this.addResearchWork());
+        }
 
-        this.options.patchValue(journal);
+        const truthyJournal = _.pickBy(journal, isPropertyDefined);
+        this.options.patchValue(truthyJournal);
 
         return this.options;
     }

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, FormControl, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, FormControl } from "@angular/forms";
 import { HttpProcessorService } from "src/app/services/http-processor/http-processor.service";
 import { Observable, from, combineLatest } from "rxjs";
 import { AcademicDegree } from "src/app/infrastracture/entities/users/AcademicDegree";

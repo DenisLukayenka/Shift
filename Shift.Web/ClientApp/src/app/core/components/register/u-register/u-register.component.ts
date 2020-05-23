@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from "@angular/core";
+import { Component, EventEmitter, Output, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms";
 import { StorageService } from "src/app/services/storage/storage.service";
 import { Router } from "@angular/router";
@@ -10,6 +10,15 @@ import { HttpProcessorService } from "src/app/services/http-processor/http-proce
 import { SpecialtiesReq } from "src/app/infrastracture/requests/data/SpecialtiesReq";
 import { AdviserListReq } from "src/app/infrastracture/requests/data/AdviserListReq";
 import { map, startWith } from "rxjs/operators";
+import * as _ from 'lodash';
+import { UndergraduateRegisterVM } from "src/app/infrastracture/entities/auth/UndergraduateRegisterVM";
+import { markGroupAsDirty } from "src/app/infrastracture/utilities/markAsDirty";
+import { RegisterUReq } from "src/app/infrastracture/requests/auth/register/RegisterUReq";
+import { AuthResponse } from "src/app/infrastracture/responses/AuthResponse";
+import { TokenKey, UserIdKey, SpecifiedUserIdKey } from "src/app/services/storage/StorageKeys";
+import { RootPage } from "src/app/infrastracture/config";
+import { castEducationForm } from "src/app/infrastracture/utilities/castEducationForm";
+import { LoginVM } from "src/app/infrastracture/entities/auth/LoginVM";
 
 @Component({
     selector: 'pac-u-register',
@@ -22,11 +31,10 @@ export class URegisterComponent {
     public uRegisterGroup: FormGroup;
     public authAlert: string;
 
-    public filteredSpecialties$: Observable<SpecialtyVM[]>;
-    public filteredAdvisers$: Observable<AdviserListItemVM[]>;
+    public educationForms: EducationForm[] = [EducationForm.DAILY, EducationForm.CORRESPONDENCE];
 
-    private specialties$: Observable<SpecialtyVM[]>;
-    private advisers$: Observable<AdviserListItemVM[]>;
+    public specialties$: Observable<SpecialtyVM[]>;
+    public advisers$: Observable<AdviserListItemVM[]>;
 
     constructor(
         private fb: FormBuilder, 
@@ -45,8 +53,25 @@ export class URegisterComponent {
     }
 
     public submit() {
-        let a = this.uRegisterGroup.value;
-        console.log(a);
+        markGroupAsDirty(this.uRegisterGroup);
+
+        if (!this.uRegisterGroup.invalid) {
+            let undergraduateModel = this.uRegisterGroup.value as UndergraduateRegisterVM;
+            undergraduateModel.EducationForm = this.EducationFormModel;
+            undergraduateModel.User.Login = this.LoginModel;
+
+            from(this.http.execute(new RegisterUReq(undergraduateModel))).subscribe((authResp: AuthResponse) => {
+                if(authResp.Alert) {
+                    this.authAlert = authResp.Alert;
+                    return;
+                }
+    
+                this.storage.setValue(TokenKey, authResp.Token);
+                this.storage.setValue(UserIdKey, authResp.User.UserId.toString());
+                this.storage.setValue(SpecifiedUserIdKey, authResp.User.SpecifiedUserId.toString());
+                this.router.navigate([RootPage]);
+            });
+        }
     }
 
     public addFormGroup(groupName: string, group: FormGroup) {
@@ -54,48 +79,46 @@ export class URegisterComponent {
     }
 
     public get SpecialtyControl(): FormControl {
-        return this.uRegisterGroup.get('Specialty') as FormControl;
+        return this.uRegisterGroup.get('SpecialtyId') as FormControl;
     }
     public get AdviserControl(): FormControl {
-        return this.uRegisterGroup.get('Adviser') as FormControl;
+        return this.uRegisterGroup.get('AdviserId') as FormControl;
+    }
+    public get EducationFormControl(): FormControl {
+        return this.uRegisterGroup.get('EducationForm') as FormControl;
+    }
+    public get LoginGroup(): FormGroup {
+        return this.uRegisterGroup.get('User').get('Login') as FormGroup;
     }
 
-    public displayWithSpecialty(specialty: SpecialtyVM) {
-        return specialty ? specialty.Title : '';
-    }
-    public displayWithAdviser(adviser: AdviserListItemVM) {
-        return adviser ? adviser.Name : '';
+    public validateAdviserControl() {
+        if(this.AdviserControl.hasError('required')) {
+            return 'Необходимо выбрать научного руководителя';
+        }
     }
 
-    private _filterSpecialties(degrees: SpecialtyVM[], value: any): SpecialtyVM[] {
-        const filterValue = value.Title ? value.Title : value.toLowerCase();
-    
-        return degrees.filter(option => option.Title.toLowerCase().indexOf(filterValue) === 0);
+    private get LoginModel(): LoginVM {
+        let controlValue = _.cloneDeep(this.LoginGroup.value);
+
+        return {
+            Login: controlValue.Login,
+            Password: controlValue.passwords.Password,
+        }
     }
-    private _filterAdvisers(advisers: AdviserListItemVM[], value: any): AdviserListItemVM[] {
-        const filterValue = value.Name ? value.Name : value.toLowerCase();
-    
-        return advisers.filter(option => option.Name.toLowerCase().indexOf(filterValue) === 0);
+
+    private get EducationFormModel() {
+        return castEducationForm(this.EducationFormControl.value);
     }
 
     private initializeFormGroup() {
         this.uRegisterGroup = this.fb.group({
             EducationForm: [EducationForm.DAILY],
-            Specialty: [null],
-            Adviser: [null, [
+            SpecialtyId: [null],
+            AdviserId: [null, [
                 Validators.required,
             ]],
-            StartEducationDate: [null, [
-                Validators.required
-            ]],
-            FinishEducationDate: [null, [
-                Validators.required,
-            ]],
+            StartEducationDate: [null],
+            FinishEducationDate: [null],
         });
-
-        this.filteredSpecialties$ = combineLatest(this.SpecialtyControl.valueChanges.pipe(startWith("")), this.specialties$)
-            .pipe(map(([value, specialties]) => this._filterSpecialties(specialties, value)));
-        this.filteredAdvisers$ = combineLatest(this.AdviserControl.valueChanges.pipe(startWith("")), this.advisers$)
-            .pipe(map(([value, advisers]) => this._filterAdvisers(advisers, value)));
     }
 }

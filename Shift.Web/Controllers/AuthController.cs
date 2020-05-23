@@ -41,7 +41,7 @@ namespace Shift.Web.Controllers
 			return Ok(authContext);
 		}
 
-		[HttpPut]
+		[HttpPost]
 		[AllowAnonymous]
 		[Route("register/undergraduate")]
 		public IActionResult RegisterUndergraduate([FromBody] UndergraduateRegisterVM undergraduate)

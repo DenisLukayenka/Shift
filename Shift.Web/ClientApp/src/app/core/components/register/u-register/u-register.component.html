@@ -7,32 +7,45 @@
 
     <div class="width-full flex-justify">
         <mat-form-field class="width-full mr-2">
-            <input type="text"
-                placeholder="Специальность"
-                aria-label="Специальность"
-                matInput
-                formControlName="Specialty"
-                [matAutocomplete]="autoSpecialty">
-            <mat-autocomplete autoActiveFirstOption #autoSpecialty="matAutocomplete" [displayWith]="displayWithSpecialty" class="autocomplete-options-font">
-                <mat-option *ngFor="let specialty of specialties$ | async" [value]="specialty">
+            <mat-label>Специальность</mat-label>
+            <mat-select formControlName="SpecialtyId">
+                <mat-option *ngFor="let specialty of specialties$ | async" [value]="specialty.Id">
                     {{ specialty.Title }}
                 </mat-option>
-            </mat-autocomplete>
+            </mat-select>
         </mat-form-field>
         <mat-form-field class="width-full ml-2">
-            <input type="text"
-                placeholder="Руководитель"
-                aria-label="Руководитель"
-                matInput
-                formControlName="Adviser"
-                [matAutocomplete]="autoAdviser">
-            <mat-autocomplete autoActiveFirstOption #autoAdviser="matAutocomplete" [displayWith]="displayWithAdviser" class="autocomplete-options-font">
-                <mat-option *ngFor="let adviser of filteredAdvisers$ | async" [value]="adviser">
+            <mat-label>Руководитель</mat-label>
+            <mat-select formControlName="AdviserId">
+                <mat-option *ngFor="let adviser of advisers$ | async" [value]="adviser.EmployeeId">
                     {{ adviser.Name }}
                 </mat-option>
-            </mat-autocomplete>
+            </mat-select>
+            <mat-error *ngIf="AdviserControl.invalid">{{ validateAdviserControl() }}</mat-error>
         </mat-form-field>
     </div>
+    <div class="width-full flex-justify">
+        <mat-form-field class="width-full mr-2">
+            <mat-label>Дата начала обучения</mat-label>
+            <input matInput [matDatepicker]="startDateDatepicker" formControlName="StartEducationDate">
+            <mat-datepicker-toggle matSuffix [for]="startDateDatepicker"></mat-datepicker-toggle>
+            <mat-datepicker #startDateDatepicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="width-full ml-2 mr-2">
+            <mat-label>Дата окончания обучения</mat-label>
+            <input matInput [matDatepicker]="finishDateDatepicker" formControlName="FinishEducationDate">
+            <mat-datepicker-toggle matSuffix [for]="finishDateDatepicker"></mat-datepicker-toggle>
+            <mat-datepicker #finishDateDatepicker></mat-datepicker>
+        </mat-form-field>
+    </div>
+    <mat-form-field class="width-full">
+        <mat-label>Форма обучения</mat-label>
+        <mat-select formControlName="EducationForm">
+            <mat-option *ngFor="let edForm of educationForms" [value]="edForm">
+                {{ edForm }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
 
     <mat-divider></mat-divider>
     <div class="width-full action-footer">

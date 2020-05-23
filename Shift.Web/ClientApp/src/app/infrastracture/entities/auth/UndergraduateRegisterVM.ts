@@ -4,7 +4,7 @@ import { UserRegisterVM } from "./UserRegisterVM";
 export class UndergraduateRegisterVM {
     public User: UserRegisterVM;
 
-    public  EducationForm: EducationForm;
+    public  EducationForm: number;
 
     public SpecialtyId: number;
     public AdviserId: number;

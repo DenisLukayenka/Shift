@@ -4,20 +4,16 @@ import { castEducationForm } from "../../../utilities/castEducationForm";
 import { BasePostRequest } from "../../BasePostRequest";
 
 export class RegisterUReq extends BasePostRequest {
-    UViewModel: UndergraduateRegisterVM;
+    UndergraduateVM: UndergraduateRegisterVM;
 
     constructor(undergraduate: UndergraduateRegisterVM) {
         super();
-
-        this.UViewModel = undergraduate;
+        this.UndergraduateVM = undergraduate;
     }
 
     get Body (): any {
-        var element =_.assign({ EducationForm: castEducationForm(this.UViewModel.EducationForm) }, this.UViewModel);
-        return JSON.stringify(element);
+        return JSON.stringify(this.UndergraduateVM);
     }
 
-    get TargetReqUrl (): string {
-        return 'api/auth/register/undergraduate';
-    }
+    TargetReqUrl: string = 'api/auth/register/undergraduate';
 }
