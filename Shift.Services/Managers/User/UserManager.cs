@@ -65,9 +65,9 @@ namespace Shift.Services.Managers.User
 			return context;
 		}
 
-		public AuthResponse RegisterGraduate(GraduateViewModel graduate)
+		public AuthResponse RegisterGraduate(GraduateRegisterVM graduate)
 		{
-			var dbUser = this._repository.Users.FindByLoginPassword(graduate.Login, graduate.Password);
+			var dbUser = this._repository.Users.FindByLoginPassword(graduate.User.Login.Login, graduate.User.Login.Password);
 			var context = new AuthResponse();
 
 			if (dbUser == null)

@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { FormBuilder, FormGroup, FormArray } from "@angular/forms";
 import { GJournal } from "src/app/infrastracture/entities/gjournal/GJournal";
 import * as _ from 'lodash';
+import { isPropertyDefined } from "src/app/infrastracture/utilities/isPropertyDefined";
 
 @Injectable()
 export class GJHelperService {
@@ -12,19 +13,30 @@ export class GJHelperService {
     public generateFormGroup(journal: GJournal) {
         this.options = this.initJournal();
 
-        journal.EducationYears.forEach((phase, i) => {
-            this.addEducationYear();
-            phase.CalendarStages.forEach(s => this.addCalendarStage(i));
-            phase.ScienceActivities.forEach(s => this.addScienceActivity(i));
-            phase.Attestations.forEach(s => this.addAttestation(i));
-        });
-
-        journal.WorkPlans.forEach((plan, i) => {
-            this.addWorkPlan();
-            plan.WorkStages.forEach(() => this.addWorkStage(i));
-        })
-
-        this.options.patchValue(journal);
+        if (journal && journal.EducationYears) {
+            journal.EducationYears.forEach((phase, i) => {
+                this.addEducationYear();
+                if(phase.CalendarStages){
+                    phase.CalendarStages.forEach(s => this.addCalendarStage(i));
+                }
+                if(phase.ScienceActivities){
+                    phase.ScienceActivities.forEach(s => this.addScienceActivity(i));
+                }
+                if(phase.Attestations){
+                    phase.Attestations.forEach(s => this.addAttestation(i));
+                }
+            });
+        }
+        if(journal && journal.WorkPlans){
+            journal.WorkPlans.forEach((plan, i) => {
+                this.addWorkPlan();
+                if(plan.WorkStages) {
+                    plan.WorkStages.forEach(() => this.addWorkStage(i));
+                }
+            });
+        }
+        const truthyJournal = _.pickBy(journal, isPropertyDefined);
+        this.options.patchValue(truthyJournal);
 
         return this.options;
     }

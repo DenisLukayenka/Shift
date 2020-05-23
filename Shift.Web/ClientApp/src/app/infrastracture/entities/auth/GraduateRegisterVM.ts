@@ -1,6 +1,6 @@
 import { UserRegisterVM } from "./UserRegisterVM";
 
-export class UndergraduateRegisterVM {
+export class GraduateRegisterVM {
     public User: UserRegisterVM;
 
     public  EducationForm: number;

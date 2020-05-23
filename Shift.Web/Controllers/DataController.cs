@@ -11,7 +11,7 @@ namespace Shift.Web.Controllers
 {
 	[Route("api/data")]
 	[ApiController]
-	public class DataController: ControllerBase
+	public class DataController : ControllerBase
 	{
 		private readonly IRepositoryWrapper _repository;
 		private readonly IMapper _mapper;

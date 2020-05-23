@@ -3,11 +3,9 @@ using Shift.DAL.Models.UserModels.GraduateData;
 using Shift.DAL.Models.UserModels.GraduateData.JournalData;
 using Shift.DAL.Models.UserModels.UndergraduateData;
 using Shift.DAL.Models.UserModels.UserData;
-using Shift.Infrastructure.Models.ViewModels.Auth;
 using Shift.Infrastructure.Models.ViewModels.Journals;
 using Shift.Infrastructure.Models.ViewModels.Journals.GJournalData;
 using Shift.Infrastructure.Models.ViewModels.Users;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Shift.Infrastructure.Mappings
@@ -22,26 +20,11 @@ namespace Shift.Infrastructure.Mappings
 				.ForMember(dest => dest.ThesisCertification, opt => opt.MapFrom(src => src.ThesisCertification))
 				.ReverseMap();
 
-			CreateMap<GraduateViewModel, User>()
-				.ForMember(dest => dest.LoginData, opt => opt.MapFrom((src, dest) => new List<LoginInfo>()
-				{
-					new LoginInfo()
-					{
-						HashPassword = src.Password,
-						Login = src.Login,
-					}
-				}));
-
-			CreateMap<GraduateViewModel, Graduate>()
-				.ForMember(dest => dest.User, opt => opt.MapFrom(src => src))
-				.ForMember(dest => dest.ScienceAdviserId, opt => opt.MapFrom(src => src.AdviserId));
-
-
 			CreateMap<User, UserContext>()
 				.ForMember(dest => dest.Login, opt => opt.MapFrom((src, dest) => src.LoginData.FirstOrDefault()?.Login ?? ""))
 				.ForMember(dest => dest.Role, opt => opt.MapFrom((src, dest) => src.Role?.Caption ?? ""))
 				.ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
-				.ForMember(dest => dest.SpecifiedUserId, opt => opt.MapFrom((src, dest) => 
+				.ForMember(dest => dest.SpecifiedUserId, opt => opt.MapFrom((src, dest) =>
 				{
 					if (src.Undergraduate != null)
 					{
@@ -51,7 +34,7 @@ namespace Shift.Infrastructure.Mappings
 					{
 						return src.Graduate.GraduateId;
 					}
-					
+
 					return src.Employee?.EmployeeId;
 				}));
 

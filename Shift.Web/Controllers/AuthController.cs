@@ -9,7 +9,7 @@ namespace Shift.Web.Controllers
 {
 	[Route("api/auth")]
 	[ApiController]
-	public class AuthController: ControllerBase
+	public class AuthController : ControllerBase
 	{
 		private readonly IUserManager _userManager;
 		private readonly ITokenProvider _tokenProvider;
@@ -25,13 +25,13 @@ namespace Shift.Web.Controllers
 		[Route("login")]
 		public IActionResult Login([FromBody] LoginVM user)
 		{
-			if(user is null)
+			if (user is null)
 			{
 				return Ok(new { Alert = Config.BadRequest });
 			}
 			var authContext = this._userManager.Login(user);
 
-			if(authContext.User != null)
+			if (authContext.User != null)
 			{
 				authContext.Token = this._tokenProvider.GenerateToken(authContext.User.Login, authContext.User.Role);
 
@@ -46,13 +46,13 @@ namespace Shift.Web.Controllers
 		[Route("register/undergraduate")]
 		public IActionResult RegisterUndergraduate([FromBody] UndergraduateRegisterVM undergraduate)
 		{
-			if(undergraduate is null)
+			if (undergraduate is null)
 			{
 				return Ok(new { Alert = Config.BadRequest });
 			}
 
 			var authContext = this._userManager.RegisterUndergraduate(undergraduate);
-			if(authContext.User != null)
+			if (authContext.User != null)
 			{
 				authContext.Token = this._tokenProvider.GenerateToken(authContext.User.Login, authContext.User.Role);
 				return Ok(authContext);
@@ -61,10 +61,10 @@ namespace Shift.Web.Controllers
 			return Ok(authContext);
 		}
 
-		[HttpPut]
+		[HttpPost]
 		[AllowAnonymous]
 		[Route("register/graduate")]
-		public IActionResult RegisterGraduate([FromBody] GraduateViewModel graduate)
+		public IActionResult RegisterGraduate([FromBody] GraduateRegisterVM graduate)
 		{
 			if (graduate is null)
 			{

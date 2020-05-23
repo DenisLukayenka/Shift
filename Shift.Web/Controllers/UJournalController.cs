@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shift.Infrastructure;
 using Shift.Infrastructure.Models.SharedData;
 using Shift.Infrastructure.Models.ViewModels.Journals;
 using Shift.Services.Managers.Journals.UJournals;
@@ -24,7 +23,7 @@ namespace Shift.Web.Controllers
         {
             var journal = this._journalManager.FetchJournal(userId);
 
-            if(journal != null)
+            if (journal != null)
             {
                 return Ok(new { Journal = journal });
             }

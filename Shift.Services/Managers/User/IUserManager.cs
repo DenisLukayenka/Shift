@@ -6,7 +6,7 @@ namespace Shift.Services.Managers.User
 	{
 		AuthResponse Login(LoginVM user);
 		AuthResponse RegisterUndergraduate(UndergraduateRegisterVM undergraduate);
-		AuthResponse RegisterGraduate(GraduateViewModel graduate);
+		AuthResponse RegisterGraduate(GraduateRegisterVM graduate);
 		AuthResponse RegisterEmployee(EmployeeRegisterVM employee);
 
 		string FetchUserRole(int userId);

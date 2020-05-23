@@ -1,0 +1,55 @@
+<h3 class="form-header">Регистрация аспиранта</h3>
+<mat-error *ngIf="authAlert">{{ authAlert }}</mat-error>
+<mat-divider></mat-divider>
+<form [formGroup]="gRegisterGroup">
+    <pac-user-register (onUserRegisterConfigured)="addFormGroup('User', $event)"></pac-user-register>
+    <mat-divider></mat-divider>
+
+    <div class="width-full flex-justify">
+        <mat-form-field class="width-full mr-2">
+            <mat-label>Специальность</mat-label>
+            <mat-select formControlName="SpecialtyId">
+                <mat-option *ngFor="let specialty of specialties$ | async" [value]="specialty.Id">
+                    {{ specialty.Title }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="width-full ml-2">
+            <mat-label>Руководитель</mat-label>
+            <mat-select formControlName="AdviserId">
+                <mat-option *ngFor="let adviser of advisers$ | async" [value]="adviser.EmployeeId">
+                    {{ adviser.Name }}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="AdviserControl.invalid">{{ validateAdviserControl() }}</mat-error>
+        </mat-form-field>
+    </div>
+    <div class="width-full flex-justify">
+        <mat-form-field class="width-full mr-2">
+            <mat-label>Дата начала обучения</mat-label>
+            <input matInput [matDatepicker]="startDateDatepicker" formControlName="StartEducationDate">
+            <mat-datepicker-toggle matSuffix [for]="startDateDatepicker"></mat-datepicker-toggle>
+            <mat-datepicker #startDateDatepicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="width-full ml-2 mr-2">
+            <mat-label>Дата окончания обучения</mat-label>
+            <input matInput [matDatepicker]="finishDateDatepicker" formControlName="FinishEducationDate">
+            <mat-datepicker-toggle matSuffix [for]="finishDateDatepicker"></mat-datepicker-toggle>
+            <mat-datepicker #finishDateDatepicker></mat-datepicker>
+        </mat-form-field>
+    </div>
+    <mat-form-field class="width-full">
+        <mat-label>Форма обучения</mat-label>
+        <mat-select formControlName="EducationForm">
+            <mat-option *ngFor="let edForm of educationForms" [value]="edForm">
+                {{ edForm }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-divider></mat-divider>
+    <div class="width-full action-footer">
+        <button class="width-full mr-2" type="button" mat-raised-button (click)="resetTarget()">Назад</button>
+        <button class="width-full ml-2" type="button" mat-raised-button color="primary" (click)="submit()">Регистрация</button>
+    </div>
+</form>

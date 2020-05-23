@@ -1,6 +1,6 @@
-﻿using System.Linq;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Shift.Services.Managers.Employee;
+using System.Linq;
 
 namespace Shift.Web.Controllers
 {
@@ -21,7 +21,7 @@ namespace Shift.Web.Controllers
         {
             var undergraduates = this._employeeManager.GetUndergraduates(userId).ToList();
 
-            return Ok(new  { Undergraduates = undergraduates });
+            return Ok(new { Undergraduates = undergraduates });
         }
 
         [Route("graduates")]

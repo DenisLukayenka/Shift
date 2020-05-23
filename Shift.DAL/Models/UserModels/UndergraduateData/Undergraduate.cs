@@ -32,8 +32,6 @@ namespace Shift.DAL.Models.UserModels.UndergraduateData
 		public virtual ICollection<UndergraduateJournal> Journals { get; set; } = new List<UndergraduateJournal>()
 		{
 			new UndergraduateJournal()
-			{
-			}
 		};
 	}
 }
