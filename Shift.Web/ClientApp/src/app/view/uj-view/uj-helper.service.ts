@@ -15,9 +15,15 @@ export class UJHelperService {
 
         if(journal && journal.ReportResults) {
             journal.ReportResults.forEach(r => this.addReportResults());
+            if(journal.ReportResults.length === 0) {
+                this.addReportResults();
+            }
         }
         if(journal && journal.PreparationInfo && journal.PreparationInfo.ResearchWorks) {
             journal.PreparationInfo.ResearchWorks.forEach(w => this.addResearchWork());
+            if(journal.PreparationInfo.ResearchWorks.length === 0) {
+                this.addResearchWork();
+            }
         }
 
         const truthyJournal = _.pickBy(journal, isPropertyDefined);
@@ -28,6 +34,9 @@ export class UJHelperService {
 
     public initJournal(): FormGroup {
         return this.fb.group({
+            Id: [null],
+            UndergraduateId: [null],
+            PreparationInfoId: [null],
             PreparationInfo: this.fb.group({
                 PreparationInfoId: [''],
                 Topic: [''],
@@ -44,10 +53,11 @@ export class UJHelperService {
                 ResearchWorks: this.fb.array([]),
             }),
             ReportResults: this.fb.array([]),
+            ThesisCertificationId: [null],
             ThesisCertification: this.fb.group({
-                ThesisCertificationId: [''],
+                ThesisCertificationId: [null],
                 IsApproved: [false],
-                Mark: ['', [
+                Mark: [null, [
                     Validators.required,
                     Validators.pattern("^[1-9]|10")
                 ]],
@@ -63,7 +73,7 @@ export class UJHelperService {
             DepartmentHead: [''],
             Protocol: this.fb.group({
                 Date: [null],
-                Number: ['']
+                Number: [null]
             }),
         });
     }

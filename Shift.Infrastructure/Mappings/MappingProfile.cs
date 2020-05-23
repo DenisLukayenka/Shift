@@ -14,12 +14,6 @@ namespace Shift.Infrastructure.Mappings
 	{
 		public MappingProfile()
 		{
-			CreateMap<UndergraduateJournal, UJournal>()
-				.ForMember(dest => dest.PreparationInfo, opt => opt.MapFrom(src => src.PreparationInfo))
-				.ForMember(dest => dest.ReportResults, opt => opt.MapFrom(src => src.ReportResults))
-				.ForMember(dest => dest.ThesisCertification, opt => opt.MapFrom(src => src.ThesisCertification))
-				.ReverseMap();
-
 			CreateMap<User, UserContext>()
 				.ForMember(dest => dest.Login, opt => opt.MapFrom((src, dest) => src.LoginData.FirstOrDefault()?.Login ?? ""))
 				.ForMember(dest => dest.Role, opt => opt.MapFrom((src, dest) => src.Role?.Caption ?? ""))

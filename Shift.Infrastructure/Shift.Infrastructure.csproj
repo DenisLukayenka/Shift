@@ -13,4 +13,8 @@
     <ProjectReference Include="..\Shift.DAL\Shift.DAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\ViewModels\Journals\University\" />
+  </ItemGroup>
+
 </Project>

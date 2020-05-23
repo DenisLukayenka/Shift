@@ -62,6 +62,7 @@ export class AppEffects {
     appFailure$ = this.actions$.pipe(
         ofType<AppFailure>(AppActionTypes.AppFailure),
         tap(() => {
+            this.storage.clear();
             this.router.navigate([ErrorPage]);
         }),
         switchMap(() => [new ViewFinishLoading(), new ErrorPageNavigated()]),

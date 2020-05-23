@@ -1,8 +1,9 @@
-﻿using Shift.Infrastructure.Models.ViewModels.Journals.University;
-using System;
+﻿using System;
 
 namespace Shift.Infrastructure.Models.ViewModels.Journals.GJournalData
 {
+	using Shift.Infrastructure.Models.ViewModels.University;
+
 	public class AttestationVM
 	{
 		public int Id { get; set; }

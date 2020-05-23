@@ -32,11 +32,11 @@ namespace Shift.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] UJournal journal)
+        public IActionResult Post([FromBody] UJournalVM journal)
         {
-            this._journalManager.SaveJournal(journal);
+            var savedJournal = this._journalManager.SaveJournal(journal);
 
-            return Ok(new { Message = Config.SaveSuccess });
+            return Ok(new { Message = Config.SaveSuccess, Journal = savedJournal });
         }
     }
 }

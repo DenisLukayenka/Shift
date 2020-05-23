@@ -9,6 +9,7 @@ import { StorageService } from "src/app/services/storage/storage.service";
 import { UserIdKey } from "src/app/services/storage/StorageKeys";
 import { Observable } from "rxjs";
 import { selectViewLoading } from "src/app/core/store/app/app.state";
+import { Report } from "src/app/infrastracture/entities/ujournal/Report";
 
 @Component({
     selector: 'pac-uj-view',
@@ -29,8 +30,6 @@ export class UndergraduateJournalComponent implements OnInit {
         this.studentState.pipe(select(selectUJournal)).subscribe(result => {
             if(result) {
                 this.journalOptions = this.ujHelper.generateFormOptions(result);
-                this.ujHelper.addResearchWork();
-                this.ujHelper.addReportResults();
             }
         });
     }
@@ -44,7 +43,10 @@ export class UndergraduateJournalComponent implements OnInit {
         let formJournal = _.cloneDeep(this.journalOptions.value);
         let researchWorks = _.filter(formJournal.PreparationInfo.ResearchWorks, work => !!work.JobType && !!work.PresentationType);
         let mark = +formJournal.ThesisCertification.Mark;
-        let reportResults = _.filter(formJournal.ReportResults, result => !!result.Result);
+        let reportResults = _.filter(formJournal.ReportResults, result => !!result.Result).map((el: Report) => {
+            el.Protocol.Number = +el.Protocol.Number;
+            return el;
+        });
 
         formJournal.PreparationInfo.ResearchWorks = researchWorks;
         formJournal.ReportResults = reportResults;

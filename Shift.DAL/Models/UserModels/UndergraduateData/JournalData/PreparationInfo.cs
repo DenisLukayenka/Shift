@@ -29,7 +29,9 @@ namespace Shift.DAL.Models.UserModels.UndergraduateData.JournalData
 		public bool IsReseachSubmitted { get; set; } = false;
 		public bool IsResearchApproved { get; set; } = false;
 
-		public int? UndergraduateJournalId { get; set; }
+		public DateTime? ReseachSubmittedDate { get; set; }
+		public DateTime? ReseachApprovedDate { get; set; }
+
 		public virtual UndergraduateJournal UndergraduateJournal { get; set; }
 
 		public virtual ICollection<ResearchWork> ResearchWorks { get; set; } = new List<ResearchWork>();

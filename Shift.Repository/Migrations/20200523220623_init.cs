@@ -77,12 +77,39 @@ namespace Shift.Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PreparationInfo",
+                columns: table => new
+                {
+                    PreparationInfoId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Topic = table.Column<string>(nullable: true),
+                    Relevance = table.Column<string>(nullable: true),
+                    Objectives = table.Column<string>(nullable: true),
+                    ResearchProcedure = table.Column<string>(nullable: true),
+                    Additions = table.Column<string>(nullable: true),
+                    PreparationAdviser = table.Column<string>(nullable: true),
+                    ResearchAdviser = table.Column<string>(nullable: true),
+                    PreparationSubmittedDate = table.Column<DateTime>(nullable: true),
+                    PreparationApprovedDate = table.Column<DateTime>(nullable: true),
+                    IsPreparationSubmitted = table.Column<bool>(nullable: false),
+                    IsPreparationApproved = table.Column<bool>(nullable: false),
+                    IsReseachSubmitted = table.Column<bool>(nullable: false),
+                    IsResearchApproved = table.Column<bool>(nullable: false),
+                    ReseachSubmittedDate = table.Column<DateTime>(nullable: true),
+                    ReseachApprovedDate = table.Column<DateTime>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PreparationInfo", x => x.PreparationInfoId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Protocol",
                 columns: table => new
                 {
                     ProtocolId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Date = table.Column<DateTime>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: true),
                     Number = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -101,6 +128,40 @@ namespace Shift.Repository.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Roles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ThesisCertifications",
+                columns: table => new
+                {
+                    ThesisCertificationId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IsApproved = table.Column<bool>(nullable: false),
+                    Mark = table.Column<int>(nullable: false),
+                    ApproveDate = table.Column<DateTime>(nullable: true),
+                    DepartmentHead = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ThesisCertifications", x => x.ThesisCertificationId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ThesisPlans",
+                columns: table => new
+                {
+                    ThesisPlanId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Info = table.Column<string>(nullable: true),
+                    Adviser = table.Column<string>(nullable: true),
+                    AdviserApproveDate = table.Column<DateTime>(nullable: true),
+                    SubmitDate = table.Column<DateTime>(nullable: true),
+                    IsSubmitted = table.Column<bool>(nullable: false),
+                    IsApproved = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ThesisPlans", x => x.ThesisPlanId);
                 });
 
             migrationBuilder.CreateTable(
@@ -138,6 +199,64 @@ namespace Shift.Repository.Migrations
                         column: x => x.FacultyId,
                         principalTable: "Faculties",
                         principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ResearchWorks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    JobType = table.Column<string>(nullable: true),
+                    PresentationType = table.Column<string>(nullable: true),
+                    StartDate = table.Column<DateTime>(nullable: true),
+                    FinishDate = table.Column<DateTime>(nullable: true),
+                    PreparationInfoId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ResearchWorks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ResearchWorks_PreparationInfo_PreparationInfoId",
+                        column: x => x.PreparationInfoId,
+                        principalTable: "PreparationInfo",
+                        principalColumn: "PreparationInfoId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RationalInfo",
+                columns: table => new
+                {
+                    RationalInfoId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StudyPurpose = table.Column<string>(nullable: true),
+                    StudyObject = table.Column<string>(nullable: true),
+                    StudySubject = table.Column<string>(nullable: true),
+                    Justification = table.Column<string>(nullable: true),
+                    ThesisPublications = table.Column<string>(nullable: true),
+                    ReseachParticipation = table.Column<string>(nullable: true),
+                    DissertationTopic = table.Column<string>(nullable: true),
+                    DepartmentHead = table.Column<string>(nullable: true),
+                    DepartmentHeadApproveDate = table.Column<DateTime>(nullable: true),
+                    IsDepartmentHeadApproved = table.Column<bool>(nullable: false),
+                    TrainingHead = table.Column<string>(nullable: true),
+                    TrainingHeadApproveDate = table.Column<DateTime>(nullable: true),
+                    IsTrainingHeadApproved = table.Column<bool>(nullable: false),
+                    Adviser = table.Column<string>(nullable: true),
+                    AdviserApproveDate = table.Column<DateTime>(nullable: true),
+                    IsAdviserApproved = table.Column<bool>(nullable: false),
+                    ProtocolId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RationalInfo", x => x.RationalInfoId);
+                    table.ForeignKey(
+                        name: "FK_RationalInfo_Protocol_ProtocolId",
+                        column: x => x.ProtocolId,
+                        principalTable: "Protocol",
+                        principalColumn: "ProtocolId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -375,7 +494,9 @@ namespace Shift.Repository.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     GraduateId = table.Column<int>(nullable: true),
-                    UniversitySettingsId = table.Column<int>(nullable: true)
+                    UniversitySettingsId = table.Column<int>(nullable: true),
+                    RationalInfoId = table.Column<int>(nullable: true),
+                    ThesisPlanId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -385,6 +506,18 @@ namespace Shift.Repository.Migrations
                         column: x => x.GraduateId,
                         principalTable: "Graduates",
                         principalColumn: "GraduateId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_GraduateJournals_RationalInfo_RationalInfoId",
+                        column: x => x.RationalInfoId,
+                        principalTable: "RationalInfo",
+                        principalColumn: "RationalInfoId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_GraduateJournals_ThesisPlans_ThesisPlanId",
+                        column: x => x.ThesisPlanId,
+                        principalTable: "ThesisPlans",
+                        principalColumn: "ThesisPlanId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_GraduateJournals_UniversitySettings_UniversitySettingsId",
@@ -401,11 +534,25 @@ namespace Shift.Repository.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UndergraduateId = table.Column<int>(nullable: true),
-                    UniversitySettingsId = table.Column<int>(nullable: true)
+                    UniversitySettingsId = table.Column<int>(nullable: true),
+                    PreparationInfoId = table.Column<int>(nullable: true),
+                    ThesisCertificationId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UndergraduateJournal", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UndergraduateJournal_PreparationInfo_PreparationInfoId",
+                        column: x => x.PreparationInfoId,
+                        principalTable: "PreparationInfo",
+                        principalColumn: "PreparationInfoId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UndergraduateJournal_ThesisCertifications_ThesisCertificationId",
+                        column: x => x.ThesisCertificationId,
+                        principalTable: "ThesisCertifications",
+                        principalColumn: "ThesisCertificationId",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_UndergraduateJournal_Undergraduates_UndergraduateId",
                         column: x => x.UndergraduateId,
@@ -450,73 +597,6 @@ namespace Shift.Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RationalInfo",
-                columns: table => new
-                {
-                    RationalInfoId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    StudyPurpose = table.Column<string>(nullable: true),
-                    StudyObject = table.Column<string>(nullable: true),
-                    StudySubject = table.Column<string>(nullable: true),
-                    Justification = table.Column<string>(nullable: true),
-                    ThesisPublications = table.Column<string>(nullable: true),
-                    ReseachParticipation = table.Column<string>(nullable: true),
-                    DissertationTopic = table.Column<string>(nullable: true),
-                    DepartmentHead = table.Column<string>(nullable: true),
-                    DepartmentHeadApproveDate = table.Column<DateTime>(nullable: true),
-                    IsDepartmentHeadApproved = table.Column<bool>(nullable: false),
-                    TrainingHead = table.Column<string>(nullable: true),
-                    TrainingHeadApproveDate = table.Column<DateTime>(nullable: true),
-                    IsTrainingHeadApproved = table.Column<bool>(nullable: false),
-                    Adviser = table.Column<string>(nullable: true),
-                    AdviserApproveDate = table.Column<DateTime>(nullable: true),
-                    IsAdviserApproved = table.Column<bool>(nullable: false),
-                    ProtocolId = table.Column<int>(nullable: true),
-                    GraduateJournalId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RationalInfo", x => x.RationalInfoId);
-                    table.ForeignKey(
-                        name: "FK_RationalInfo_GraduateJournals_GraduateJournalId",
-                        column: x => x.GraduateJournalId,
-                        principalTable: "GraduateJournals",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_RationalInfo_Protocol_ProtocolId",
-                        column: x => x.ProtocolId,
-                        principalTable: "Protocol",
-                        principalColumn: "ProtocolId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ThesisPlans",
-                columns: table => new
-                {
-                    ThesisPlanId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Info = table.Column<string>(nullable: true),
-                    Adviser = table.Column<string>(nullable: true),
-                    AdviserApproveDate = table.Column<DateTime>(nullable: true),
-                    SubmitDate = table.Column<DateTime>(nullable: true),
-                    IsSubmitted = table.Column<bool>(nullable: false),
-                    IsApproved = table.Column<bool>(nullable: false),
-                    GraduateJournalId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ThesisPlans", x => x.ThesisPlanId);
-                    table.ForeignKey(
-                        name: "FK_ThesisPlans_GraduateJournals_GraduateJournalId",
-                        column: x => x.GraduateJournalId,
-                        principalTable: "GraduateJournals",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "WorkPlans",
                 columns: table => new
                 {
@@ -546,44 +626,12 @@ namespace Shift.Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PreparationInfo",
-                columns: table => new
-                {
-                    PreparationInfoId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Topic = table.Column<string>(nullable: true),
-                    Relevance = table.Column<string>(nullable: true),
-                    Objectives = table.Column<string>(nullable: true),
-                    ResearchProcedure = table.Column<string>(nullable: true),
-                    Additions = table.Column<string>(nullable: true),
-                    PreparationAdviser = table.Column<string>(nullable: true),
-                    ResearchAdviser = table.Column<string>(nullable: true),
-                    PreparationSubmittedDate = table.Column<DateTime>(nullable: true),
-                    PreparationApprovedDate = table.Column<DateTime>(nullable: true),
-                    IsPreparationSubmitted = table.Column<bool>(nullable: false),
-                    IsPreparationApproved = table.Column<bool>(nullable: false),
-                    IsReseachSubmitted = table.Column<bool>(nullable: false),
-                    IsResearchApproved = table.Column<bool>(nullable: false),
-                    UndergraduateJournalId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PreparationInfo", x => x.PreparationInfoId);
-                    table.ForeignKey(
-                        name: "FK_PreparationInfo_UndergraduateJournal_UndergraduateJournalId",
-                        column: x => x.UndergraduateJournalId,
-                        principalTable: "UndergraduateJournal",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ReportResults",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Date = table.Column<DateTime>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: true),
                     Result = table.Column<string>(nullable: true),
                     DepartmentHead = table.Column<string>(nullable: true),
                     UndergraduateJournalId = table.Column<int>(nullable: true),
@@ -600,29 +648,6 @@ namespace Shift.Repository.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_ReportResults_UndergraduateJournal_UndergraduateJournalId",
-                        column: x => x.UndergraduateJournalId,
-                        principalTable: "UndergraduateJournal",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ThesisCertifications",
-                columns: table => new
-                {
-                    ThesisCertificationId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    IsApproved = table.Column<bool>(nullable: false),
-                    Mark = table.Column<int>(nullable: false),
-                    ApproveDate = table.Column<DateTime>(nullable: false),
-                    DepartmentHead = table.Column<string>(nullable: true),
-                    UndergraduateJournalId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ThesisCertifications", x => x.ThesisCertificationId);
-                    table.ForeignKey(
-                        name: "FK_ThesisCertifications_UndergraduateJournal_UndergraduateJournalId",
                         column: x => x.UndergraduateJournalId,
                         principalTable: "UndergraduateJournal",
                         principalColumn: "Id",
@@ -740,29 +765,6 @@ namespace Shift.Repository.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "ResearchWorks",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    JobType = table.Column<string>(nullable: true),
-                    PresentationType = table.Column<string>(nullable: true),
-                    StartDate = table.Column<DateTime>(nullable: true),
-                    FinishDate = table.Column<DateTime>(nullable: true),
-                    PreparationInfoId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ResearchWorks", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ResearchWorks_PreparationInfo_PreparationInfoId",
-                        column: x => x.PreparationInfoId,
-                        principalTable: "PreparationInfo",
-                        principalColumn: "PreparationInfoId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Attestations_EducationPhaseId",
                 table: "Attestations",
@@ -830,6 +832,20 @@ namespace Shift.Repository.Migrations
                 column: "GraduateId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_GraduateJournals_RationalInfoId",
+                table: "GraduateJournals",
+                column: "RationalInfoId",
+                unique: true,
+                filter: "[RationalInfoId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GraduateJournals_ThesisPlanId",
+                table: "GraduateJournals",
+                column: "ThesisPlanId",
+                unique: true,
+                filter: "[ThesisPlanId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_GraduateJournals_UniversitySettingsId",
                 table: "GraduateJournals",
                 column: "UniversitySettingsId");
@@ -859,20 +875,6 @@ namespace Shift.Repository.Migrations
                 name: "IX_LoginInfo_UserId",
                 table: "LoginInfo",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PreparationInfo_UndergraduateJournalId",
-                table: "PreparationInfo",
-                column: "UndergraduateJournalId",
-                unique: true,
-                filter: "[UndergraduateJournalId] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RationalInfo_GraduateJournalId",
-                table: "RationalInfo",
-                column: "GraduateJournalId",
-                unique: true,
-                filter: "[GraduateJournalId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RationalInfo_ProtocolId",
@@ -905,18 +907,18 @@ namespace Shift.Repository.Migrations
                 column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ThesisCertifications_UndergraduateJournalId",
-                table: "ThesisCertifications",
-                column: "UndergraduateJournalId",
+                name: "IX_UndergraduateJournal_PreparationInfoId",
+                table: "UndergraduateJournal",
+                column: "PreparationInfoId",
                 unique: true,
-                filter: "[UndergraduateJournalId] IS NOT NULL");
+                filter: "[PreparationInfoId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ThesisPlans_GraduateJournalId",
-                table: "ThesisPlans",
-                column: "GraduateJournalId",
+                name: "IX_UndergraduateJournal_ThesisCertificationId",
+                table: "UndergraduateJournal",
+                column: "ThesisCertificationId",
                 unique: true,
-                filter: "[GraduateJournalId] IS NOT NULL");
+                filter: "[ThesisCertificationId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UndergraduateJournal_UndergraduateId",
@@ -980,9 +982,6 @@ namespace Shift.Repository.Migrations
                 name: "LoginInfo");
 
             migrationBuilder.DropTable(
-                name: "RationalInfo");
-
-            migrationBuilder.DropTable(
                 name: "ReportResults");
 
             migrationBuilder.DropTable(
@@ -992,22 +991,13 @@ namespace Shift.Repository.Migrations
                 name: "ScienceActivities");
 
             migrationBuilder.DropTable(
-                name: "ThesisCertifications");
-
-            migrationBuilder.DropTable(
-                name: "ThesisPlans");
-
-            migrationBuilder.DropTable(
                 name: "WorkStages");
 
             migrationBuilder.DropTable(
                 name: "Disciplines");
 
             migrationBuilder.DropTable(
-                name: "Protocol");
-
-            migrationBuilder.DropTable(
-                name: "PreparationInfo");
+                name: "UndergraduateJournal");
 
             migrationBuilder.DropTable(
                 name: "EducationPhases");
@@ -1016,16 +1006,25 @@ namespace Shift.Repository.Migrations
                 name: "WorkPlans");
 
             migrationBuilder.DropTable(
-                name: "UndergraduateJournal");
+                name: "PreparationInfo");
 
             migrationBuilder.DropTable(
-                name: "GraduateJournals");
+                name: "ThesisCertifications");
 
             migrationBuilder.DropTable(
                 name: "Undergraduates");
 
             migrationBuilder.DropTable(
+                name: "GraduateJournals");
+
+            migrationBuilder.DropTable(
                 name: "Graduates");
+
+            migrationBuilder.DropTable(
+                name: "RationalInfo");
+
+            migrationBuilder.DropTable(
+                name: "ThesisPlans");
 
             migrationBuilder.DropTable(
                 name: "UniversitySettings");
@@ -1035,6 +1034,9 @@ namespace Shift.Repository.Migrations
 
             migrationBuilder.DropTable(
                 name: "Specialties");
+
+            migrationBuilder.DropTable(
+                name: "Protocol");
 
             migrationBuilder.DropTable(
                 name: "AcademicDegrees");

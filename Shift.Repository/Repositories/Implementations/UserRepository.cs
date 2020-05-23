@@ -29,6 +29,7 @@ namespace Shift.Repository.Repositories.Implementations
 				.Include(u => u.Undergraduate)
 				.Include(u => u.Graduate)
 				.Include(u => u.Employee)
+				.Include(u => u.Role)
 				.FirstOrDefault(u => u.LoginData.FirstOrDefault(ld => ld.Login == login && ld.HashPassword == password) != null);
 		}
 	}

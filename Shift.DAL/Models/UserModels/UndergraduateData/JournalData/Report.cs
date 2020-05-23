@@ -12,7 +12,7 @@ namespace Shift.DAL.Models.UserModels.UndergraduateData.JournalData
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int Id { get; set; }
 
-		public DateTime Date { get; set; }
+		public DateTime? Date { get; set; }
 		public string Result { get; set; }
 		public string DepartmentHead { get; set; }
 

@@ -19,8 +19,11 @@ namespace Shift.DAL.Models.UserModels.GraduateData
 		public int? UniversitySettingsId { get; set; }
 		public virtual UniversitySettings UniversitySettings { get; set; }
 
-		public virtual RationalInfo RationalInfo { get; set; }
-		public virtual ThesisPlan ThesisPlan { get; set; }
+		public int? RationalInfoId { get; set; }
+		public virtual RationalInfo RationalInfo { get; set; } = new RationalInfo();
+
+		public int? ThesisPlanId { get; set; }
+		public virtual ThesisPlan ThesisPlan { get; set; } = new ThesisPlan();
 
 		public virtual ICollection<WorkPlan> WorkPlans { get; set; } = new List<WorkPlan>();
 		public virtual ICollection<EducationPhase> EducationYears { get; set; } = new List<EducationPhase>();

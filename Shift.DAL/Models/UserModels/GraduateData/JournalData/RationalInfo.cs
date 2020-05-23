@@ -37,7 +37,6 @@ namespace Shift.DAL.Models.UserModels.GraduateData.JournalData
 		public int? ProtocolId { get; set; }
 		public virtual Protocol Protocol { get; set; }
 
-		public int? GraduateJournalId { get; set; }
 		public virtual GraduateJournal GraduateJournal { get; set; }
 	}
 }

@@ -1,8 +1,9 @@
-﻿using Shift.Infrastructure.Models.ViewModels.Journals.University;
-using System;
+﻿using System;
 
 namespace Shift.Infrastructure.Models.ViewModels.Journals.GJournalData
 {
+	using Shift.Infrastructure.Models.ViewModels.University;
+
 	public class RationalInfoVM
 	{
 		public int RationalInfoId { get; set; }

@@ -19,7 +19,6 @@ namespace Shift.DAL.Models.UserModels.GraduateData.JournalData
 		public bool IsSubmitted { get; set; } = false;
 		public bool IsApproved { get; set; } = false;
 
-		public int? GraduateJournalId { get; set; }
 		public GraduateJournal GraduateJournal { get; set; }
 	}
 }

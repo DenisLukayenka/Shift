@@ -6,7 +6,7 @@
                 <button mat-stroked-button color="primary" (click)="submitJournal()">Сохранить</button>
             </div>
         </div>
-        <form [formGroup]="journalOptions" autocomplete="off">
+        <form *ngIf="journalOptions" [formGroup]="journalOptions" autocomplete="off">
             <div formGroupName="PreparationInfo">
                 <h4 class="chapter-header">
                     1. Программа подготовки магистерской диссертации
@@ -131,7 +131,7 @@
                             </mat-form-field>
                             <mat-form-field class="inline section-element">
                                 <mat-label>№ </mat-label>
-                                <input matInput formControlName="Number">
+                                <input type="number" matInput formControlName="Number">
                             </mat-form-field>
                         </div>
 

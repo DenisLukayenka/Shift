@@ -9,7 +9,7 @@ namespace Shift.Infrastructure.Models.ViewModels.Journals.UJournalData
 		public bool IsApproved { get; set; } = false;
 		public int Mark { get; set; }
 
-		public DateTime ApproveDate { get; set; }
+		public DateTime? ApproveDate { get; set; }
 
 		public string DepartmentHead { get; set; }
 	}

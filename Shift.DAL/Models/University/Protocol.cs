@@ -9,7 +9,7 @@ namespace Shift.DAL.Models.University
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int ProtocolId { get; set; }
-		public DateTime Date { get; set; } = DateTime.Now;
+		public DateTime? Date { get; set; }
 
 		public int Number { get; set; }
 	}
