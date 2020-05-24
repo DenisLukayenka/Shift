@@ -110,7 +110,7 @@ namespace Shift.Repository.Migrations
                     ProtocolId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateTime>(nullable: true),
-                    Number = table.Column<int>(nullable: false)
+                    Number = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

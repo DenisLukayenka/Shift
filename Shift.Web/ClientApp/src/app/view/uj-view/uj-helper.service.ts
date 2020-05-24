@@ -77,6 +77,8 @@ export class UJHelperService {
         return this.fb.group({
             Id: [null],
             Result: ['', Validators.required],
+            UndergraduateJournalId: [null],
+            ProtocolId: [null],
             Protocol: this.fb.group({
                 ProtocolId: [null],
                 Date: [null],

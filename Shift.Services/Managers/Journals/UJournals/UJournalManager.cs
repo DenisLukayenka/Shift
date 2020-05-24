@@ -38,23 +38,27 @@ namespace Shift.Services.Managers.Journals.UJournals
 
 		public UJournalVM SaveJournal(UJournalVM journal)
 		{
+			var journalDal = this._mapper.Map<UndergraduateJournal>(journal);
+
 			var researchWorks = this._mapper.Map<IEnumerable<ResearchWork>>(journal.PreparationInfo.ResearchWorks);
 			var reports = this._mapper.Map<IEnumerable<Report>>(journal.ReportResults);
 
-			var journalDal = this._mapper.Map<UndergraduateJournal>(journal);
-			journalDal.PreparationInfo.ResearchWorks = this._context.ResearchWorks
+			var researchWorksDb = this._context.ResearchWorks
 				.Where(w => w.PreparationInfoId == journalDal.PreparationInfoId)
 				.AsNoTracking()
 				.ToList();
-			journalDal.ReportResults = this._context.ReportResults
+			var reportResultsDb = this._context.ReportResults
 				.Where(r => r.UndergraduateJournalId == journalDal.Id)
 				.AsNoTracking()
 				.ToList();
 
 			this.SetModifiedOrAddedState(this._context, journalDal.PreparationInfo, journalDal.PreparationInfoId);
 
-			this.UpdateResearchWorksState(researchWorks, journalDal.PreparationInfo.ResearchWorks);
-			this.UpdateReportResultsState(reports, journalDal.ReportResults);
+			this.UpdateResearchWorksState(researchWorks, researchWorksDb);
+			this.UpdateReportResultsState(reports, reportResultsDb, journalDal.Id);
+
+			journalDal.ReportResults = reports.ToList();
+			journalDal.PreparationInfo.ResearchWorks = researchWorks.ToList();
 
 			this._context.SaveChanges();
 
@@ -84,7 +88,7 @@ namespace Shift.Services.Managers.Journals.UJournals
 				}
 			}
 		}
-		private void UpdateReportResultsState(IEnumerable<Report> reports, IEnumerable<Report> reportsDb)
+		private void UpdateReportResultsState(IEnumerable<Report> reports, IEnumerable<Report> reportsDb, int journalId)
 		{
 			foreach (var report in reportsDb)
 			{
@@ -95,10 +99,10 @@ namespace Shift.Services.Managers.Journals.UJournals
 			}
 			foreach (var report in reports)
 			{
-				this.SetModifiedOrAddedState(this._context, report.Protocol, report.ProtocolId);
-				var workDb = reportsDb.FirstOrDefault(w => w.Id == report.Id);
+				report.UndergraduateJournalId = journalId;
+				var reportDb = reportsDb.FirstOrDefault(w => w.Id == report.Id);
 
-				if (workDb == null || workDb.Id == 0)
+				if (reportDb == null || reportDb.Id == 0)
 				{
 					this._context.Entry(report).State = EntityState.Added;
 				}
@@ -106,6 +110,8 @@ namespace Shift.Services.Managers.Journals.UJournals
 				{
 					this._context.Entry(report).State = EntityState.Modified;
 				}
+
+				this.SetModifiedOrAddedState(this._context, report.Protocol, report.Protocol.ProtocolId);
 			}
 		}
 

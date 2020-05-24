@@ -7,7 +7,7 @@ namespace Shift.Infrastructure.Models.ViewModels.Journals.UJournalData
 		public int ThesisCertificationId { get; set; }
 
 		public bool IsApproved { get; set; } = false;
-		public int Mark { get; set; }
+		public int? Mark { get; set; }
 
 		public DateTime? ApproveDate { get; set; }
 

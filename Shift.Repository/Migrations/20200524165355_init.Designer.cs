@@ -10,7 +10,7 @@ using Shift.Repository.Database;
 namespace Shift.Repository.Migrations
 {
     [DbContext(typeof(CoreContext))]
-    [Migration("20200524091419_init")]
+    [Migration("20200524165355_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -96,8 +96,8 @@ namespace Shift.Repository.Migrations
                     b.Property<DateTime?>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Number")
-                        .HasColumnType("int");
+                    b.Property<string>("Number")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ProtocolId");
 

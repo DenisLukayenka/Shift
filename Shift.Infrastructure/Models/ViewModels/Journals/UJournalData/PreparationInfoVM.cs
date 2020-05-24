@@ -5,7 +5,7 @@ namespace Shift.Infrastructure.Models.ViewModels.Journals.UJournalData
 {
 	public class PreparationInfoVM
 	{
-		public int PreparationInfoId { get; set; }
+		public int? PreparationInfoId { get; set; }
 
 		public string Topic { get; set; }
 		public string Relevance { get; set; }

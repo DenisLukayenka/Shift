@@ -7,6 +7,6 @@ export class Report {
     public DepartmentHead: string;
     public UndergraduateJournalId?: number;
 
-    public ProtocolId: number;
+    public ProtocolId?: number;
     public Protocol: Protocol;
 }
