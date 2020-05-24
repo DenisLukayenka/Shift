@@ -1,14 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, EventEmitter, Output, OnChanges, SimpleChanges } from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { Store, select } from "@ngrx/store";
-import { StudentState, selectGJournal } from "src/app/core/store/student/student.state";
 import * as _ from 'lodash';
 import { GJHelperService } from "./gj-helper.service";
-import { Observable } from "rxjs";
-import { selectViewLoading } from "src/app/core/store/app/app.state";
-import { StorageService } from "src/app/services/storage/storage.service";
-import { UserIdKey } from "src/app/services/storage/StorageKeys";
-import { ExecuteLoadGJournal, SaveGJournal } from "src/app/core/store/student/student.actions";
+import { GJournal } from "src/app/infrastracture/entities/gjournal/GJournal";
+import { ViewMode } from "src/app/infrastracture/entities/ViewMode";
 
 @Component({
     selector: 'pac-gj-view',
@@ -16,33 +11,30 @@ import { ExecuteLoadGJournal, SaveGJournal } from "src/app/core/store/student/st
     templateUrl: './gj-view.component.html',
     providers: [GJHelperService]
 })
-export class GraduateJournalComponent implements OnInit {
-    public isViewLoading$: Observable<boolean>;
+export class GJViewComponent implements OnChanges {
     public journalOptions: FormGroup;
 
-    constructor(
-        private studentState: Store<StudentState>,
-        public gjHelper: GJHelperService,
-        private storage: StorageService,
-    ){
-        this.studentState.pipe(select(selectGJournal)).subscribe(result => {
-            if(result) {
-                this.journalOptions = this.gjHelper.generateFormGroup(result);
-                this.gjHelper.addWorkPlan();
-            }
-        });
-        this.isViewLoading$ = this.studentState.pipe(select(selectViewLoading));
-    }
+    @Input() public isViewLoading: boolean;
+    @Input() public journal: GJournal;
+    @Input() public viewMode?: ViewMode = ViewMode.Student;
 
-    public ngOnInit() {
-        let userId = +this.storage.getValue(UserIdKey);
-        this.studentState.dispatch(new ExecuteLoadGJournal({ userId: userId }));
+    @Output() public onJSaved: EventEmitter<GJournal> = new EventEmitter<GJournal>();
+    @Output() public onJDownload: EventEmitter<{}> = new EventEmitter<{}>();
+
+    constructor(public gjHelper: GJHelperService) { }
+
+    public ngOnChanges (changes: SimpleChanges): void {
+        if(changes && changes.journal && changes.journal.currentValue) {
+            this.journalOptions = this.gjHelper.generateFormGroup(changes.journal.currentValue);
+            this.gjHelper.addWorkPlan();
+        }
     }
 
     public submitJournal() {
-        let formJournal = _.cloneDeep(this.journalOptions.value);
-        
-        this.studentState.dispatch(new SaveGJournal({ journal: formJournal }));
-        console.log(formJournal);
+        this.onJSaved.emit(this.journalOptions.value);
+    }
+
+    public downloadJournal() {
+        this.onJDownload.emit();
     }
 }

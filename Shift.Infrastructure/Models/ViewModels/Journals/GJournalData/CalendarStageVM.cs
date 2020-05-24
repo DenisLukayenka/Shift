@@ -4,12 +4,12 @@ namespace Shift.Infrastructure.Models.ViewModels.Journals.GJournalData
 {
 	public class CalendarStageVM
 	{
-		public int Id { get; set; }
+		public int? Id { get; set; }
 
 		public string StageName { get; set; }
 
-		public DateTime StartDate { get; set; } = DateTime.Now;
-		public DateTime FinishDate { get; set; } = DateTime.Now;
+		public DateTime? StartDate { get; set; }
+		public DateTime? FinishDate { get; set; }
 
 		public string WaitResult { get; set; }
 

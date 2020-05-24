@@ -6,7 +6,7 @@ namespace Shift.Infrastructure.Models.ViewModels.Journals.GJournalData
 
 	public class RationalInfoVM
 	{
-		public int RationalInfoId { get; set; }
+		public int? RationalInfoId { get; set; }
 
 		public string StudyPurpose { get; set; }
 		public string StudyObject { get; set; }
@@ -30,6 +30,7 @@ namespace Shift.Infrastructure.Models.ViewModels.Journals.GJournalData
 		public DateTime? AdviserApproveDate { get; set; }
 		public bool IsAdviserApproved { get; set; } = false;
 
+		public int? ProtocolId { get; set; }
 		public virtual ProtocolVM Protocol { get; set; }
 
 		public int? GraduateJournalId { get; set; }

@@ -3,7 +3,12 @@
         <div class="flex-column-center">
             <div>
                 <h3 class="form-header inline mr-3">Индивидуальный план магистранта</h3>
-                <button mat-stroked-button color="primary" (click)="submitJournal()">Сохранить</button>
+                <button mat-icon-button (click)="submitJournal()">
+                    <mat-icon>save</mat-icon>
+                </button>
+                <button mat-icon-button (click)="downloadJournal()">
+                    <mat-icon>get_app</mat-icon>
+                </button>
             </div>
         </div>
         <form *ngIf="journalOptions" [formGroup]="journalOptions" autocomplete="off">

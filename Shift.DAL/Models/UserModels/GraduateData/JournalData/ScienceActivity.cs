@@ -10,8 +10,8 @@ namespace Shift.DAL.Models.UserModels.GraduateData.JournalData
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int Id { get; set; }
 
-		public DateTime StartDate { get; set; }
-		public DateTime FinishDate { get; set; }
+		public DateTime? StartDate { get; set; }
+		public DateTime? FinishDate { get; set; }
 
 		public string Title { get; set; }
 		public string Address { get; set; }

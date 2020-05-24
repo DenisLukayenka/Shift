@@ -4,7 +4,7 @@ namespace Shift.Infrastructure.Models.ViewModels.Journals.GJournalData
 {
 	public class ThesisPlanVM
 	{
-		public int ThesisPlanId { get; set; }
+		public int? ThesisPlanId { get; set; }
 
 		public string Info { get; set; }
 		public string Adviser { get; set; }

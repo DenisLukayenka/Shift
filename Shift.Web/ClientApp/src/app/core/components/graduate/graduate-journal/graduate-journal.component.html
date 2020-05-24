@@ -1,6 +1,7 @@
-<pac-uj-view 
+<pac-gj-view 
     [isViewLoading]="isViewLoading$ | async"
     [journal]="journal$ | async"
     [viewMode]="ViewModes.Student"
-    (onJSaved)="updateUJornal($event)"
-></pac-uj-view>
+    (onJSaved)="updateJornal($event)"
+    (onJDownload)="downloadJournal($event)"
+></pac-gj-view>

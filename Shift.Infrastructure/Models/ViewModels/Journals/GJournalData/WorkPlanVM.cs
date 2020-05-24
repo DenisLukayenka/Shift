@@ -5,7 +5,7 @@ namespace Shift.Infrastructure.Models.ViewModels.Journals.GJournalData
 {
 	public class WorkPlanVM
 	{
-		public int WorkPlanId { get; set; }
+		public int? WorkPlanId { get; set; }
 
 		public bool IsSubmitted { get; set; } = false;
 

@@ -35,8 +35,11 @@ export class GJHelperService {
                 }
             });
         }
-        const truthyJournal = _.pickBy(journal, isPropertyDefined);
-        this.options.patchValue(truthyJournal);
+        const truthyRationalInfo = _.pickBy(journal.RationalInfo, isPropertyDefined);
+        const truthyJournal = _.pickBy(journal, isPropertyDefined) as GJournal;
+        const updatedTruthyJournal = _.assign(truthyJournal, { RationalInfo: truthyRationalInfo });
+
+        this.options.patchValue(updatedTruthyJournal);
 
         return this.options;
     }
@@ -45,44 +48,42 @@ export class GJHelperService {
         return this.fb.group({
             Id: [null],
             RationalInfo: this.fb.group({
-                RationalInfoId: [''],
-                StudyPurpose: [''],
-                StudyObject: [''],
-                StudySubject: [''],
-                Justification: [''],
+                RationalInfoId: [null],
+                StudyPurpose: [null],
+                StudyObject: [null],
+                StudySubject: [null],
+                Justification: [null],
 
-                ThesisPublications: [''],
-                ResearchParticipation: [''],
-                DissertationTopic: [''],
+                ThesisPublications: [null],
+                ResearchParticipation: [null],
+                DissertationTopic: [null],
 
-                DepartmentHead: [''],
+                DepartmentHead: [null],
                 DepartmentHeadApproveDate: [null],
                 IsDepartmentHeadApproved: [false],
 
-                TrainingHead: [''],
+                TrainingHead: [null],
                 TrainingHeadApproveDate: [null],
                 IsTrainingHeadApproved: [false],
 
-                Adviser: [''],
+                Adviser: [null],
                 AdviserApproveDate: [null],
                 IsAdviserApproved: [false],
 
-                Protocol: this.fb.group({
-                    Date: [null],
-                    Number: [''],
-                }),
+                ProtocolId: [null],
+                Protocol: this.initProtocol(),
 
-                GraduateJournalId: [''],
+                GraduateJournalId: [null],
             }),
             ThesisPlan: this.fb.group({
-                ThesisPlanId: [''],
-                Info: [''],
-                Adviser: [''],
+                ThesisPlanId: [null],
+                Info: [null],
+                Adviser: [null],
                 AdviserApproveDate: [null],
                 SubmitDate: [null],
                 IsSubmitted: [false],
                 IsApproved: [false],
-                GraduateJournalId: [''],
+                GraduateJournalId: [null],
             }),
             WorkPlans: this.fb.array([]),
             EducationYears: this.fb.array([]),
@@ -90,49 +91,49 @@ export class GJHelperService {
     }
     public initWorkStage(): FormGroup {
         return this.fb.group({
-            Id: [''],
-            JobInfo: [''],
+            Id: [null],
+            JobInfo: [null],
             StartDate: [null],
             FinishDate: [null],
             SubmitDate: [null],
             ApproveDate: [null],
             IsSubmitted: [false],
             IsApproved: [false],
-            Note: [''],
-            WorkPlanId: [''],
+            Note: [null],
+            WorkPlanId: [null],
         });
     }
     public initWorkPlan(): FormGroup {
         return this.fb.group({
-            WorkPlanId: [''],
+            WorkPlanId: [null],
             IsSubmitted: [false],
             SubmitDate: [null],
 
-            Adviser: [''],
+            Adviser: [null],
             AdviserApproveDate: [null],
             IsAdviserApproved: [false],
 
-            TrainingHead: [''],
+            TrainingHead: [null],
             TrainingHeadApproveDate: [null],
             IsTrainingHeadApproved: [false],
 
-            FinalCertification: [''],
-            CouncilNumber: [''],
-            GraduateJournalId: [''],
+            FinalCertification: [null],
+            CouncilNumber: [null],
+            GraduateJournalId: [null],
             WorkStages: this.fb.array([])
         })
     }
     public initEducationPhase(): FormGroup {
         return this.fb.group({
-            Id: [''],
-            TripsInternships: [''],
-            SubWorks: [''],
-            Publications: [''],
-            ScienceParticipations: [''],
-            SubResearchResults: [''],
-            JournalId: [''],
+            Id: [null],
+            TripsInternships: [null],
+            SubWorks: [null],
+            Publications: [null],
+            ScienceParticipations: [null],
+            SubResearchResults: [null],
+            JournalId: [null],
 
-            Adviser: [''],
+            Adviser: [null],
             AdviserApproveDate: [null],
             IsAdviserApproved: [false],
 
@@ -146,52 +147,53 @@ export class GJHelperService {
     }
     public initCalendarStage(): FormGroup {
         return this.fb.group({
-            Id: [''],
-            StageName: [''],
+            Id: [null],
+            StageName: [null],
             StartDate: [null],
             FinishDate: [null],
-            WaitResult: [''],
-            OutcomeResult: [''],
-            EducationPhaseId: [''],
+            WaitResult: [null],
+            OutcomeResult: [null],
+            EducationPhaseId: [null],
         });
     }
     public initScienceActivity(): FormGroup {
         return this.fb.group({
-            Id: [''],
+            Id: [null],
             StartDate: [null],
             FinishDate: [null],
-            Title: [''],
-            Address: [''],
-            PlanResult: [''],
-            EducationPhaseId: [''],
+            Title: [null],
+            Address: [null],
+            PlanResult: [null],
+            EducationPhaseId: [null],
         });
     }
     public initAttestation(): FormGroup {
         return this.fb.group({
-            Id: [''],
-            AttestationResult: [''],
+            Id: [null],
+            AttestationResult: [null],
 
-            Adviser: [''],
+            Adviser: [null],
             AdviserApproveDate: [null],
             IsAdviserApproved: [false],
 
-            DepartmentHead: [''],
+            DepartmentHead: [null],
             DepartmentHeadApproveDate: [null],
             IsDepartmentHeadApproved: [false],
 
-            TrainingHead: [''],
+            TrainingHead: [null],
             TrainingHeadApproveDate: [null],
             IsTrainingHeadApproved: [false],
 
+            ProtocolId: [null],
             Protocol: this.initProtocol(),
-            EducationPhaseId: [''],
+            EducationPhaseId: [null],
         });
     }
     public initProtocol(): FormGroup {
         return this.fb.group({
             ProtocolId: [null],
             Date: [null],
-            Number: [''],
+            Number: [null],
         });
     }
 
@@ -225,28 +227,38 @@ export class GJHelperService {
         control.push(this.initAttestation());
     }
 
-    get getWorkPlansFormControls() {
+    get WorkPlansFormControls() {
         const control = this.options.get('WorkPlans') as FormArray;
         return control;
     }
 
-    get getEducationYearsFormControls() {
+    get EducationYearsFormControls() {
         const control = this.options.get('EducationYears') as FormArray;
         return control;
     }
 
-    get getWorkStagesFormControls() {
+    get WorkStagesFormControls() {
         const control = this.options.get('WorkPlans').get('WorkStages') as FormArray;
         return control;
     }
 
-    get getScienceActivitiesFormControls() {
+    get ScienceActivitiesFormControls() {
         const control = this.options.get('EducationYears').get('ScienceActivities') as FormArray;
         return control;
     }
 
-    get getAttestationsFormControls() {
+    get AttestationsFormControls() {
         const control = this.options.get('EducationYears').get('Attestations') as FormArray;
+        return control;
+    }
+
+    get RationalInfoControl() {
+        const control = this.options.get('RationalInfo') as FormGroup;
+        return control;
+    }
+
+    get ThesisPlanControl() {
+        const control = this.options.get('ThesisPlan') as FormGroup;
         return control;
     }
 

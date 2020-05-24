@@ -6,7 +6,7 @@ namespace Shift.Infrastructure.Models.ViewModels.Journals.GJournalData
 
 	public class AttestationVM
 	{
-		public int Id { get; set; }
+		public int? Id { get; set; }
 
 		public string AttestationResult { get; set; }
 
@@ -22,6 +22,7 @@ namespace Shift.Infrastructure.Models.ViewModels.Journals.GJournalData
 		public DateTime? TrainingHeadApproveDate { get; set; }
 		public bool IsTrainingHeadApproved { get; set; } = false;
 
+		public int? ProtocolId { get; set; }
 		public virtual ProtocolVM Protocol { get; set; }
 
 		public int? EducationPhaseId { get; set; }

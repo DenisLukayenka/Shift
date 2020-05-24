@@ -5,7 +5,7 @@ namespace Shift.Infrastructure.Models.ViewModels.Journals.GJournalData
 {
 	public class EducationPhaseVM
 	{
-		public int Id { get; set; }
+		public int? Id { get; set; }
 
 		public string TripsInternships { get; set; }
 		public string SubWorks { get; set; }

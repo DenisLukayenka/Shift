@@ -1,9 +1,14 @@
-<div *ngIf="!(isViewLoading$ | async)" class="flex-column-center">
+<div *ngIf="!isViewLoading" class="flex-column-center">
     <div class="container journal-container journal-border">
         <div class="flex-column-center">
             <div>
                 <h3 class="form-header inline mr-3">Индивидуальный план аспиранта</h3>
-                <button mat-stroked-button color="primary" (click)="submitJournal()">Сохранить</button>
+                <button mat-icon-button (click)="submitJournal()">
+                    <mat-icon>save</mat-icon>
+                </button>
+                <button mat-icon-button (click)="downloadJournal()">
+                    <mat-icon>get_app</mat-icon>
+                </button>
             </div>
         </div>
         
@@ -59,9 +64,9 @@
 
                     <mat-form-field class="inline section-element">
                         <mat-label>от</mat-label>
-                        <input matInput [matDatepicker]="protocolDatepicker" formControlName="Date">
-                        <mat-datepicker-toggle matSuffix [for]="protocolDatepicker"></mat-datepicker-toggle>
-                        <mat-datepicker #protocolDatepicker></mat-datepicker>
+                        <input matInput [matDatepicker]="protocolRationalInfoDatepicker" formControlName="Date">
+                        <mat-datepicker-toggle matSuffix [for]="protocolRationalInfoDatepicker"></mat-datepicker-toggle>
+                        <mat-datepicker #protocolRationalInfoDatepicker></mat-datepicker>
                     </mat-form-field>
                     <mat-form-field class="inline section-element">
                         <mat-label>№ </mat-label>
@@ -129,7 +134,7 @@
                 </div>
             </div>
 
-            <ng-container formArrayName="WorkPlans" *ngFor="let group of gjHelper.getWorkPlansFormControls.controls; let i=index">
+            <ng-container formArrayName="WorkPlans" *ngFor="let group of gjHelper.WorkPlansFormControls.controls; let i=index">
                 <div [formGroupName]='i'>
                     <div class="flex-column-center">
                         <h4 class="chapter-header">
@@ -247,7 +252,7 @@
                     </mat-grid-list>
                 </div>
             </ng-container>
-            <ng-container formArrayName="EducationYears" *ngFor="let group of gjHelper.getEducationYearsFormControls.controls; let i=index">
+            <ng-container formArrayName="EducationYears" *ngFor="let group of gjHelper.EducationYearsFormControls.controls; let i=index">
                 <div [formGroupName]='i'>
                     <div class="flex-column-center">
                         <h4 class="chapter-header">

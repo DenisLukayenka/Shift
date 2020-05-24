@@ -1,8 +1,7 @@
 import { Component, Output, EventEmitter, Input, OnChanges, SimpleChanges } from "@angular/core";
-import { FormGroup, FormControl } from "@angular/forms";
+import { FormGroup } from "@angular/forms";
 import * as _ from 'lodash';
 import { UJHelperService } from "./uj-helper.service";
-import { Report } from "src/app/infrastracture/entities/ujournal/Report";
 import { UJournal } from "src/app/infrastracture/entities/ujournal/UJournal";
 import { ViewMode } from "src/app/infrastracture/entities/ViewMode";
 
@@ -19,7 +18,8 @@ export class UJViewComponent implements OnChanges {
     @Input() public journal: UJournal;
     @Input() public viewMode?: ViewMode = ViewMode.Student;
 
-    @Output() public onUJSaved: EventEmitter<any> = new EventEmitter<any>();
+    @Output() public onJSaved: EventEmitter<UJournal> = new EventEmitter<UJournal>();
+    @Output() public onJDownload: EventEmitter<{}> = new EventEmitter<{}>();
     
     constructor(public ujHelper: UJHelperService) {}
 
@@ -39,6 +39,10 @@ export class UJViewComponent implements OnChanges {
         formJournal.ReportResults = reportResults;
         formJournal.ThesisCertification.Mark = mark;
 
-        this.onUJSaved.emit(formJournal);
+        this.onJSaved.emit(formJournal);
+    }
+
+    public downloadJournal() {
+        this.onJDownload.emit();
     }
 }
