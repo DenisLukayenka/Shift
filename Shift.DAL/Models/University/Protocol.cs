@@ -11,6 +11,6 @@ namespace Shift.DAL.Models.University
 		public int ProtocolId { get; set; }
 		public DateTime? Date { get; set; }
 
-		public int Number { get; set; }
+		public string Number { get; set; }
 	}
 }

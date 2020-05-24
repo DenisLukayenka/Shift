@@ -39,23 +39,22 @@ namespace Shift.Services.Managers.Journals.UJournals
 		public UJournalVM SaveJournal(UJournalVM journal)
 		{
 			var researchWorks = this._mapper.Map<IEnumerable<ResearchWork>>(journal.PreparationInfo.ResearchWorks);
+			var reports = this._mapper.Map<IEnumerable<Report>>(journal.ReportResults);
 
 			var journalDal = this._mapper.Map<UndergraduateJournal>(journal);
 			journalDal.PreparationInfo.ResearchWorks = this._context.ResearchWorks
 				.Where(w => w.PreparationInfoId == journalDal.PreparationInfoId)
 				.AsNoTracking()
 				.ToList();
+			journalDal.ReportResults = this._context.ReportResults
+				.Where(r => r.UndergraduateJournalId == journalDal.Id)
+				.AsNoTracking()
+				.ToList();
 
 			this.SetModifiedOrAddedState(this._context, journalDal.PreparationInfo, journalDal.PreparationInfoId);
 
 			this.UpdateResearchWorksState(researchWorks, journalDal.PreparationInfo.ResearchWorks);
-			this.SetModifiedOrAddedState(this._context, journalDal.ThesisCertification, journalDal.ThesisCertificationId);
-
-			foreach (var report in journalDal.ReportResults)
-			{
-				this.SetModifiedOrAddedState(this._context, report, report.Id);
-				this.SetModifiedOrAddedState(this._context, report.Protocol, report.ProtocolId);
-			}
+			this.UpdateReportResultsState(reports, journalDal.ReportResults);
 
 			this._context.SaveChanges();
 
@@ -82,6 +81,30 @@ namespace Shift.Services.Managers.Journals.UJournals
 				else
 				{
 					this._context.Entry(work).State = EntityState.Modified;
+				}
+			}
+		}
+		private void UpdateReportResultsState(IEnumerable<Report> reports, IEnumerable<Report> reportsDb)
+		{
+			foreach (var report in reportsDb)
+			{
+				if (reports.FirstOrDefault(w => w.Id == report.Id) == null)
+				{
+					this._context.Entry(report).State = EntityState.Deleted;
+				}
+			}
+			foreach (var report in reports)
+			{
+				this.SetModifiedOrAddedState(this._context, report.Protocol, report.ProtocolId);
+				var workDb = reportsDb.FirstOrDefault(w => w.Id == report.Id);
+
+				if (workDb == null || workDb.Id == 0)
+				{
+					this._context.Entry(report).State = EntityState.Added;
+				}
+				else
+				{
+					this._context.Entry(report).State = EntityState.Modified;
 				}
 			}
 		}

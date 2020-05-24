@@ -9,13 +9,17 @@ export class PreparationInfo {
     Additions: string;
     PreparationAdviser: string;
     ResearchAdviser: string;
+    UndergraduateJournalId: number;
+
     PreparationSubmittedDate?: Date;
     PreparationApprovedDate?: Date;
     IsPreparationSubmitted: boolean;
     IsPreparationApproved: boolean;
+
+    ReseachSubmittedDate: Date;
+    ReseachApprovedDate: Date;
     IsResearchSubmitted: boolean;
     IsResearchApproved: boolean;
-    UndergraduateJournalId: number;
 
     ResearchWorks: ResearchWork[];
 }

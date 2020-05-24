@@ -25,6 +25,9 @@ namespace Shift.Infrastructure.Models.ViewModels.Journals.UJournalData
 		public bool IsReseachSubmitted { get; set; } = false;
 		public bool IsResearchApproved { get; set; } = false;
 
+		public DateTime? ReseachSubmittedDate { get; set; }
+		public DateTime? ReseachApprovedDate { get; set; }
+
 		public virtual ICollection<ResearchWorkVM> ResearchWorks { get; set; } = new List<ResearchWorkVM>();
 	}
 }

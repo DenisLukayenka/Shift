@@ -33,20 +33,12 @@ export class UJViewComponent implements OnChanges {
         let formJournal = _.cloneDeep(this.journalOptions.value) as UJournal;
         let researchWorks = _.filter(formJournal.PreparationInfo.ResearchWorks, work => !!work.JobType && !!work.PresentationType);
         let mark = +formJournal.ThesisCertification.Mark;
-        let reportResults = _.filter(formJournal.ReportResults, result => !!result.Result).map((el: Report) => {
-            el.Protocol.Number = +el.Protocol.Number;
-            return el;
-        });
+        let reportResults = _.filter(formJournal.ReportResults, result => !!result.Result);
 
         formJournal.PreparationInfo.ResearchWorks = researchWorks;
         formJournal.ReportResults = reportResults;
         formJournal.ThesisCertification.Mark = mark;
 
         this.onUJSaved.emit(formJournal);
-    }
-
-    public submitPreparation() {
-        const control = this.journalOptions.get('PreparationInfo').get('PreparationSubmittedDate') as FormControl;
-        control.setValue(new Date());
     }
 }

@@ -38,26 +38,20 @@
                     <textarea  class="non-scrollable-textarea" cdkTextareaAutosize cdkAutosizeMinRows="2" matInput formControlName="Additions"></textarea>
                 </mat-form-field>
 
-                <div class="flex-horizontal">
-                    <mat-form-field class="width-full section-element">
-                        <mat-label>Научный руководитель:</mat-label>
-                        <input matInput [matDatepicker]="preparationEmpDatepicker" id="PreparationApprovedDate" formControlName="PreparationApprovedDate">
-                        <mat-datepicker-toggle matSuffix [for]="preparationEmpDatepicker"></mat-datepicker-toggle>
-                        <mat-datepicker #preparationEmpDatepicker></mat-datepicker>
-                    </mat-form-field>
+                <mat-form-field class="section-element">
+                    <mat-label>Научный руководитель:</mat-label>
+                    <input matInput [matDatepicker]="preparationEmpDatepicker" id="PreparationApprovedDate" formControlName="PreparationApprovedDate">
+                    <mat-datepicker-toggle matSuffix [for]="preparationEmpDatepicker"></mat-datepicker-toggle>
+                    <mat-datepicker #preparationEmpDatepicker></mat-datepicker>
+                </mat-form-field>
 
-                    <mat-form-field class="width-full section-element">
-                        <mat-label>Магистрант:</mat-label>
-                        <input matInput [matDatepicker]="preparationUDatepicker" id="PreparationSubmittedDate" formControlName="PreparationSubmittedDate">
-                        <mat-datepicker-toggle matSuffix [for]="preparationUDatepicker"></mat-datepicker-toggle>
-                        <mat-datepicker #preparationUDatepicker></mat-datepicker>
-                    </mat-form-field>
-                    <button type="button" mat-mini-fab color="primary" (click)='submitPreparation()'>
-                        <mat-icon>
-                            done
-                        </mat-icon>
-                    </button>
-                </div>
+                <mat-form-field class="section-element">
+                    <mat-label>Магистрант:</mat-label>
+                    <input matInput [matDatepicker]="preparationUDatepicker" id="PreparationSubmittedDate" formControlName="PreparationSubmittedDate">
+                    <mat-datepicker-toggle matSuffix [for]="preparationUDatepicker"></mat-datepicker-toggle>
+                    <mat-datepicker #preparationUDatepicker></mat-datepicker>
+                </mat-form-field>
+
                 <h5 class="section-header">
                     Перечень мероприятий по осуществлению научно-исследовательской работы
                 </h5>
@@ -106,6 +100,20 @@
                 <div class="action-container">
                     <button type="button" mat-raised-button (click)="ujHelper.addResearchWork()">Добавить мероприятие</button>
                 </div>
+
+                <mat-form-field class="section-element">
+                    <mat-label>Научный руководитель:</mat-label>
+                    <input matInput [matDatepicker]="reseachApprovedDateDatepicker" id="ReseachApprovedDate" formControlName="ReseachApprovedDate">
+                    <mat-datepicker-toggle matSuffix [for]="reseachApprovedDateDatepicker"></mat-datepicker-toggle>
+                    <mat-datepicker #reseachApprovedDateDatepicker></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field class="section-element">
+                    <mat-label>Магистрант:</mat-label>
+                    <input matInput [matDatepicker]="reseachSubmittedDateDatepicker" id="ReseachSubmittedDate" formControlName="ReseachSubmittedDate">
+                    <mat-datepicker-toggle matSuffix [for]="reseachSubmittedDateDatepicker"></mat-datepicker-toggle>
+                    <mat-datepicker #reseachSubmittedDateDatepicker></mat-datepicker>
+                </mat-form-field>
             </div>
             <div>
                 <mat-divider class="chapter-divider"></mat-divider>
@@ -131,19 +139,7 @@
                             </mat-form-field>
                             <mat-form-field class="inline section-element">
                                 <mat-label>№ </mat-label>
-                                <input type="number" matInput formControlName="Number">
-                            </mat-form-field>
-                        </div>
-
-                        <div class="inline-fields">
-                            <mat-form-field class="inline section-element">
-                                <mat-label>Заведующий кафедрой</mat-label>
-                                <input matInput formControlName="DepartmentHead">
-                            </mat-form-field>
-                            <mat-form-field class="inline section-element">
-                                <input matInput [matDatepicker]="reportDatepicker" formControlName="Date">
-                                <mat-datepicker-toggle matSuffix [for]="reportDatepicker"></mat-datepicker-toggle>
-                                <mat-datepicker #reportDatepicker></mat-datepicker>
+                                <input matInput formControlName="Number">
                             </mat-form-field>
                         </div>
                     </div>
@@ -156,15 +152,11 @@
                 </h5>
                 <div>
                     <mat-checkbox class="block-element" formControlName="IsApproved">Магистерская диссертация защищена</mat-checkbox>
-                    <mat-form-field class="section-element">
-                        <mat-label>Оценка</mat-label>
-                        <input matInput formControlName="Mark">
-                    </mat-form-field>
                 </div>
                 <div class="inline-fields">
-                    <mat-form-field class="inline section-element">
-                        <mat-label>Заведующий кафедрой</mat-label>
-                        <input matInput formControlName="DepartmentHead">
+                    <mat-form-field class="section-element">
+                        <mat-label>Оценка</mat-label>
+                        <input type="number" min="1" max="10" matInput formControlName="Mark">
                     </mat-form-field>
                     <mat-form-field class="inline section-element">
                         <mat-label>Дата прохождения</mat-label>
