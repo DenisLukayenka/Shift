@@ -15,19 +15,20 @@ export class UJHelperService {
 
         if(journal && journal.ReportResults) {
             journal.ReportResults.forEach(r => this.addReportResults());
-            if(journal.ReportResults.length === 0) {
-                this.addReportResults();
-            }
         }
         if(journal && journal.PreparationInfo && journal.PreparationInfo.ResearchWorks) {
             journal.PreparationInfo.ResearchWorks.forEach(w => this.addResearchWork());
-            if(journal.PreparationInfo.ResearchWorks.length === 0) {
-                this.addResearchWork();
-            }
         }
 
         const truthyJournal = _.pickBy(journal, isPropertyDefined);
         this.options.patchValue(truthyJournal);
+
+        if(journal.ReportResults.length === 0) {
+            this.addReportResults();
+        }
+        if(journal.PreparationInfo.ResearchWorks.length === 0) {
+            this.addResearchWork();
+        }
 
         return this.options;
     }
@@ -38,7 +39,7 @@ export class UJHelperService {
             UndergraduateId: [null],
             PreparationInfoId: [null],
             PreparationInfo: this.fb.group({
-                PreparationInfoId: [''],
+                PreparationInfoId: [null],
                 Topic: [''],
                 Relevance: [''],
                 Objectives: [''],
@@ -68,10 +69,12 @@ export class UJHelperService {
     }
     public initReportResults(): FormGroup {
         return this.fb.group({
+            Id: [null],
             Date: [null],
             Result: ['', Validators.required],
             DepartmentHead: [''],
             Protocol: this.fb.group({
+                ProtocolId: [null],
                 Date: [null],
                 Number: [null]
             }),
@@ -79,11 +82,12 @@ export class UJHelperService {
     }
     public initResearchWork(): FormGroup {
         return this.fb.group({
+            Id: [null],
             JobType: ['', Validators.required],
             PresentationType: ['', Validators.required],
             StartDate: [null],
             FinishDate: [null],
-            PreparationInfoId: [''],
+            PreparationInfoId: [this.PreparationInfoControl],
         });
     }
 
@@ -115,5 +119,10 @@ export class UJHelperService {
     get getRRFormControls() {
         const control = this.options.get('ReportResults') as FormArray;
         return control;
+    }
+
+    get PreparationInfoControl() {
+        const control = this.options.get('PreparationInfo') as FormGroup;
+        return control.get('PreparationInfoId').value;
     }
 }

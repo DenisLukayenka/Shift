@@ -1,15 +1,10 @@
-import { Component, OnInit } from "@angular/core";
-import { StudentState, selectUJournal } from "src/app/core/store/student/student.state";
-import { Store, select } from "@ngrx/store";
-import { SaveUJournal, ExecuteLoadUJournal } from "src/app/core/store/student/student.actions";
+import { Component, Output, EventEmitter, Input, OnChanges, SimpleChanges } from "@angular/core";
 import { FormGroup, FormControl } from "@angular/forms";
 import * as _ from 'lodash';
 import { UJHelperService } from "./uj-helper.service";
-import { StorageService } from "src/app/services/storage/storage.service";
-import { UserIdKey } from "src/app/services/storage/StorageKeys";
-import { Observable } from "rxjs";
-import { selectViewLoading } from "src/app/core/store/app/app.state";
 import { Report } from "src/app/infrastracture/entities/ujournal/Report";
+import { UJournal } from "src/app/infrastracture/entities/ujournal/UJournal";
+import { ViewMode } from "src/app/infrastracture/entities/ViewMode";
 
 @Component({
     selector: 'pac-uj-view',
@@ -17,30 +12,25 @@ import { Report } from "src/app/infrastracture/entities/ujournal/Report";
     templateUrl: './uj-view.component.html',
     providers: [UJHelperService],
 })
-export class UndergraduateJournalComponent implements OnInit {
+export class UJViewComponent implements OnChanges {
     public journalOptions: FormGroup;
-    public isViewLoading$: Observable<boolean>;
+
+    @Input() public isViewLoading: boolean;
+    @Input() public journal: UJournal;
+    @Input() public viewMode?: ViewMode = ViewMode.Student;
+
+    @Output() public onUJSaved: EventEmitter<any> = new EventEmitter<any>();
     
-    constructor(
-        private studentState: Store<StudentState>,
-        public ujHelper: UJHelperService,
-        private storage: StorageService,
-    ) {
-        this.isViewLoading$ = this.studentState.pipe(select(selectViewLoading));
-        this.studentState.pipe(select(selectUJournal)).subscribe(result => {
-            if(result) {
-                this.journalOptions = this.ujHelper.generateFormOptions(result);
-            }
-        });
-    }
+    constructor(public ujHelper: UJHelperService) {}
 
-    public ngOnInit() {
-        let userId = +this.storage.getValue(UserIdKey);
-        this.studentState.dispatch(new ExecuteLoadUJournal({ userId: userId }));
+    public ngOnChanges (changes: SimpleChanges): void {
+        if(changes && changes.journal && changes.journal.currentValue) {
+            this.journalOptions = this.ujHelper.generateFormOptions(changes.journal.currentValue);
+        }
     }
-
+    
     public submitJournal() {
-        let formJournal = _.cloneDeep(this.journalOptions.value);
+        let formJournal = _.cloneDeep(this.journalOptions.value) as UJournal;
         let researchWorks = _.filter(formJournal.PreparationInfo.ResearchWorks, work => !!work.JobType && !!work.PresentationType);
         let mark = +formJournal.ThesisCertification.Mark;
         let reportResults = _.filter(formJournal.ReportResults, result => !!result.Result).map((el: Report) => {
@@ -52,7 +42,7 @@ export class UndergraduateJournalComponent implements OnInit {
         formJournal.ReportResults = reportResults;
         formJournal.ThesisCertification.Mark = mark;
 
-        this.studentState.dispatch(new SaveUJournal({ journal: formJournal }));
+        this.onUJSaved.emit(formJournal);
     }
 
     public submitPreparation() {

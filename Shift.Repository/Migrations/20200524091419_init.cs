@@ -460,34 +460,6 @@ namespace Shift.Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ExamInfo",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Mark = table.Column<int>(nullable: false),
-                    Date = table.Column<DateTime>(nullable: false),
-                    DisciplineId = table.Column<int>(nullable: true),
-                    GraduateId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ExamInfo", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ExamInfo_Disciplines_DisciplineId",
-                        column: x => x.DisciplineId,
-                        principalTable: "Disciplines",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_ExamInfo_Graduates_GraduateId",
-                        column: x => x.GraduateId,
-                        principalTable: "Graduates",
-                        principalColumn: "GraduateId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "GraduateJournals",
                 columns: table => new
                 {
@@ -591,6 +563,34 @@ namespace Shift.Repository.Migrations
                     table.ForeignKey(
                         name: "FK_EducationPhases_GraduateJournals_JournalId",
                         column: x => x.JournalId,
+                        principalTable: "GraduateJournals",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ExamInfo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Mark = table.Column<int>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: true),
+                    DisciplineId = table.Column<int>(nullable: true),
+                    GraduateJournalId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExamInfo", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ExamInfo_Disciplines_DisciplineId",
+                        column: x => x.DisciplineId,
+                        principalTable: "Disciplines",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ExamInfo_GraduateJournals_GraduateJournalId",
+                        column: x => x.GraduateJournalId,
                         principalTable: "GraduateJournals",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -822,9 +822,9 @@ namespace Shift.Repository.Migrations
                 column: "DisciplineId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ExamInfo_GraduateId",
+                name: "IX_ExamInfo_GraduateJournalId",
                 table: "ExamInfo",
-                column: "GraduateId");
+                column: "GraduateJournalId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GraduateJournals_GraduateId",

@@ -10,7 +10,7 @@ using Shift.Repository.Database;
 namespace Shift.Repository.Migrations
 {
     [DbContext(typeof(CoreContext))]
-    [Migration("20200523220623_init")]
+    [Migration("20200524091419_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -887,13 +887,13 @@ namespace Shift.Repository.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime?>("Date")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("DisciplineId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("GraduateId")
+                    b.Property<int?>("GraduateJournalId")
                         .HasColumnType("int");
 
                     b.Property<int>("Mark")
@@ -903,7 +903,7 @@ namespace Shift.Repository.Migrations
 
                     b.HasIndex("DisciplineId");
 
-                    b.HasIndex("GraduateId");
+                    b.HasIndex("GraduateJournalId");
 
                     b.ToTable("ExamInfo");
                 });
@@ -1174,9 +1174,9 @@ namespace Shift.Repository.Migrations
                         .WithMany("ExamInfo")
                         .HasForeignKey("DisciplineId");
 
-                    b.HasOne("Shift.DAL.Models.UserModels.GraduateData.Graduate", "Graduate")
+                    b.HasOne("Shift.DAL.Models.UserModels.GraduateData.GraduateJournal", "GraduateJournal")
                         .WithMany("ExamsData")
-                        .HasForeignKey("GraduateId");
+                        .HasForeignKey("GraduateJournalId");
                 });
 
             modelBuilder.Entity("Shift.DAL.Models.UserModels.UserData.LoginInfo", b =>

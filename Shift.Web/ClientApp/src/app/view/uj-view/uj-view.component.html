@@ -1,4 +1,4 @@
-<div *ngIf="!(isViewLoading$ | async)" class="flex-column-center">
+<div *ngIf="!isViewLoading" class="flex-column-center">
     <div class="container journal-container journal-border">
         <div class="flex-column-center">
             <div>
@@ -52,7 +52,7 @@
                         <mat-datepicker-toggle matSuffix [for]="preparationUDatepicker"></mat-datepicker-toggle>
                         <mat-datepicker #preparationUDatepicker></mat-datepicker>
                     </mat-form-field>
-                    <button  mat-mini-fab color="primary" (click)='submitPreparation()'>
+                    <button type="button" mat-mini-fab color="primary" (click)='submitPreparation()'>
                         <mat-icon>
                             done
                         </mat-icon>
@@ -104,7 +104,7 @@
                     </tbody>
                 </table>
                 <div class="action-container">
-                    <button mat-raised-button (click)="ujHelper.addResearchWork()">Добавить мероприятие</button>
+                    <button type="button" mat-raised-button (click)="ujHelper.addResearchWork()">Добавить мероприятие</button>
                 </div>
             </div>
             <div>

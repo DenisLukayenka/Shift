@@ -10,11 +10,11 @@ import { RegisterComponent } from "./core/components/register/register.component
 import { UndergraduateComponent } from "./core/components/undergraduate/undergraduate.component";
 import { GraduateComponent } from "./core/components/graduate/graduate.component";
 import { NotFoundComponent } from "./core/components/not-found/not-found.component";
-import { UndergraduateJournalComponent } from "./view/uj-view/uj-view.component";
 import { GraduateJournalComponent } from "./view/gj-view/gj-view.component";
 import { EmployeeComponent } from "./core/components/employee/employee.component";
 import { UJournalListComponent } from "./view/uj-list/uj-list.component";
 import { GJournalListComponent } from "./view/gj-list/gj-list.component";
+import { UndergraduateJournalComponent } from "./core/components/undergraduate/journal/undergraduate-journal.component";
 
 const routes: Routes = [
     { 

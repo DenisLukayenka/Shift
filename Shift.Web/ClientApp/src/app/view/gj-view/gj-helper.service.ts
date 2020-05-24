@@ -43,6 +43,7 @@ export class GJHelperService {
 
     public initJournal(): FormGroup {
         return this.fb.group({
+            Id: [null],
             RationalInfo: this.fb.group({
                 RationalInfoId: [''],
                 StudyPurpose: [''],
@@ -188,6 +189,7 @@ export class GJHelperService {
     }
     public initProtocol(): FormGroup {
         return this.fb.group({
+            ProtocolId: [null],
             Date: [null],
             Number: [''],
         });

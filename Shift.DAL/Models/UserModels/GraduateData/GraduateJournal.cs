@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Shift.DAL.Models.UserModels.GraduateData
 {
 	using Shift.DAL.Models.University;
 	using Shift.DAL.Models.UserModels.GraduateData.JournalData;
-	using System.ComponentModel.DataAnnotations;
-	using System.ComponentModel.DataAnnotations.Schema;
+	using Shift.DAL.Models.UserModels.UserData;
 
 	public class GraduateJournal
 	{
@@ -27,5 +28,6 @@ namespace Shift.DAL.Models.UserModels.GraduateData
 
 		public virtual ICollection<WorkPlan> WorkPlans { get; set; } = new List<WorkPlan>();
 		public virtual ICollection<EducationPhase> EducationYears { get; set; } = new List<EducationPhase>();
+		public virtual ICollection<ExamInfo> ExamsData { get; set; } = new List<ExamInfo>();
 	}
 }
