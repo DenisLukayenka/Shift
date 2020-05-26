@@ -1,22 +1,36 @@
-import { Component, OnInit } from "@angular/core";
-import { Store } from "@ngrx/store";
-import { EmployeeState } from "src/app/core/store/employee/employee.state";
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { Store, select } from "@ngrx/store";
+import { EmployeeState, selectGraduates } from "src/app/core/store/employee/employee.state";
 import { StorageService } from "src/app/services/storage/storage.service";
 import { SpecifiedUserIdKey } from "src/app/services/storage/StorageKeys";
+import { UserContext } from "src/app/infrastracture/entities/users/UserContext";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatTableDataSource } from "@angular/material/table";
 import { LoadGraduates } from "src/app/core/store/employee/employee.action";
 
 @Component({
     selector: 'pac-gj-list',
-    templateUrl: './gj-list.component.html'
+    templateUrl: './gj-list.component.html',
+    styleUrls: ['./gj-list.component.scss'],
 })
 export class GJournalListComponent implements OnInit {
+    displayedColumns: string[] = ['FirstName', 'LastName', 'Journal'];
+    dataSource = new MatTableDataSource<UserContext>();
+    @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+
     private employeeId: number;
 
     constructor(private employeeState: Store<EmployeeState>, private storageService: StorageService) {
         this.employeeId = +this.storageService.getValue(SpecifiedUserIdKey);
+        this.employeeState.pipe(select(selectGraduates)).subscribe(users => this.dataSource.data = users);
     }
     
     ngOnInit() {
         this.employeeState.dispatch(new LoadGraduates({ employeeId: this.employeeId }));
+        this.dataSource.paginator = this.paginator;
+    }
+    
+    public showJournal(userId: number) {
+        console.log(userId);
     }
 }

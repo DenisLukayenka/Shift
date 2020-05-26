@@ -17,3 +17,5 @@ export const GJournalPage = 'gj';
 export const EmployeePage = 'employee';
 export const UJournalList = 'uj-list';
 export const GJournalList = 'gj-list';
+
+export const LogoutPage = 'logout';

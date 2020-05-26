@@ -29,9 +29,6 @@ namespace Shift.DAL.Models.UserModels.GraduateData
 		public int? SpecialtyId { get; set; }
 		public virtual Specialty Specialty { get; set; }
 
-		public virtual ICollection<GraduateJournal> GraduateJournals { get; set; } = new List<GraduateJournal>()
-		{
-			new GraduateJournal()
-		};
+		public virtual ICollection<GraduateJournal> GraduateJournals { get; set; } = new List<GraduateJournal>();
 	}
 }

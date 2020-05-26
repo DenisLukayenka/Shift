@@ -1,9 +1,10 @@
 import { Component } from "@angular/core";
 import { MenuToggle } from "../../store/menu/menu.action";
-import { Store } from "@ngrx/store";
+import { Store, select } from "@ngrx/store";
 import { MenuState } from "../../store/menu/menu.state";
-import { AppState } from "../../store/app/app.state";
+import { AppState, selectUserContext } from "../../store/app/app.state";
 import { LogOut } from "../../store/app/app.actions";
+import { UserContext } from "src/app/infrastracture/entities/users/UserContext";
 
 @Component({
     selector: 'pac-toolbar',
@@ -11,7 +12,11 @@ import { LogOut } from "../../store/app/app.actions";
     templateUrl: './toolbar.component.html'
 })
 export class ToolbarComponent {
-    constructor(private menuStore: Store<MenuState>, private appStore: Store<AppState>) {}
+    userContext: UserContext;
+    
+    constructor(private menuStore: Store<MenuState>, private appStore: Store<AppState>) {
+        this.appStore.pipe(select(selectUserContext)).subscribe(userContext => this.userContext = userContext);
+    }
 
     public onSideNavToggle() {
         this.menuStore.dispatch(new MenuToggle());

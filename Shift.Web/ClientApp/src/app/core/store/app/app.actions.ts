@@ -16,6 +16,9 @@ export enum AppActionTypes {
 
     ViewStartLoading = '[Pac] View Start Loading',
     ViewFinishLoading = '[Pac] View Finish Loading',
+    
+    FetchUserContext = '[Pac] Fetch User Context',
+    FetchUserContextSuccess = '[Pac] Fetch User Context Success',
 }
 
 export class LoadApp implements Action {
@@ -72,6 +75,19 @@ export class ViewFinishLoading implements Action {
     readonly type = AppActionTypes.ViewFinishLoading;
 }
 
+export class FetchUserContext implements Action {
+    readonly type = AppActionTypes.FetchUserContext;
+
+    constructor(public payload: { userId: number }) {}
+};
+
+export class FetchUserContextSuccess implements Action {
+    readonly type = AppActionTypes.FetchUserContextSuccess;
+
+    constructor(public payload: { user: UserContext }) {}
+};
+
+
 export type AppActionsUnion = 
     | LoadSuccess
     | LoadFailure
@@ -87,4 +103,7 @@ export type AppActionsUnion =
     | ErrorPageNavigated
     
     | ViewStartLoading
-    | ViewFinishLoading;
+    | ViewFinishLoading
+    
+    | FetchUserContext
+    | FetchUserContextSuccess;

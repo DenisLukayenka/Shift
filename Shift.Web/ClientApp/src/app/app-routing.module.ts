@@ -15,6 +15,7 @@ import { UJournalListComponent } from "./view/uj-list/uj-list.component";
 import { GJournalListComponent } from "./view/gj-list/gj-list.component";
 import { UndergraduateJournalComponent } from "./core/components/undergraduate/journal/undergraduate-journal.component";
 import { GraduateJournalComponent } from "./core/components/graduate/graduate-journal/graduate-journal.component";
+import { LogoutComponent } from "./core/components/logout/logout.component";
 
 const routes: Routes = [
     { 
@@ -43,7 +44,8 @@ const routes: Routes = [
 
     { path: Config.LoginPage, component: LoginComponent },
     { path: Config.RegisterPage, component: RegisterComponent },
-
+    { path: Config.LogoutPage, component: LogoutComponent },
+    
     { path: '', redirectTo: Config.RootPage, pathMatch: 'full' },
     
     { path: Config.ErrorPage, component: ErrorPageComponent, canActivate: [ErrorPageGuard] },

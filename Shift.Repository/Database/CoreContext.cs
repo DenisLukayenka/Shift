@@ -19,7 +19,7 @@ namespace Shift.Repository.Database
 		public DbSet<Faculty> Faculties { get; set; }
 		public DbSet<Department> Departments { get; set; }
 		public DbSet<Specialty> Specialties { get; set; }
-		public DbSet<UniversitySettings> UniversitySettings { get; set; }
+		public DbSet<University> Universities { get; set; }
 		public DbSet<Discipline> Disciplines { get; set; }
 
 		#endregion

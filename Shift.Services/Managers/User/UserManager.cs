@@ -73,6 +73,7 @@ namespace Shift.Services.Managers.User
 			if (dbUser == null)
 			{
 				var entity = this._mapper.Map<Graduate>(graduate);
+				entity.GraduateJournals.Add(new GraduateJournal());
 				entity.User.RoleId = this.GetOrAddRole(RoleNames.Graduate);
 
 				this._repository.Graduates.Add(entity);
@@ -97,6 +98,7 @@ namespace Shift.Services.Managers.User
 			if (dbUser == null)
 			{
 				var entity = this._mapper.Map<Undergraduate>(undergraduate);
+				entity.Journals.Add(new UndergraduateJournal());
 				entity.User.RoleId = this.GetOrAddRole(RoleNames.Undergraduate);
 
 				this._repository.Undergraduates.Add(entity);
@@ -111,6 +113,19 @@ namespace Shift.Services.Managers.User
 
 			context.Alert = Config.LoginExist;
 			return context;
+		}
+
+		public UserContext GetUserContext(int userId)
+		{
+			var dbUser = this._repository.Users.FindById(userId);
+			if(dbUser != null)
+			{
+				var context = this._mapper.Map<UserContext>(dbUser);
+
+				return context;
+			}
+
+			return null;
 		}
 
 		public string FetchUserRole(int userId)

@@ -22,6 +22,17 @@ namespace Shift.Repository.Repositories.Implementations
 			return this.AppContext.Set<User>().Where(expression).Include(u => u.Role).Include(u => u.LoginData).AsNoTracking();
 		}
 
+		public User FindById(int userId)
+		{
+			return this.AppContext.Users
+				.Include(u => u.Role)
+				.Include(u => u.LoginData)
+				.Include(u => u.Employee)
+				.Include(u => u.Graduate)
+				.Include(u => u.Undergraduate)
+				.FirstOrDefault(u => u.UserId == userId);
+		}
+
 		public User FindByLoginPassword(string login, string password)
 		{
 			return this.AppContext.Users

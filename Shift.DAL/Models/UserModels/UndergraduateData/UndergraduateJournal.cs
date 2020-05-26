@@ -16,9 +16,6 @@ namespace Shift.DAL.Models.UserModels.UndergraduateData
 		public int? UndergraduateId { get; set; }
 		public virtual Undergraduate Undergraduate { get; set; }
 
-		public int? UniversitySettingsId { get; set; }
-		public virtual UniversitySettings Settings { get; set; }
-
 		public int? PreparationInfoId { get; set; }
 		public virtual PreparationInfo PreparationInfo { get; set; } = new PreparationInfo();
 

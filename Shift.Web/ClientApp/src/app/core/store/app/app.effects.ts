@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { AppActionTypes, LoadApp, LogOutSuccess, LogOut, AppFailure, TryAuth, AuthSuccess, AuthFailure, ErrorPageNavigated, ViewFinishLoading } from "./app.actions";
+import { AppActionTypes, LoadApp, LogOutSuccess, LogOut, AppFailure, TryAuth, AuthSuccess, AuthFailure, ErrorPageNavigated, ViewFinishLoading, FetchUserContext, FetchUserContextSuccess } from "./app.actions";
 import { switchMap, catchError, map, exhaustMap, tap } from "rxjs/operators";
 import { of } from "rxjs";
 import { Router } from "@angular/router";
@@ -11,6 +11,8 @@ import { LoginPage, RootPage, ErrorPage } from "src/app/infrastracture/config";
 import { HttpProcessorService } from "src/app/services/http-processor/http-processor.service";
 import { AuthReq } from "src/app/infrastracture/requests/auth/AuthReq";
 import { AuthResponse } from "src/app/infrastracture/responses/AuthResponse";
+import { UserContextReq } from "src/app/infrastracture/requests/auth/UserContextReq";
+import { UserContext } from "src/app/infrastracture/entities/users/UserContext";
 
 @Injectable()
 export class AppEffects {
@@ -22,6 +24,7 @@ export class AppEffects {
 
             return [
                 new FetchRootMenu({ userId: userId }),
+                new FetchUserContext({ userId: userId }),
             ]
         }),
         catchError(error => of(new AppFailure()))
@@ -66,6 +69,20 @@ export class AppEffects {
             this.router.navigate([ErrorPage]);
         }),
         switchMap(() => [new ViewFinishLoading(), new ErrorPageNavigated()]),
+    );
+
+    @Effect()
+    fetchUserContext$ = this.actions$.pipe(
+        ofType<FetchUserContext>(AppActionTypes.FetchUserContext),
+        map(action => action.payload),
+        exhaustMap(data => this.httpProcessor.execute(new UserContextReq(data.userId))),
+        map((response: UserContext) => {
+            this.storage.setValue(UserIdKey, response.UserId.toString());
+            this.storage.setValue(SpecifiedUserIdKey, response.SpecifiedUserId.toString());
+
+            return new FetchUserContextSuccess({ user: response });
+        }),
+        catchError(error => of(new AppFailure()))
     );
 
     constructor(

@@ -10,7 +10,7 @@ using Shift.Repository.Database;
 namespace Shift.Repository.Migrations
 {
     [DbContext(typeof(CoreContext))]
-    [Migration("20200524165355_init")]
+    [Migration("20200525181604_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -81,7 +81,12 @@ namespace Shift.Repository.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("UniversityId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UniversityId");
 
                     b.ToTable("Faculties");
                 });
@@ -127,7 +132,7 @@ namespace Shift.Repository.Migrations
                     b.ToTable("Specialties");
                 });
 
-            modelBuilder.Entity("Shift.DAL.Models.University.UniversitySettings", b =>
+            modelBuilder.Entity("Shift.DAL.Models.University.University", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -148,7 +153,7 @@ namespace Shift.Repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UniversitySettings");
+                    b.ToTable("Universities");
                 });
 
             modelBuilder.Entity("Shift.DAL.Models.UserModels.EmployeeData.AcademicDegree", b =>
@@ -295,9 +300,6 @@ namespace Shift.Repository.Migrations
                     b.Property<int?>("ThesisPlanId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UniversitySettingsId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("GraduateId");
@@ -309,8 +311,6 @@ namespace Shift.Repository.Migrations
                     b.HasIndex("ThesisPlanId")
                         .IsUnique()
                         .HasFilter("[ThesisPlanId] IS NOT NULL");
-
-                    b.HasIndex("UniversitySettingsId");
 
                     b.ToTable("GraduateJournals");
                 });
@@ -377,7 +377,7 @@ namespace Shift.Repository.Migrations
                     b.Property<int?>("EducationPhaseId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("FinishDate")
+                    b.Property<DateTime?>("FinishDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("OutcomeResult")
@@ -386,7 +386,7 @@ namespace Shift.Repository.Migrations
                     b.Property<string>("StageName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("StartDate")
+                    b.Property<DateTime?>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("WaitResult")
@@ -524,13 +524,13 @@ namespace Shift.Repository.Migrations
                     b.Property<int?>("EducationPhaseId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("FinishDate")
+                    b.Property<DateTime?>("FinishDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PlanResult")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("StartDate")
+                    b.Property<DateTime?>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
@@ -627,10 +627,10 @@ namespace Shift.Repository.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("ApproveDate")
+                    b.Property<DateTime?>("ApproveDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("FinishDate")
+                    b.Property<DateTime?>("FinishDate")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsApproved")
@@ -645,10 +645,10 @@ namespace Shift.Repository.Migrations
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("StartDate")
+                    b.Property<DateTime?>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("SubmitDate")
+                    b.Property<DateTime?>("SubmitDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("WorkPlanId")
@@ -860,9 +860,6 @@ namespace Shift.Repository.Migrations
                     b.Property<int?>("UndergraduateId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UniversitySettingsId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("PreparationInfoId")
@@ -874,8 +871,6 @@ namespace Shift.Repository.Migrations
                         .HasFilter("[ThesisCertificationId] IS NOT NULL");
 
                     b.HasIndex("UndergraduateId");
-
-                    b.HasIndex("UniversitySettingsId");
 
                     b.ToTable("UndergraduateJournal");
                 });
@@ -985,6 +980,13 @@ namespace Shift.Repository.Migrations
                         .HasForeignKey("FacultyId");
                 });
 
+            modelBuilder.Entity("Shift.DAL.Models.University.Faculty", b =>
+                {
+                    b.HasOne("Shift.DAL.Models.University.University", "University")
+                        .WithMany("Faculties")
+                        .HasForeignKey("UniversityId");
+                });
+
             modelBuilder.Entity("Shift.DAL.Models.University.Specialty", b =>
                 {
                     b.HasOne("Shift.DAL.Models.University.Department", "Department")
@@ -1051,10 +1053,6 @@ namespace Shift.Repository.Migrations
                     b.HasOne("Shift.DAL.Models.UserModels.GraduateData.JournalData.ThesisPlan", "ThesisPlan")
                         .WithOne("GraduateJournal")
                         .HasForeignKey("Shift.DAL.Models.UserModels.GraduateData.GraduateJournal", "ThesisPlanId");
-
-                    b.HasOne("Shift.DAL.Models.University.UniversitySettings", "UniversitySettings")
-                        .WithMany()
-                        .HasForeignKey("UniversitySettingsId");
                 });
 
             modelBuilder.Entity("Shift.DAL.Models.UserModels.GraduateData.JournalData.Attestation", b =>
@@ -1162,10 +1160,6 @@ namespace Shift.Repository.Migrations
                     b.HasOne("Shift.DAL.Models.UserModels.UndergraduateData.Undergraduate", "Undergraduate")
                         .WithMany("Journals")
                         .HasForeignKey("UndergraduateId");
-
-                    b.HasOne("Shift.DAL.Models.University.UniversitySettings", "Settings")
-                        .WithMany()
-                        .HasForeignKey("UniversitySettingsId");
                 });
 
             modelBuilder.Entity("Shift.DAL.Models.UserModels.UserData.ExamInfo", b =>

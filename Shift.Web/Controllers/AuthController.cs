@@ -42,6 +42,16 @@ namespace Shift.Web.Controllers
 		}
 
 		[HttpPost]
+		[Authorize]
+		[Route("userContext")]
+		public IActionResult GetUserContext([FromBody] int userId)
+		{
+			var context = this._userManager.GetUserContext(userId);
+
+			return Ok(context);
+		}
+
+		[HttpPost]
 		[AllowAnonymous]
 		[Route("register/undergraduate")]
 		public IActionResult RegisterUndergraduate([FromBody] UndergraduateRegisterVM undergraduate)

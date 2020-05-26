@@ -46,7 +46,10 @@ export function appReducer(state = initialState, action: AppActionsUnion): AppSt
             return produce(state, draft => {
                 draft.viewLoading = true;
             });
-    
+        case AppActionTypes.FetchUserContextSuccess:
+            return produce(state, draft => {
+                draft.userContext = action.payload.user;
+            });
         default:
             return state;
     }

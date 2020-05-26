@@ -42,7 +42,5 @@ export class EmployeeEffects {
 
     constructor(
         private actions$: Actions, 
-        private storage: StorageService,
-        private router: Router,
         private httpProcessor: HttpProcessorService) {}
 }

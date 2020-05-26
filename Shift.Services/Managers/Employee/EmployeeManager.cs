@@ -18,7 +18,7 @@ namespace Shift.Services.Managers.Employee
 
 		public IEnumerable<GraduateContext> GetGraduates(int employeeId)
 		{
-			var graduatesDb = this._repository.Graduates.Get(g => g.ScienceAdviserId == employeeId);
+			var graduatesDb = this._repository.Graduates.GetGraduatesByEmployee(employeeId);
 			var graduateContexts = this._mapper.Map<IEnumerable<GraduateContext>>(graduatesDb);
 
 			return graduateContexts;
@@ -26,7 +26,7 @@ namespace Shift.Services.Managers.Employee
 
 		public IEnumerable<UndergraduateContext> GetUndergraduates(int employeeId)
 		{
-			var undergraduatesDb = this._repository.Undergraduates.Get(g => g.ScienceAdviserId == employeeId);
+			var undergraduatesDb = this._repository.Undergraduates.GetUndergraduatesByEmployee(employeeId);
 			var undergraduateContexts = this._mapper.Map<IEnumerable<UndergraduateContext>>(undergraduatesDb);
 
 			return undergraduateContexts;

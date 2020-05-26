@@ -73,6 +73,10 @@ namespace Shift.Infrastructure.Mappings
 		public void RegisterUndergraduateMappings()
 		{
 			CreateMap<Graduate, GraduateContext>()
+				.ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.User.FirstName))
+				.ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.User.LastName))
+				.ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.User.FirstName))
+
 				.ForMember(dest => dest.Login, opt => opt.MapFrom((src, dest) => src.User.LoginData.FirstOrDefault()?.Login ?? ""))
 				.ForMember(dest => dest.Role, opt => opt.MapFrom((src, dest) => src.User.Role?.Caption ?? ""))
 				.ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.User.UserId))
@@ -80,6 +84,10 @@ namespace Shift.Infrastructure.Mappings
 				.ForMember(dest => dest.JournalId, opt => opt.MapFrom((src, dest) => src.GraduateJournals.FirstOrDefault()?.Id));
 
 			CreateMap<Undergraduate, UndergraduateContext>()
+				.ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.User.FirstName))
+				.ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.User.LastName))
+				.ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.User.FirstName))
+
 				.ForMember(dest => dest.Login, opt => opt.MapFrom((src, dest) => src.User.LoginData.FirstOrDefault()?.Login ?? ""))
 				.ForMember(dest => dest.Role, opt => opt.MapFrom((src, dest) => src.User.Role?.Caption ?? ""))
 				.ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.User.UserId))

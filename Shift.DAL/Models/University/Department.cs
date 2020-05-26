@@ -22,7 +22,5 @@ namespace Shift.DAL.Models.University
 		public Faculty Faculty { get; set; }
 
 		public ICollection<Employee> Employees { get; set; } = new List<Employee>();
-		public ICollection<Undergraduate> Undergraduates { get; set; } = new List<Undergraduate>();
-		public ICollection<Graduate> Graduates { get; set; } = new List<Graduate>();
 	}
 }

@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Shift.DAL.Models.UserModels.GraduateData
 {
-	using Shift.DAL.Models.University;
 	using Shift.DAL.Models.UserModels.GraduateData.JournalData;
 	using Shift.DAL.Models.UserModels.UserData;
 
@@ -16,9 +15,6 @@ namespace Shift.DAL.Models.UserModels.GraduateData
 
 		public int? GraduateId { get; set; }
 		public virtual Graduate Graduate { get; set; }
-
-		public int? UniversitySettingsId { get; set; }
-		public virtual UniversitySettings UniversitySettings { get; set; }
 
 		public int? RationalInfoId { get; set; }
 		public virtual RationalInfo RationalInfo { get; set; } = new RationalInfo();

@@ -35,9 +35,9 @@ namespace Shift.Services.Services.Menu
 							},
 							new MenuItem
 							{
-								Caption = "Результаты",
-								Icon = "assignment",
-								Link = "undergraduate/uj-results"
+								Caption = "Выход",
+								Icon = "exit_to_app",
+								Link = "logout"
 							}
 						},
 					},
@@ -64,9 +64,9 @@ namespace Shift.Services.Services.Menu
 							},
 							new MenuItem
 							{
-								Caption = "Результаты",
-								Icon = "assignment",
-								Link = "graduate/gj-results"
+								Caption = "Выход",
+								Icon = "exit_to_app",
+								Link = "logout"
 							}
 						},
 					},
@@ -96,6 +96,12 @@ namespace Shift.Services.Services.Menu
 								Caption = "Аспиранты",
 								Icon = "assignment",
 								Link = "employee/gj-list"
+							},
+							new MenuItem
+							{
+								Caption = "Выход",
+								Icon = "exit_to_app",
+								Link = "logout"
 							}
 						},
 					},

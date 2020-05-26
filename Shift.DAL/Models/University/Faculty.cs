@@ -13,6 +13,9 @@ namespace Shift.DAL.Models.University
 		public string Abbreviation { get; set; }
 		public string Dean { get; set; }
 
+		public int? UniversityId { get; set; }
+		public University University { get; set; }
+
 		public ICollection<Department> Departments { get; set; } = new List<Department>();
 	}
 }
