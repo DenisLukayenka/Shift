@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, Injectable } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -15,6 +15,11 @@ import { AuthGuard } from './infrastracture/guards/AuthGuard';
 import { Router } from '@angular/router';
 import { ErrorPageGuard } from './infrastracture/guards/error-page.guard';
 import { getJwtToken } from './infrastracture/utilities/getJwtToken';
+
+@Injectable()
+export class WindowWrapper extends Window { }
+
+export function getWindow() { return window; }
 
 @NgModule({
   declarations: [
@@ -38,7 +43,7 @@ import { getJwtToken } from './infrastracture/utilities/getJwtToken';
     }),
   ],
   providers: [
-    { provide: Window, useValue: window },
+    { provide: WindowWrapper, useValue: getWindow },
     { provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true },
     AuthGuard,
     ErrorPageGuard,

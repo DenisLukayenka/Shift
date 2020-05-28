@@ -14,5 +14,6 @@ namespace Shift.Infrastructure.Models.ViewModels.Journals
 
 		public virtual ICollection<WorkPlanVM> WorkPlans { get; set; } = new List<WorkPlanVM>();
 		public virtual ICollection<EducationPhaseVM> EducationYears { get; set; } = new List<EducationPhaseVM>();
+		public virtual ICollection<ExamInfoVM> ExamsInfo { get; set; } = new List<ExamInfoVM>();
 	}
 }

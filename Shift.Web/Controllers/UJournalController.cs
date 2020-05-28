@@ -7,7 +7,7 @@ using Shift.Services.Managers.Journals.UJournals;
 namespace Shift.Web.Controllers
 {
     [Route("api/undergraduate/journal")]
-    [Authorize(Roles = RoleNames.Undergraduate)]
+    [Authorize]
     [ApiController]
     public class UJournalController : ControllerBase
     {

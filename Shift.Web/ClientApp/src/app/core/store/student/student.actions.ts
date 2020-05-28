@@ -16,6 +16,8 @@ export enum StudentActionTypes {
 
     SaveGJournal = '[Pac] Save GJournal',
     SaveGJournalSuccess = '[Pac] Save GJournal Success',
+
+    ResetJournals = '[Pac] Reset Journals',
 }
 
 export class LoadUJournal implements Action {
@@ -78,6 +80,10 @@ export class ExecuteLoadGJournal implements Action {
     constructor(public payload: { userId: number }){}
 };
 
+export class ResetJournals implements Action {
+    readonly type = StudentActionTypes.ResetJournals;
+};
+
 export type StudentActionsUnion = 
     | LoadUJournal
     | LoadUJournalSuccess
@@ -91,4 +97,6 @@ export type StudentActionsUnion =
     | SaveGJournal
     | SaveGJournalSuccess
     | ExecuteLoadUJournal
-    | ExecuteLoadGJournal;
+    | ExecuteLoadGJournal
+    
+    | ResetJournals;

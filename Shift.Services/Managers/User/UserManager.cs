@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 
 namespace Shift.Services.Managers.User
 {
@@ -13,7 +12,7 @@ namespace Shift.Services.Managers.User
 	using Shift.Infrastructure.Models.SharedData;
 	using Shift.DAL.Models.UserModels.UserData;
     using Shift.Infrastructure.Models.ViewModels.Users;
-	using Shift.Repository.Database;
+	using DAL.Models.UserModels.GraduateData.JournalData;
 
 	public class UserManager : IUserManager
 	{
@@ -73,7 +72,10 @@ namespace Shift.Services.Managers.User
 			if (dbUser == null)
 			{
 				var entity = this._mapper.Map<Graduate>(graduate);
-				entity.GraduateJournals.Add(new GraduateJournal());
+				var journal = new GraduateJournal();
+				journal.EducationYears.Add(new EducationPhase());
+
+				entity.GraduateJournals.Add(journal);
 				entity.User.RoleId = this.GetOrAddRole(RoleNames.Graduate);
 
 				this._repository.Graduates.Add(entity);

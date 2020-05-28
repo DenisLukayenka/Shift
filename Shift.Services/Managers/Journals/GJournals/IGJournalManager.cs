@@ -5,6 +5,6 @@ namespace Shift.Services.Managers.Journals.GJournals
 	public interface IGJournalManager
 	{
 		GJournal FetchJournal(int userId);
-		void SaveJournal(GJournal journal);
+		GJournal SaveJournal(GJournal journal);
 	}
 }

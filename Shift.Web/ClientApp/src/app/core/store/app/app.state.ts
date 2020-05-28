@@ -13,7 +13,7 @@ export const initialState: AppState = {
     appLoading: false,
     viewLoading: false,
     isErrorOccurs: false,
-    userContext: undefined,
+    userContext: null,
     authAlert: '',
 }
 

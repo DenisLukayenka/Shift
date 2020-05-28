@@ -4,7 +4,9 @@ namespace Shift.Infrastructure.Mappings
 {
 	using Shift.DAL.Models.University;
 	using Shift.DAL.Models.UserModels.EmployeeData;
+	using Shift.DAL.Models.UserModels.UserData;
 	using Shift.Infrastructure.Models.ViewModels.Data;
+	using Shift.Infrastructure.Models.ViewModels.Journals.GJournalData;
 	using Shift.Infrastructure.Models.ViewModels.University;
 
 	public class DataMappingProfile: Profile
@@ -18,6 +20,7 @@ namespace Shift.Infrastructure.Mappings
 			CreateMap<JobPosition, JobPositionVM>().ReverseMap();
 			CreateMap<Department, DepartmentVM>().ReverseMap();
 			CreateMap<Specialty, SpecialtyVM>().ReverseMap();
+			CreateMap<ExamInfo, ExamInfoVM>().ReverseMap();
 		}
 	}
 }

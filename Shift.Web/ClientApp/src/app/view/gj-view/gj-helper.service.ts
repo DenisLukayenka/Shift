@@ -27,14 +27,36 @@ export class GJHelperService {
                 }
             });
         }
+        this.addScienceActivity(0);
+        this.addCalendarStage(0);
+        this.addWorkPlan();
+        this.addWorkStage(0);
+        
         if(journal && journal.WorkPlans){
+            if(journal.WorkPlans.length > 0) {
+                this.addWorkStage(0);
+            }
+            
             journal.WorkPlans.forEach((plan, i) => {
                 this.addWorkPlan();
                 if(plan.WorkStages) {
                     plan.WorkStages.forEach(() => this.addWorkStage(i));
                 }
+
+                if(this.WorkStagesFormControls.length === 0) {
+                    this.addWorkStage(i);
+                }
             });
         }
+        if(journal && journal.ExamInfo) {
+            journal.ExamInfo.forEach(info => {
+                this.addExamInfo();
+            });
+        }
+        if(this.ExamInfo.length === 0) {
+            this.addExamInfo();
+        }
+
         const truthyRationalInfo = _.pickBy(journal.RationalInfo, isPropertyDefined);
         const truthyJournal = _.pickBy(journal, isPropertyDefined) as GJournal;
         const updatedTruthyJournal = _.assign(truthyJournal, { RationalInfo: truthyRationalInfo });
@@ -67,7 +89,7 @@ export class GJHelperService {
                 IsTrainingHeadApproved: [false],
 
                 Adviser: [null],
-                AdviserApproveDate: [null],
+                AdviserApproveDate: [{ value: null, disabled: false }],
                 IsAdviserApproved: [false],
 
                 ProtocolId: [null],
@@ -87,6 +109,7 @@ export class GJHelperService {
             }),
             WorkPlans: this.fb.array([]),
             EducationYears: this.fb.array([]),
+            ExamInfo: this.fb.array([]),
         });
     }
     public initWorkStage(): FormGroup {
@@ -185,7 +208,6 @@ export class GJHelperService {
             IsTrainingHeadApproved: [false],
 
             ProtocolId: [null],
-            Protocol: this.initProtocol(),
             EducationPhaseId: [null],
         });
     }
@@ -196,6 +218,16 @@ export class GJHelperService {
             Number: [null],
         });
     }
+    public initExamInfo(): FormGroup {
+        return this.fb.group({
+            Id: [null],
+            Mark: [null],
+            Date: [null],
+            DisciplineId: [null],
+            GraduateJournalId: [null],
+        });
+    }
+
 
     public addEducationYear(){
         const control = this.options.get('EducationYears') as FormArray;
@@ -207,23 +239,28 @@ export class GJHelperService {
         control.push(this.initWorkPlan());
     }
 
+    public addExamInfo() {
+        const control = this.options.get('ExamInfo') as FormArray;
+        control.push(this.initExamInfo());
+    }
+
     public addWorkStage(planIndex: number) {
-        const control = this.options.get('WorkPlans')[planIndex].get('WorkStages') as FormArray;
+        const control = (this.options.get('WorkPlans') as FormArray).controls[planIndex].get('WorkStages') as FormArray;
         control.push(this.initWorkStage());
     }
 
     public addCalendarStage(phaseIndex: number) {
-        const control = this.options.get('EducationYears')[phaseIndex].get('CalendarStages') as FormArray;
+        const control = (this.options.get('EducationYears') as FormArray).controls[phaseIndex].get('CalendarStages') as FormArray;
         control.push(this.initCalendarStage());
     }
 
     public addScienceActivity(phaseIndex: number) {
-        const control = this.options.get('EducationYears')[phaseIndex].get('ScienceActivities') as FormArray;
+        const control = (this.options.get('EducationYears') as FormArray).controls[phaseIndex].get('ScienceActivities') as FormArray;
         control.push(this.initScienceActivity());
     }
 
     public addAttestation(phaseIndex: number) {
-        const control = this.options.get('EducationYears')[phaseIndex].get('Attestations') as FormArray;
+        const control = (this.options.get('EducationYears') as FormArray).controls[phaseIndex].get('Attestations') as FormArray;
         control.push(this.initAttestation());
     }
 
@@ -259,6 +296,11 @@ export class GJHelperService {
 
     get ThesisPlanControl() {
         const control = this.options.get('ThesisPlan') as FormGroup;
+        return control;
+    }
+
+    get ExamInfo() {
+        const control = this.options.get('ExamInfo') as FormArray;
         return control;
     }
 

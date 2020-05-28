@@ -25,13 +25,13 @@ export class UJViewComponent implements OnChanges {
 
     public ngOnChanges (changes: SimpleChanges): void {
         if(changes && changes.journal && changes.journal.currentValue) {
-            this.journalOptions = this.ujHelper.generateFormOptions(changes.journal.currentValue);
+            this.journalOptions = this.ujHelper.generateFormOptions(changes.journal.currentValue, this.viewMode);
         }
     }
     
     public submitJournal() {
         let formJournal = _.cloneDeep(this.journalOptions.value) as UJournal;
-        let researchWorks = _.filter(formJournal.PreparationInfo.ResearchWorks, work => !!work.JobType && !!work.PresentationType);
+        let researchWorks = _.filter(formJournal.PreparationInfo.ResearchWorks, work => !!work.JobType || !!work.PresentationType || !!work.StartDate || !!work.FinishDate);
         let mark = +formJournal.ThesisCertification.Mark;
         let reportResults = _.filter(formJournal.ReportResults, result => !!result.Result);
 

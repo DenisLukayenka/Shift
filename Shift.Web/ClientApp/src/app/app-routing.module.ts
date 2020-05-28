@@ -44,7 +44,7 @@ const routes: Routes = [
 
     { path: Config.LoginPage, component: LoginComponent },
     { path: Config.RegisterPage, component: RegisterComponent },
-    { path: Config.LogoutPage, component: LogoutComponent },
+    { path: Config.RootPage + '/' + Config.LogoutPage, component: LogoutComponent },
     
     { path: '', redirectTo: Config.RootPage, pathMatch: 'full' },
     

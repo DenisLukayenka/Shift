@@ -26,7 +26,6 @@ export class GJViewComponent implements OnChanges {
     public ngOnChanges (changes: SimpleChanges): void {
         if(changes && changes.journal && changes.journal.currentValue) {
             this.journalOptions = this.gjHelper.generateFormGroup(changes.journal.currentValue);
-            this.gjHelper.addWorkPlan();
         }
     }
 

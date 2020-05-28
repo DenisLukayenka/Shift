@@ -4,7 +4,6 @@ import { MaterialModule } from "../material/material.module";
 import { MainSidenavComponent } from "./components/main-sidenav/main-sidenav.component";
 import { MenuGroupComponent } from "./components/main-sidenav/menu-group/menu-group.component";
 import { ErrorPageComponent } from "./components/error-page/error-page.component";
-import { StudentsListComponent } from "./components/students-list/students-list.component";
 import { UserRegisterComponent } from "./components/user-register/user-register.component";
 import { LoginRegisterComponent } from "./components/login-register/login-register.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -15,7 +14,6 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
         MainSidenavComponent, 
         MenuGroupComponent,
         ErrorPageComponent,
-        StudentsListComponent,
         UserRegisterComponent,
         LoginRegisterComponent,
     ],
@@ -23,7 +21,6 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     exports: [
         ErrorPageComponent,
         MainSidenavComponent,
-        StudentsListComponent,
         UserRegisterComponent,
         LoginRegisterComponent,
     ],

@@ -7,7 +7,7 @@ using Shift.Services.Managers.Journals.GJournals;
 namespace Shift.Web.Controllers
 {
     [Route("api/graduate/journal")]
-    [Authorize(Roles = RoleNames.Graduate)]
+    [Authorize]
     [ApiController]
     public class GJournalController : ControllerBase
     {
@@ -34,9 +34,9 @@ namespace Shift.Web.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] GJournal journal)
         {
-            this._journalManager.SaveJournal(journal);
+            var savedJournal = this._journalManager.SaveJournal(journal);
 
-            return Ok(new { Message = Config.SaveSuccess });
+            return Ok(new { Message = Config.SaveSuccess, Journal = savedJournal });
         }
     }
 }

@@ -18,8 +18,8 @@ export class LoginComponent implements OnInit {
     options: FormGroup;
     hidePassword = true;
 
-    private loginControl: FormControl;
-    private passwordControl: FormControl;
+    public loginControl: FormControl;
+    public passwordControl: FormControl;
 
     constructor(
         private formBuilder: FormBuilder,

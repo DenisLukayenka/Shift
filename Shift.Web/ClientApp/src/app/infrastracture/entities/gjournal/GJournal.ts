@@ -2,6 +2,7 @@ import { RationalInfo } from "./RationalInfo";
 import { ThesisPlan } from "./ThesisPlan";
 import { WorkPlan } from "./WorkPlan";
 import { EducationPhase } from "./EducationPhase";
+import { ExamInfo } from "./ExamInfo";
 
 export class GJournal {
     public Id: number;
@@ -13,4 +14,5 @@ export class GJournal {
 
     public WorkPlans: WorkPlan[];
     public EducationYears: EducationPhase[];
+    public ExamInfo: ExamInfo[];
 }

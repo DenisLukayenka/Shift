@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { AppState } from "../../store/app/app.state";
-import { State, Store } from "@ngrx/store";
+import { Store } from "@ngrx/store";
 import { LogOut } from "../../store/app/app.actions";
 
 @Component({

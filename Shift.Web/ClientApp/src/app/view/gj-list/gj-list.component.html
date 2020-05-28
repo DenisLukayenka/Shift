@@ -1,28 +1,47 @@
-<h5>Список аспирантов</h5>
-<div class="mat-elevation-z2 users-table">
-    <table mat-table [dataSource]="dataSource" class="width-full">
-        <ng-container matColumnDef="FirstName">
-            <th mat-header-cell *matHeaderCellDef>Имя</th>
-            <td mat-cell *matCellDef="let element"> {{element.FirstName}} </td>
-        </ng-container>
 
-        <ng-container matColumnDef="LastName">
-            <th mat-header-cell *matHeaderCellDef>Фамилия</th>
-            <td mat-cell *matCellDef="let element"> {{element.LastName}} </td>
-        </ng-container>
+<ng-container *ngIf="isJournalOpened">
+    <div class="mb-4">
+        <div>
+            <button class="mr-2" mat-flat-button (click)="resetUndergraduateView()">Назад</button>
+            <span>План {{ selectedUser.LastName }} {{ selectedUser.FirstName }}</span>
+        </div>
+    </div>
+    
+    <pac-gj-view
+        [journal]="journal"
+        [isViewLoading]="isViewLoading$ | async"
+        [viewMode]="ViewModes.Adviser"
+        (onJSaved)="saveJournal($event)"
+    ></pac-gj-view>
+</ng-container>
 
-        <ng-container matColumnDef="Journal">
-            <th mat-header-cell *matHeaderCellDef>План работ</th>
-            <td mat-cell *matCellDef="let element">
-                <button mat-icon-button type="button" (click)="showJournal(element.UserId)">
-                    <mat-icon>visibility</mat-icon>
-                </button>
-            </td>
-        </ng-container>
+<ng-container *ngIf="!isJournalOpened">
+    <h5>Список аспирантов</h5>
+    <div class="mat-elevation-z2 users-table">
+        <table mat-table [dataSource]="dataSource" class="width-full">
+            <ng-container matColumnDef="FirstName">
+                <th mat-header-cell *matHeaderCellDef>Имя</th>
+                <td mat-cell *matCellDef="let element"> {{element.FirstName}} </td>
+            </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+            <ng-container matColumnDef="LastName">
+                <th mat-header-cell *matHeaderCellDef>Фамилия</th>
+                <td mat-cell *matCellDef="let element"> {{element.LastName}} </td>
+            </ng-container>
 
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-</div>
+            <ng-container matColumnDef="Journal">
+                <th mat-header-cell *matHeaderCellDef>План работ</th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button type="button" (click)="showJournal(element)">
+                        <mat-icon>visibility</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </div>
+</ng-container>

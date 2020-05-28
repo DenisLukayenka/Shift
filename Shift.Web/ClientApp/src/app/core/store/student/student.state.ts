@@ -8,8 +8,8 @@ export interface StudentState {
 }
 
 export const initialState: StudentState = {
-    uJournal: undefined,
-    gJournal: undefined,
+    uJournal: null,
+    gJournal: null,
 }
 
 export const selectStudentState = createFeatureSelector<StudentState>('student');
