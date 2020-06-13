@@ -8,7 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Shift.DI.Extensions
 {
-    using Shift.FileGenerator.Undergraduate;
+    using Shift.FileGenerator.UJournal;
     using Shift.Infrastructure.Models.SharedData;
 	using Shift.Repository.Database;
 	using Shift.Repository.Repositories;

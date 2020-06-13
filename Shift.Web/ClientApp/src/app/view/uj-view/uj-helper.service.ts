@@ -4,6 +4,7 @@ import { UJournal } from "src/app/infrastracture/entities/ujournal/UJournal";
 import * as _ from 'lodash';
 import { isPropertyDefined } from "src/app/infrastracture/utilities/isPropertyDefined";
 import { ViewMode } from "src/app/infrastracture/entities/ViewMode";
+import { Protocol } from "src/app/infrastracture/entities/university/Protocol";
 
 @Injectable()
 export class UJHelperService {
@@ -23,6 +24,13 @@ export class UJHelperService {
         if(journal && journal.PreparationInfo && journal.PreparationInfo.ResearchWorks) {
             journal.PreparationInfo.ResearchWorks.forEach(w => this.addResearchWork());
         }
+        if(journal && journal.ThesisCertification && journal.ThesisCertification.Protocol) {
+            this.ThesisCertificationControl.addControl('Protocol', this.fb.group({
+                    ProtocolId: [null],
+                    Date: [null],
+                    Number: [null],
+            }));
+        }
 
         const truthyJournal = _.pickBy(journal, isPropertyDefined);
         this.options.patchValue(truthyJournal);
@@ -32,6 +40,14 @@ export class UJHelperService {
         }
         if(journal.PreparationInfo.ResearchWorks.length === 0) {
             this.addResearchWork();
+        }
+
+        if(journal && journal.ThesisCertification && !journal.ThesisCertification.Protocol) {
+            this.ThesisCertificationControl.addControl('Protocol', this.fb.group({
+                    ProtocolId: [null],
+                    Date: [null],
+                    Number: [null],
+            }));
         }
 
         this.subscribeOnDatesChanges();
@@ -73,11 +89,6 @@ export class UJHelperService {
                 ApproveDate: [{ value: null, disabled: this.IsStudentMode }],
                 PreliminaryApproveDate: [{ value: null, disabled: this.IsStudentMode }],
                 ProtocolId: [null],
-                Protocol: this.fb.group({
-                    ProtocolId: [null],
-                    Date: [null],
-                    Number: [null]
-                }),
             })
         });
     }
@@ -202,6 +213,11 @@ export class UJHelperService {
     }
     get IsResearchApprovedControl() {
         const control = this.options.get('PreparationInfo').get('IsResearchApproved') as FormControl;
+        return control;
+    }
+
+    get ThesisCertificationControl() {
+        const control = this.options.get('ThesisCertification') as FormGroup;
         return control;
     }
 

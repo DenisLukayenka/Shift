@@ -157,6 +157,26 @@
 
             <div formGroupName="ThesisCertification">
                 <h5 class="section-header">
+                    Результаты предварительной защиты магистерской диссертации
+                </h5>
+                <mat-form-field class="width-full section-element">
+                    <mat-label>Постановили</mat-label>
+                    <textarea class="non-scrollable-textarea" cdkTextareaAutosize cdkAutosizeMinRows="3" matInput formControlName="PreliminaryResult"></textarea>
+                </mat-form-field>
+                <div formGroupName="Protocol" class="inline-fields">
+                    <mat-form-field class="inline section-element">
+                        <mat-label>Протокол от</mat-label>
+                        <input matInput [matDatepicker]="protocolDatepicker" formControlName="Date">
+                        <mat-datepicker-toggle matSuffix [for]="protocolDatepicker"></mat-datepicker-toggle>
+                        <mat-datepicker #protocolDatepicker></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field class="inline section-element">
+                        <mat-label>№ </mat-label>
+                        <input matInput formControlName="Number">
+                    </mat-form-field>
+                </div>
+
+                <h5 class="section-header">
                     Результаты прохождения итоговой аттестации
                 </h5>
                 <div>

@@ -5,7 +5,7 @@ namespace Shift.Services.Managers.Journals.UJournals
 {
 	using Shift.DAL.Models.UserModels.UndergraduateData;
 	using Shift.DAL.Models.UserModels.UndergraduateData.JournalData;
-    using Shift.FileGenerator.Undergraduate;
+    using Shift.FileGenerator.UJournal;
     using Shift.Infrastructure.Models.ViewModels.Journals;
 	using Shift.Repository.Database;
 	using Shift.Repository.Repositories;
@@ -59,6 +59,8 @@ namespace Shift.Services.Managers.Journals.UJournals
 
 			this.UpdateResearchWorksState(researchWorks, researchWorksDb);
 			this.UpdateReportResultsState(reports, reportResultsDb, journalDal.Id);
+			this.SetModifiedOrAddedState(this._context, journalDal.ThesisCertification, journalDal.ThesisCertificationId);
+			this.SetModifiedOrAddedState(this._context, journalDal.ThesisCertification?.Protocol, journalDal.ThesisCertification?.ProtocolId);
 
 			journalDal.ReportResults = reports.ToList();
 			journalDal.PreparationInfo.ResearchWorks = researchWorks.ToList();
@@ -70,12 +72,11 @@ namespace Shift.Services.Managers.Journals.UJournals
 
 		public virtual byte[] DownloadJournalDocx(int userId)
 		{
-			var dbJournal = this._repository.UJournals.GetByUserId(userId);
+			var dbJournal = this._repository.UJournals.GetFullByUserId(userId);
 
 			if (dbJournal != null)
 			{
-				var responseJournal = this._mapper.Map<UJournalVM>(dbJournal);
-				byte[] journalDocx = this._ujConverter.Convert(responseJournal);
+				byte[] journalDocx = this._ujConverter.Convert(dbJournal);
 
 				return journalDocx;
 			}

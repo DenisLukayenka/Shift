@@ -41,7 +41,7 @@ namespace Shift.Web.Controllers
             var journalBytes = this._journalManager.DownloadJournalDocx(userId);
             var content = new MemoryStream(journalBytes);
 
-            return File(journalBytes, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "UndergraduateTemplate.docx");
+            return File(content, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "UndergraduateTemplate.docx");
         }
 
         [HttpPost]

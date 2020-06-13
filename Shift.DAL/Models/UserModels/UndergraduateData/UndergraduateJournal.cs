@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Shift.DAL.Models.UserModels.UndergraduateData
 {
-	using Shift.DAL.Models.University;
 	using Shift.DAL.Models.UserModels.UndergraduateData.JournalData;
-	using System.ComponentModel.DataAnnotations;
-	using System.ComponentModel.DataAnnotations.Schema;
 
 	public class UndergraduateJournal
 	{
