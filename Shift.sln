@@ -11,9 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shift.Services", "Shift.Ser
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shift.Infrastructure", "Shift.Infrastructure\Shift.Infrastructure.csproj", "{5824AC89-9F1F-496A-A43D-2F1D153C61E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shift.Repository", "Shift.Repository\Shift.Repository.csproj", "{F01D819E-6B44-467A-92C6-317759818C74}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shift.Repository", "Shift.Repository\Shift.Repository.csproj", "{F01D819E-6B44-467A-92C6-317759818C74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shift.DI", "Shift.DI\Shift.DI.csproj", "{FD6C63EC-3FDD-4D0E-A025-7CAD297DB335}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shift.DI", "Shift.DI\Shift.DI.csproj", "{FD6C63EC-3FDD-4D0E-A025-7CAD297DB335}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shift.FileGenerator", "Shift.FileGenerator\Shift.FileGenerator.csproj", "{23B81E20-A5E3-4649-BC95-1B73C7B7B397}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{FD6C63EC-3FDD-4D0E-A025-7CAD297DB335}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD6C63EC-3FDD-4D0E-A025-7CAD297DB335}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD6C63EC-3FDD-4D0E-A025-7CAD297DB335}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23B81E20-A5E3-4649-BC95-1B73C7B7B397}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23B81E20-A5E3-4649-BC95-1B73C7B7B397}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23B81E20-A5E3-4649-BC95-1B73C7B7B397}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23B81E20-A5E3-4649-BC95-1B73C7B7B397}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

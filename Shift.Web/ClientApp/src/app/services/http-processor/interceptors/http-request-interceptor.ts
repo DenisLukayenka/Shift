@@ -10,11 +10,13 @@ export class HttpRequestInterceptor implements HttpInterceptor {
     constructor(private router: Router) { }
     
     intercept ( req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        const newReq = req.clone({
-            headers: req.headers.set('Content-Type', 'application/json')
-        });
+        if(!req.headers.has('Content-Type')) {
+            req = req.clone({
+                headers: req.headers.set('Content-Type', 'application/json')
+            });
+        }
 
-        return next.handle(newReq).pipe(catchError((error: any) => this.handleAuthError(error)));
+        return next.handle(req).pipe(catchError((error: any) => this.handleAuthError(error)));
     }
 
     private handleAuthError(error: HttpErrorResponse): Observable<HttpEvent<any>> {

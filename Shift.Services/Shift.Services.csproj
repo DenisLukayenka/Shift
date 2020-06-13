@@ -10,10 +10,12 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.5.1" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.5.1" />
+    <PackageReference Include="TemplateEngine.Docx" Version="1.1.5" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Shift.DAL\Shift.DAL.csproj" />
+    <ProjectReference Include="..\Shift.FileGenerator\Shift.FileGenerator.csproj" />
     <ProjectReference Include="..\Shift.Infrastructure\Shift.Infrastructure.csproj" />
     <ProjectReference Include="..\Shift.Repository\Shift.Repository.csproj" />
   </ItemGroup>

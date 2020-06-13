@@ -5,7 +5,8 @@ namespace Shift.Services.Managers.Journals.UJournals
 {
 	using Shift.DAL.Models.UserModels.UndergraduateData;
 	using Shift.DAL.Models.UserModels.UndergraduateData.JournalData;
-	using Shift.Infrastructure.Models.ViewModels.Journals;
+    using Shift.FileGenerator.Undergraduate;
+    using Shift.Infrastructure.Models.ViewModels.Journals;
 	using Shift.Repository.Database;
 	using Shift.Repository.Repositories;
 	using System.Collections.Generic;
@@ -15,13 +16,15 @@ namespace Shift.Services.Managers.Journals.UJournals
 	{
 		private readonly IRepositoryWrapper _repository;
 		private readonly IMapper _mapper;
+		private readonly IUJConverter _ujConverter;
 		private readonly CoreContext _context;
 
-		public UJournalManager(IRepositoryWrapper repository, IMapper mapper, CoreContext context)
+		public UJournalManager(IRepositoryWrapper repository, IMapper mapper, CoreContext context, IUJConverter ujConverter)
 		{
 			this._repository = repository;
 			this._mapper = mapper;
 			this._context = context;
+			this._ujConverter = ujConverter;
 		}
 
 		public UJournalVM FetchJournal(int userId)
@@ -63,6 +66,21 @@ namespace Shift.Services.Managers.Journals.UJournals
 			this._context.SaveChanges();
 
 			return this._mapper.Map<UJournalVM>(journalDal);
+		}
+
+		public virtual byte[] DownloadJournalDocx(int userId)
+		{
+			var dbJournal = this._repository.UJournals.GetByUserId(userId);
+
+			if (dbJournal != null)
+			{
+				var responseJournal = this._mapper.Map<UJournalVM>(dbJournal);
+				byte[] journalDocx = this._ujConverter.Convert(responseJournal);
+
+				return journalDocx;
+			}
+
+			return null;
 		}
 
 		private void UpdateResearchWorksState(IEnumerable<ResearchWork> researchWorks, IEnumerable<ResearchWork> researchWorksDb)
@@ -126,5 +144,5 @@ namespace Shift.Services.Managers.Journals.UJournals
 				context.Entry(entity).State = EntityState.Added;
 			}
 		}
-	}
+    }
 }

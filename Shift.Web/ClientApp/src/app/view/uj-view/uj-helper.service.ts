@@ -69,7 +69,15 @@ export class UJHelperService {
                 Mark: [{ value: null, disabled: this.IsStudentMode }, [
                     Validators.required,
                 ]],
-                ApprovedDate: [{ value: null, disabled: this.IsStudentMode }],
+                PreliminaryResult: [null],
+                ApproveDate: [{ value: null, disabled: this.IsStudentMode }],
+                PreliminaryApproveDate: [{ value: null, disabled: this.IsStudentMode }],
+                ProtocolId: [null],
+                Protocol: this.fb.group({
+                    ProtocolId: [null],
+                    Date: [null],
+                    Number: [null]
+                }),
             })
         });
     }

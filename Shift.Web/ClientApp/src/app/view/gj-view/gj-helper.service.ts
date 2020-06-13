@@ -29,6 +29,7 @@ export class GJHelperService {
         }
         this.addScienceActivity(0);
         this.addCalendarStage(0);
+        this.addCalendarStage(0);
         this.addWorkPlan();
         this.addWorkStage(0);
         

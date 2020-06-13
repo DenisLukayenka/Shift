@@ -8,7 +8,8 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Shift.DI.Extensions
 {
-	using Shift.Infrastructure.Models.SharedData;
+    using Shift.FileGenerator.Undergraduate;
+    using Shift.Infrastructure.Models.SharedData;
 	using Shift.Repository.Database;
 	using Shift.Repository.Repositories;
 	using Shift.Repository.Repositories.Implementations;
@@ -22,7 +23,9 @@ namespace Shift.DI.Extensions
 
 	public static class ServicesExtensions
 	{
-		public static void ConfigureSqlServerDbContext(this IServiceCollection services, IConfiguration config)
+		public static void ConfigureSqlServerDbContext(
+			this IServiceCollection services,
+			IConfiguration config)
 		{
 			var connectionString = config.GetConnectionString("sqlServerDefault");
 			services.AddDbContext<CoreContext>(o => o.UseSqlServer(connectionString));
@@ -45,6 +48,7 @@ namespace Shift.DI.Extensions
 			services.AddScoped<IJobPositionRepository, JobPositionRepository>();
 			services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 			services.AddScoped<ISpecialtyRepository, SpecialtyRepository>();
+			services.AddScoped<IUJConverter, UJConverterDocx>();
 		}
 
 		public static void ConfigureServices(this IServiceCollection services)

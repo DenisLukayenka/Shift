@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Shift.FileGenerator\Shift.FileGenerator.csproj" />
     <ProjectReference Include="..\Shift.Repository\Shift.Repository.csproj" />
     <ProjectReference Include="..\Shift.Services\Shift.Services.csproj" />
   </ItemGroup>

@@ -1,5 +1,5 @@
 ﻿using Shift.Infrastructure.Models.ViewModels.Journals;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace Shift.Services.Managers.Journals.UJournals
 {
@@ -7,5 +7,6 @@ namespace Shift.Services.Managers.Journals.UJournals
 	{
 		UJournalVM FetchJournal(int userId);
 		UJournalVM SaveJournal(UJournalVM journal);
+		byte[] DownloadJournalDocx(int userId);
 	}
 }

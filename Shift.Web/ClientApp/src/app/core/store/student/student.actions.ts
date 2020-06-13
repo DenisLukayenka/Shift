@@ -6,6 +6,8 @@ export enum StudentActionTypes {
     LoadUJournal = '[Pac] Load UJournal',
     LoadUJournalSuccess = '[Pac] Load UJournal Success',
     ExecuteLoadUJournal = '[Pac] Execute Load UJournal',
+    DownloadUJournal = '[Pac] Download UJournal',
+    DownloadUJournalSuccess = '[Pac] Download UJournal Success',
 
     LoadGJournal = '[Pac] Load GJournal',
     LoadGJournalSuccess = '[Pac] Load GJournal Success',
@@ -84,9 +86,21 @@ export class ResetJournals implements Action {
     readonly type = StudentActionTypes.ResetJournals;
 };
 
+export class DownloadUJournal implements Action {
+    readonly type = StudentActionTypes.DownloadUJournal;
+
+    constructor(public payload: { userId: number }){}
+};
+
+export class DownloadUJournalSuccess implements Action {
+    readonly type = StudentActionTypes.DownloadUJournalSuccess;
+};
+
 export type StudentActionsUnion = 
     | LoadUJournal
     | LoadUJournalSuccess
+    | DownloadUJournal
+    | DownloadUJournalSuccess
     
     | SaveUJournal
     | SaveUJournalSuccess
