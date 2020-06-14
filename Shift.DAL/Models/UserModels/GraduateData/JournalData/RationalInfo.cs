@@ -18,7 +18,7 @@ namespace Shift.DAL.Models.UserModels.GraduateData.JournalData
 		public string Justification { get; set; }
 
 		public string ThesisPublications { get; set; }
-		public string ReseachParticipation { get; set; }
+		public string ResearchParticipation { get; set; }
 
 		public string DissertationTopic { get; set; }
 

@@ -29,7 +29,6 @@ namespace Shift.Repository.Repositories.Implementations
 			return this.AppContext.Set<T>().Where(expression).AsNoTracking();
 		}
 
-
 		public virtual T Add(T entity)
 		{
 			return this.AppContext.Set<T>().Add(entity)?.Entity;

@@ -25,9 +25,15 @@ namespace Shift.Repository.Repositories.Implementations
 				.Include(j => j.EducationYears).ThenInclude(j => j.ScienceActivities)
 				.Include(j => j.EducationYears).ThenInclude(j => j.Attestations).ThenInclude(a => a.Protocol)
 				.Include(j => j.Graduate)
+				.Include(j => j.ExamsData)
 				.AsNoTracking()
 
 				.FirstOrDefault(journal => journal.Graduate.UserId == userId);
 		}
+
+		public virtual GraduateJournal GetByIdTracking(int graduateJournalId)
+        {
+			return this.AppContext.GraduateJournals.FirstOrDefault(j => j.Id == graduateJournalId);
+        }
 	}
 }

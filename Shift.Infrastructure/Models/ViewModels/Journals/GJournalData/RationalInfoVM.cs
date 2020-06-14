@@ -14,7 +14,7 @@ namespace Shift.Infrastructure.Models.ViewModels.Journals.GJournalData
 		public string Justification { get; set; }
 
 		public string ThesisPublications { get; set; }
-		public string ReseachParticipation { get; set; }
+		public string ResearchParticipation { get; set; }
 
 		public string DissertationTopic { get; set; }
 

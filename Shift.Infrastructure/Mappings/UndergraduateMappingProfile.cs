@@ -3,7 +3,7 @@ using Shift.Infrastructure.Models.ViewModels.Auth;
 
 namespace Shift.Infrastructure.Mappings
 {
-	public class UndergraduateMappingProfile: MappingProfile
+	public class UndergraduateMappingProfile: ContextsMappingProfile
 	{
 		public UndergraduateMappingProfile()
 		{

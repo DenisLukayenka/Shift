@@ -1,4 +1,4 @@
-export class ExamInfo {
+export class ExamData {
     Id: number;
     Mark: number;
     Date: Date;

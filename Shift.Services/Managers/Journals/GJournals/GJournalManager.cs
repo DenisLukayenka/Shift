@@ -41,34 +41,17 @@ namespace Shift.Services.Managers.Journals.GJournals
 
 		public GJournal SaveJournal(GJournal journal)
 		{
-			var journalDal = this._mapper.Map<GraduateJournal>(journal);
+			var dbJournal = this._repository.GJournals.GetByIdTracking(journal.Id);
 
-			var workPlans = this._mapper.Map<IEnumerable<WorkPlan>>(journal.WorkPlans);
-			var educationPhases = this._mapper.Map<IEnumerable<EducationPhase>>(journal.EducationYears);
-			var examsData = this._mapper.Map<IEnumerable<ExamInfo>>(journal.ExamsInfo);
-
-			this.SetModifiedOrAddedState(this._context, journalDal.ThesisPlan, journalDal.ThesisPlanId);
-			this.SetModifiedOrAddedState(this._context, journalDal.RationalInfo, journalDal.RationalInfoId);
-
-			journalDal.WorkPlans = workPlans.ToList();
-			journalDal.EducationYears = educationPhases.ToList();
-			journalDal.ExamsData = examsData.ToList();
+			dbJournal.RationalInfo = this._mapper.Map<RationalInfo>(journal.RationalInfo);
+			dbJournal.ThesisPlan = this._mapper.Map<ThesisPlan>(journal.ThesisPlan);
+			dbJournal.WorkPlans = this._mapper.Map<ICollection<WorkPlan>>(journal.WorkPlans);
+			dbJournal.EducationYears = this._mapper.Map<ICollection<EducationPhase>>(journal.EducationYears);
+			dbJournal.ExamsData = this._mapper.Map<ICollection<ExamInfo>>(journal.ExamsData);
 
 			this._context.SaveChanges();
 
-			return this._mapper.Map<GJournal>(journalDal);
-		}
-
-		private void SetModifiedOrAddedState(CoreContext context, object entity, int? id)
-		{
-			if (id != null && id.Value != 0)
-			{
-				context.Entry(entity).State = EntityState.Modified;
-			}
-			else
-			{
-				context.Entry(entity).State = EntityState.Added;
-			}
+			return this._mapper.Map<GJournal>(dbJournal);
 		}
 	}
 }

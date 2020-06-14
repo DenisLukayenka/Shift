@@ -5,7 +5,7 @@ using Shift.Infrastructure.Models.ViewModels.Journals.UJournalData;
 
 namespace Shift.Infrastructure.Mappings
 {
-	public class UndergraduateJournalMappingProfile: MappingProfile
+	public class UndergraduateJournalMappingProfile: ContextsMappingProfile
 	{
 		public UndergraduateJournalMappingProfile()
 		{

@@ -9,11 +9,14 @@ namespace Shift.Infrastructure.Models.ViewModels.Journals
 
 		public int? GraduateId { get; set; }
 
+		public int? RationalInfoId { get; set; }
 		public virtual RationalInfoVM RationalInfo { get; set; }
+
+		public int? ThesisPlanId { get; set; }
 		public virtual ThesisPlanVM ThesisPlan { get; set; }
 
 		public virtual ICollection<WorkPlanVM> WorkPlans { get; set; } = new List<WorkPlanVM>();
 		public virtual ICollection<EducationPhaseVM> EducationYears { get; set; } = new List<EducationPhaseVM>();
-		public virtual ICollection<ExamInfoVM> ExamsInfo { get; set; } = new List<ExamInfoVM>();
+		public virtual ICollection<ExamInfoVM> ExamsData { get; set; } = new List<ExamInfoVM>();
 	}
 }

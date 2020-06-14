@@ -6,9 +6,9 @@
                 <button mat-icon-button (click)="submitJournal()">
                     <mat-icon>save</mat-icon>
                 </button>
-                <!--<button mat-icon-button (click)="downloadJournal()">
+                <button mat-icon-button (click)="downloadJournal()">
                     <mat-icon>get_app</mat-icon>
-                </button>-->
+                </button>
             </div>
         </div>
         
@@ -47,7 +47,6 @@
                     <textarea class="non-scrollable-textarea" cdkTextareaAutosize cdkAutosizeMinRows="2" matInput formControlName="ResearchParticipation"></textarea>
                 </mat-form-field>
 
-                <!--TODO exam info-->
                 <div [formGroup]="journalOptions">
                     <h5 class="section-header">
                         Сведения о сдаче кандидатских экзаменов и зачета по общеобразовательным дисциплинам
@@ -60,7 +59,7 @@
                             <th></th>
                         </thead>
                         <tbody>
-                            <ng-container formArrayName="ExamInfo" *ngFor="let exam of gjHelper.ExamInfo.controls; let i=index">
+                            <ng-container formArrayName="ExamsData" *ngFor="let exam of gjHelper.ExamsData.controls; let i=index">
                                 <tr [formGroupName]='i'>
                                     <td>
                                         <mat-form-field class="width-full">
@@ -87,7 +86,7 @@
                         </tbody>
                     </table>
                     <div class="action-container">
-                        <button type="button" mat-raised-button (click)="gjHelper.addExamInfo()">Добавить экзамен</button>
+                        <button type="button" mat-raised-button (click)="gjHelper.addExamData()">Добавить экзамен</button>
                     </div>
                 </div>
                 <mat-divider class="mb-3 mt-3"></mat-divider>
@@ -227,7 +226,7 @@
                         </tbody>
                     </table>
                     <div class="action-container">
-                        <button type="button" mat-raised-button (click)="gjHelper.addExamInfo()">Добавить этап работы</button>
+                        <button type="button" mat-raised-button (click)="gjHelper.addExamData()">Добавить этап работы</button>
                     </div>
 
                     <div class="mt-3">
@@ -305,7 +304,7 @@
                         </tbody>
                     </table>
                     <div class="action-container">
-                        <button type="button" mat-raised-button (click)="gjHelper.addExamInfo()">Добавить этап</button>
+                        <button type="button" mat-raised-button (click)="gjHelper.addExamData()">Добавить этап</button>
                     </div>
 
                     <div class="flex-column-center">
@@ -365,7 +364,7 @@
                         </tbody>
                     </table>
                     <div class="action-container">
-                        <button type="button" mat-raised-button (click)="gjHelper.addExamInfo()">Добавить мероприятие</button>
+                        <button type="button" mat-raised-button (click)="gjHelper.addExamData()">Добавить мероприятие</button>
                     </div>
 
                     <h4 class="section-label">
@@ -476,7 +475,6 @@
                             <h5 class="section-label">
                                 Результаты научно-исследовательской работы аспиранта (соискателя) заслушаны и обсуждены на заседании кафедры <i>(указать наименование)</i>
                             </h5>
-                            <!--TODO Add department here-->
 
                             <mat-grid-list cols="2" rowHeight="50px" class="col-md-5">
                                 <mat-grid-tile>
