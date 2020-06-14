@@ -8,6 +8,7 @@ import { StorageService } from "src/app/services/storage/storage.service";
 import { selectViewLoading } from "src/app/core/store/app/app.state";
 import { UserIdKey } from "src/app/services/storage/StorageKeys";
 import { ExecuteLoadGJournal, SaveGJournal } from "src/app/core/store/student/student.actions";
+import { ViewStartLoading } from "src/app/core/store/app/app.actions";
 
 @Component({
     selector: 'pac-graduate-journal',
@@ -29,6 +30,7 @@ export class GraduateJournalComponent implements OnInit {
     }
 
     public updateJornal(journal: GJournal) {
+        this.studentState.dispatch(new ViewStartLoading());
         this.studentState.dispatch(new SaveGJournal({ journal: journal }));
     }
 

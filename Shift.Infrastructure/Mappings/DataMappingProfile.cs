@@ -21,6 +21,7 @@ namespace Shift.Infrastructure.Mappings
 			CreateMap<Department, DepartmentVM>().ReverseMap();
 			CreateMap<Specialty, SpecialtyVM>().ReverseMap();
 			CreateMap<ExamInfo, ExamInfoVM>().ReverseMap();
+			CreateMap<Discipline, DisciplineVM>().ReverseMap();
 		}
 	}
 }

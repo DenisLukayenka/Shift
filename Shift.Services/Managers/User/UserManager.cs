@@ -13,6 +13,7 @@ namespace Shift.Services.Managers.User
 	using Shift.DAL.Models.UserModels.UserData;
     using Shift.Infrastructure.Models.ViewModels.Users;
 	using DAL.Models.UserModels.GraduateData.JournalData;
+	using DAL.Models.University;
 
 	public class UserManager : IUserManager
 	{
@@ -74,6 +75,8 @@ namespace Shift.Services.Managers.User
 				var entity = this._mapper.Map<Graduate>(graduate);
 				var journal = new GraduateJournal();
 				journal.EducationYears.Add(new EducationPhase());
+				journal.RationalInfo.Protocol = new Protocol();
+				journal.WorkPlans.Add(new WorkPlan());
 
 				entity.GraduateJournals.Add(journal);
 				entity.User.RoleId = this.GetOrAddRole(RoleNames.Graduate);

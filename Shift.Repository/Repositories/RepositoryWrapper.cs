@@ -18,6 +18,9 @@ namespace Shift.Repository.Repositories
 		private readonly IJobPositionRepository _positionRepository;
 		private readonly IDepartmentRepository _departmentRepository;
 		private readonly ISpecialtyRepository _specialtyRepository;
+		private readonly IExamRepository _examRepository;
+		private readonly IWorkPlanRepository _workPlanRepository;
+		private readonly IEducationPhaseRepository _educationPhases;
 
 		public RepositoryWrapper(
 			CoreContext repositoryContext,
@@ -32,7 +35,10 @@ namespace Shift.Repository.Repositories
 			IAcademicRankRepository rankRepository,
 			IJobPositionRepository positionRepository,
 			IDepartmentRepository departmentRepository,
-			ISpecialtyRepository specialtyRepository
+			ISpecialtyRepository specialtyRepository,
+			IExamRepository examRepository,
+			IWorkPlanRepository workPlanRepository,
+			IEducationPhaseRepository educationPhases
 			)
 		{
 			this._dbContext = repositoryContext;
@@ -49,6 +55,9 @@ namespace Shift.Repository.Repositories
 			this._positionRepository = positionRepository;
 			this._departmentRepository = departmentRepository;
 			this._specialtyRepository = specialtyRepository;
+			this._examRepository = examRepository;
+			this._workPlanRepository = workPlanRepository;
+			this._educationPhases = educationPhases;
 		}
 
 		public virtual IUserRepository Users => this._userRepository;
@@ -64,6 +73,9 @@ namespace Shift.Repository.Repositories
 		public virtual IJobPositionRepository Positions => this._positionRepository;
 		public virtual IDepartmentRepository Departments => this._departmentRepository;
 		public virtual ISpecialtyRepository Specialties => this._specialtyRepository;
+		public virtual IExamRepository Exams => this._examRepository;
+		public virtual IWorkPlanRepository WorkPlans => this._workPlanRepository;
+		public virtual IEducationPhaseRepository EducationPhases => this._educationPhases;
 
 		public virtual void Save()
 		{

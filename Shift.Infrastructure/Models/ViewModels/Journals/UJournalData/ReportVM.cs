@@ -13,6 +13,6 @@ namespace Shift.Infrastructure.Models.ViewModels.Journals.UJournalData
 		public int? UndergraduateJournalId { get; set; }
 
 		public int? ProtocolId { get; set; }
-		public virtual ProtocolVM Protocol { get; set; }
+		public virtual ProtocolVM Protocol { get; set; } = new ProtocolVM();
 	}
 }

@@ -15,6 +15,9 @@ import { AuthGuard } from './infrastracture/guards/AuthGuard';
 import { Router } from '@angular/router';
 import { ErrorPageGuard } from './infrastracture/guards/error-page.guard';
 import { getJwtToken } from './infrastracture/utilities/getJwtToken';
+import { MomentDateModule, MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
+import { DATE_FORMATS } from './infrastracture/utilities/date-formats';
 
 @Injectable()
 export class WindowWrapper extends Window { }
@@ -41,10 +44,15 @@ export function getWindow() { return window; }
         blacklistedRoutes: []
       }
     }),
+    MomentDateModule,
+    MatMomentDateModule,
   ],
   providers: [
     { provide: WindowWrapper, useValue: getWindow },
     { provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true },
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
+    { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' },
+    { provide: MAT_DATE_FORMATS, useValue: DATE_FORMATS },
     AuthGuard,
     ErrorPageGuard,
   ],

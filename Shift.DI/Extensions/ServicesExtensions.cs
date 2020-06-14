@@ -48,7 +48,9 @@ namespace Shift.DI.Extensions
 			services.AddScoped<IJobPositionRepository, JobPositionRepository>();
 			services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 			services.AddScoped<ISpecialtyRepository, SpecialtyRepository>();
-			services.AddScoped<IUJConverter, UJConverterDocx>();
+			services.AddScoped<IExamRepository, ExamRepository>();
+			services.AddScoped<IWorkPlanRepository, WorkPlanRepository>();
+			services.AddScoped<IEducationPhaseRepository, EducationPhaseRepository>();
 		}
 
 		public static void ConfigureServices(this IServiceCollection services)
@@ -59,6 +61,7 @@ namespace Shift.DI.Extensions
 			services.AddTransient<IUJournalManager, UJournalManager>();
 			services.AddTransient<IGJournalManager, GJournalManager>();
 			services.AddTransient<IEmployeeManager, EmployeeManager>();
+			services.AddScoped<IUJConverter, UJConverterDocx>();
 		}
 
 		public static void ConfigureJwtAuth(this IServiceCollection services)

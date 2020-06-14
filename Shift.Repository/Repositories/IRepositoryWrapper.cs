@@ -16,6 +16,9 @@ namespace Shift.Repository.Repositories
 		IJobPositionRepository Positions { get; }
 		IDepartmentRepository Departments { get; }
 		ISpecialtyRepository Specialties { get; }
+		IExamRepository Exams { get; }
+		IWorkPlanRepository WorkPlans { get; }
+		IEducationPhaseRepository EducationPhases { get; }
 
 		void Save();
 	}

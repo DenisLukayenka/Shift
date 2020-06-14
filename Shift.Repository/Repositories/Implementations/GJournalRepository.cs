@@ -25,7 +25,7 @@ namespace Shift.Repository.Repositories.Implementations
 				.Include(j => j.EducationYears).ThenInclude(j => j.ScienceActivities)
 				.Include(j => j.EducationYears).ThenInclude(j => j.Attestations).ThenInclude(a => a.Protocol)
 				.Include(j => j.Graduate)
-				.Include(j => j.ExamsData)
+				.Include(j => j.ExamsData).ThenInclude(e => e.Discipline)
 				.AsNoTracking()
 
 				.FirstOrDefault(journal => journal.Graduate.UserId == userId);

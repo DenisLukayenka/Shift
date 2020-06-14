@@ -1,5 +1,4 @@
-﻿using Shift.Infrastructure.Models.ViewModels.Journals;
-using System;
+﻿using System;
 
 namespace Shift.Infrastructure.Models.ViewModels.University
 {

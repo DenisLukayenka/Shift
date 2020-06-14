@@ -123,18 +123,16 @@ export class GJHelperService {
             Mark: [null],
             Date: [null],
             DisciplineId: [null],
+            Discipline: this.initDiscipline(),
             GraduateJournalId: [null],
         });
     }
-
-    public addEducationYear(){
-        const control = this.options.get('EducationYears') as FormArray;
-        control.push(this.initEducationPhase());
-    }
-
-    public addWorkPlan() {
-        const control = this.options.get('WorkPlans') as FormArray;
-        control.push(this.initWorkPlan());
+    public initDiscipline(): FormGroup {
+        return this.fb.group({
+            Id: [null],
+            FullName: [null],
+            Abbreviation: [null],
+        });
     }
 
     public addExamData() {
@@ -203,17 +201,22 @@ export class GJHelperService {
     }
 
     public deleteWorkStage(workPlanIndex: number, workStageIndex: number) {
-        const control = this.options.get('WorkPlans')[workPlanIndex] as FormArray;
+        const control = (this.options.get('WorkPlans') as FormArray).controls[workPlanIndex].get('WorkStages') as FormArray;
         control.removeAt(workStageIndex);
     }
 
-    public deleteCalendarStage(EducationPhaseIndex: number, calendarStageIndex: number) {
-        const control = this.options.get('EducationYears')[EducationPhaseIndex] as FormArray;
-        control.removeAt(calendarStageIndex);
+    public deleteCalendarStage(educationPhaseIndex: number, calendarStageIndex: number) {
+        const stages = (this.options.get('EducationYears') as FormArray).controls[educationPhaseIndex].get('CalendarStages') as FormArray;
+        stages.removeAt(calendarStageIndex);
     }
 
-    public deleteScienceActivity(EducationPhaseIndex: number, activityIndex: number) {
-        const control = this.options.get('EducationYears')[EducationPhaseIndex] as FormArray;
+    public deleteScienceActivity(educationPhaseIndex: number, activityIndex: number) {
+        const control = (this.options.get('EducationYears') as FormArray).controls[educationPhaseIndex].get('ScienceActivities') as FormArray;
         control.removeAt(activityIndex);
+    }
+
+    public deleteExam(index: number) {
+        const control = this.options.get('ExamsData') as FormArray;
+        control.removeAt(index);
     }
 }
