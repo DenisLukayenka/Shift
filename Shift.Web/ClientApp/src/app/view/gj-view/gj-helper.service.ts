@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, FormArray } from "@angular/forms";
 import { GJournal } from "src/app/infrastracture/entities/gjournal/GJournal";
 import * as _ from 'lodash';
 import { generateForm } from "src/app/infrastracture/utilities/generateForm";
+import { ViewMode } from "src/app/infrastracture/entities/ViewMode";
 
 @Injectable()
 export class GJHelperService {
@@ -10,8 +11,8 @@ export class GJHelperService {
 
     constructor(private fb: FormBuilder) {}
 
-    public generateFormGroup(journal: GJournal) {
-        let formGenerated = generateForm(journal);
+    public generateFormGroup(journal: GJournal, viewMode: ViewMode = ViewMode.Student) {
+        let formGenerated = generateForm(journal, null, viewMode);
         this.options = formGenerated as FormGroup;
         console.log(this.options);
 

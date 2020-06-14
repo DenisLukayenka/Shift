@@ -4,6 +4,7 @@ import * as _ from 'lodash';
 import { GJHelperService } from "./gj-helper.service";
 import { GJournal } from "src/app/infrastracture/entities/gjournal/GJournal";
 import { ViewMode } from "src/app/infrastracture/entities/ViewMode";
+import { isStudentMode } from "src/app/infrastracture/utilities/isStudentMode";
 
 @Component({
     selector: 'pac-gj-view',
@@ -13,6 +14,7 @@ import { ViewMode } from "src/app/infrastracture/entities/ViewMode";
 })
 export class GJViewComponent implements OnChanges {
     public journalOptions: FormGroup;
+    public isStudentMode = isStudentMode;
 
     @Input() public isViewLoading: boolean;
     @Input() public journal: GJournal;
@@ -25,7 +27,7 @@ export class GJViewComponent implements OnChanges {
 
     public ngOnChanges (changes: SimpleChanges): void {
         if(changes && changes.journal && changes.journal.currentValue) {
-            this.journalOptions = this.gjHelper.generateFormGroup(changes.journal.currentValue);
+            this.journalOptions = this.gjHelper.generateFormGroup(changes.journal.currentValue, this.viewMode);
         }
     }
 

@@ -2,9 +2,8 @@ import { Injectable } from "@angular/core";
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from "@angular/forms";
 import { UJournal } from "src/app/infrastracture/entities/ujournal/UJournal";
 import * as _ from 'lodash';
-import { isPropertyDefined } from "src/app/infrastracture/utilities/isPropertyDefined";
 import { ViewMode } from "src/app/infrastracture/entities/ViewMode";
-import { Protocol } from "src/app/infrastracture/entities/university/Protocol";
+import { generateForm } from "src/app/infrastracture/utilities/generateForm";
 
 @Injectable()
 export class UJHelperService {
@@ -15,83 +14,14 @@ export class UJHelperService {
 
     public generateFormOptions(journal: UJournal, viewMode: ViewMode = ViewMode.Student): FormGroup {
         this.viewMode = viewMode;
-
-        this.options = this.initJournal();
-
-        if(journal && journal.ReportResults) {
-            journal.ReportResults.forEach(r => this.addReportResults());
-        }
-        if(journal && journal.PreparationInfo && journal.PreparationInfo.ResearchWorks) {
-            journal.PreparationInfo.ResearchWorks.forEach(w => this.addResearchWork());
-        }
-        if(journal && journal.ThesisCertification && journal.ThesisCertification.Protocol) {
-            this.ThesisCertificationControl.addControl('Protocol', this.fb.group({
-                    ProtocolId: [null],
-                    Date: [null],
-                    Number: [null],
-            }));
-        }
-
-        const truthyJournal = _.pickBy(journal, isPropertyDefined);
-        this.options.patchValue(truthyJournal);
-
-        if(journal.ReportResults.length === 0) {
-            this.addReportResults();
-        }
-        if(journal.PreparationInfo.ResearchWorks.length === 0) {
-            this.addResearchWork();
-        }
-
-        if(journal && journal.ThesisCertification && !journal.ThesisCertification.Protocol) {
-            this.ThesisCertificationControl.addControl('Protocol', this.fb.group({
-                    ProtocolId: [null],
-                    Date: [null],
-                    Number: [null],
-            }));
-        }
-
-        this.subscribeOnDatesChanges();
+        
+        let formGenerated = generateForm(journal, null, viewMode);
+        this.options = formGenerated as FormGroup;
+        console.log(this.options);
 
         return this.options;
     }
 
-    public initJournal(): FormGroup {
-        return this.fb.group({
-            Id: [null],
-            UndergraduateId: [null],
-            PreparationInfoId: [null],
-            PreparationInfo: this.fb.group({
-                PreparationInfoId: [null],
-                Topic: [{ value: null, disabled: !this.IsStudentMode }],
-                Relevance: [{ value: null, disabled: !this.IsStudentMode }],
-                Objectives: [{ value: null, disabled: !this.IsStudentMode }],
-                ResearchProcedure: [{ value: null, disabled: !this.IsStudentMode }],
-                Additions: [{ value: null, disabled: !this.IsStudentMode }],
-                PreparationSubmittedDate: [{ value: null, disabled: !this.IsStudentMode }],
-                PreparationApprovedDate: [{ value: null, disabled: this.IsStudentMode }],
-                IsPreparationSubmitted: [false],
-                IsPreparationApproved: [false],
-                IsResearchSubmitted: [false],
-                IsResearchApproved: [false],
-                ReseachSubmittedDate: [{ value: null, disabled: !this.IsStudentMode }],
-                ReseachApprovedDate: [{ value: null, disabled: this.IsStudentMode }],
-                ResearchWorks: this.fb.array([]),
-            }),
-            ReportResults: this.fb.array([]),
-            ThesisCertificationId: [null],
-            ThesisCertification: this.fb.group({
-                ThesisCertificationId: [null],
-                IsApproved: [{ value: null, disabled: this.IsStudentMode }],
-                Mark: [{ value: null, disabled: this.IsStudentMode }, [
-                    Validators.required,
-                ]],
-                PreliminaryResult: [null],
-                ApproveDate: [{ value: null, disabled: this.IsStudentMode }],
-                PreliminaryApproveDate: [{ value: null, disabled: this.IsStudentMode }],
-                ProtocolId: [null],
-            })
-        });
-    }
     public initReportResults(): FormGroup {
         return this.fb.group({
             Id: [null],
@@ -134,35 +64,6 @@ export class UJHelperService {
     public deleteReportResult(index: number) {
         const control = this.options.get('ReportResults') as FormArray;
         control.removeAt(index);
-    }
-
-    public subscribeOnDatesChanges() {
-        this.subscribeOnPreparationSubmit();
-        this.subscribeOnPreparationApprove();
-        this.subscribeOnResearchSubmit();
-        this.subscribeOnReseacrhApprove();
-    }
-
-    public subscribeOnPreparationSubmit() {
-        this.PreparationSubmittedDateControl.valueChanges.subscribe(date => {
-            this.IsPreparationSubmittedControl.setValue(!!date);
-        });
-    }
-    public subscribeOnPreparationApprove() {
-        this.PreparationApprovedDateControl.valueChanges.subscribe(date => {
-            this.IsPreparationApprovedControl.setValue(!!date);
-        });
-    }
-
-    public subscribeOnResearchSubmit() {
-        this.ReseachSubmittedDateControl.valueChanges.subscribe(date => {
-            this.IsResearchSubmittedControl.setValue(!!date);
-        });
-    }
-    public subscribeOnReseacrhApprove() {
-        this.ReseachApprovedDateDateControl.valueChanges.subscribe(date => {
-            this.IsResearchApprovedControl.setValue(!!date);
-        });
     }
 
     get getRWFormControls() {
