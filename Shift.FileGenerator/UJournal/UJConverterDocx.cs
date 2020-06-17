@@ -84,6 +84,13 @@ namespace Shift.FileGenerator.UJournal
                     new FieldContent("DepartmentHeadSign", head.ValueOrDefault()));
             }
 
+            reportsContent.AddItem(
+                    new FieldContent("ReportResult", ""),
+                    new FieldContent("ProtocolDate", ""),
+                    new FieldContent("ProtocolNumber", ""),
+                    new FieldContent("DepartmentHeadSign", "")
+             );
+
             return reportsContent;
         }
 
@@ -115,6 +122,7 @@ namespace Shift.FileGenerator.UJournal
         protected virtual TableContent GetResearchesContent(IEnumerable<ResearchWork> works)
         {
             var researchesContent = new TableContent("ResearchWorkTable");
+            
             foreach (var work in works)
             {
                 researchesContent.AddRow(
@@ -123,6 +131,12 @@ namespace Shift.FileGenerator.UJournal
                     new FieldContent("StartDate", work.StartDate?.ToShortDateString() ?? ""),
                     new FieldContent("FinishDate", work.FinishDate?.ToShortDateString() ?? ""));
             }
+
+            researchesContent.AddRow(
+                    new FieldContent("JobType", ""),
+                    new FieldContent("PresentationType", ""),
+                    new FieldContent("StartDate", ""),
+                    new FieldContent("FinishDate", ""));
 
             return researchesContent;
         }

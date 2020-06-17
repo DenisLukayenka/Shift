@@ -19,7 +19,7 @@ namespace Shift.DAL.Models.UserModels.UndergraduateData
 		public virtual PreparationInfo PreparationInfo { get; set; } = new PreparationInfo();
 
 		public int? ThesisCertificationId { get; set; }
-		public virtual ThesisCertification ThesisCertification { get; set; } = new ThesisCertification();
+		public virtual ThesisCertification ThesisCertification { get; set; }
 
 		public virtual ICollection<Report> ReportResults { get; set; } = new List<Report>();
 	}

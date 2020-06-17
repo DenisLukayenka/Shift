@@ -14,8 +14,9 @@ namespace Shift.Services.Managers.User
     using Shift.Infrastructure.Models.ViewModels.Users;
 	using DAL.Models.UserModels.GraduateData.JournalData;
 	using DAL.Models.University;
+    using Shift.DAL.Models.UserModels.UndergraduateData.JournalData;
 
-	public class UserManager : IUserManager
+    public class UserManager : IUserManager
 	{
 		private readonly IRepositoryWrapper _repository;
 		private readonly IMapper _mapper;
@@ -109,7 +110,17 @@ namespace Shift.Services.Managers.User
 			if (dbUser == null)
 			{
 				var entity = this._mapper.Map<Undergraduate>(undergraduate);
-				entity.Journals.Add(new UndergraduateJournal());
+
+				var thesisData = new ThesisCertification()
+				{
+					Protocol = new Protocol()
+				};
+				var journal = new UndergraduateJournal()
+				{
+					ThesisCertification = thesisData
+				};
+
+				entity.Journals.Add(journal);
 				entity.User.RoleId = this.GetOrAddRole(RoleNames.Undergraduate);
 
 				this._repository.Undergraduates.Add(entity);
