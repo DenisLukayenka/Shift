@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Shift.DI.Extensions
 {
+    using Shift.FileGenerator.GJournal;
     using Shift.FileGenerator.UJournal;
     using Shift.Infrastructure.Models.SharedData;
 	using Shift.Repository.Database;
@@ -62,6 +63,7 @@ namespace Shift.DI.Extensions
 			services.AddTransient<IGJournalManager, GJournalManager>();
 			services.AddTransient<IEmployeeManager, EmployeeManager>();
 			services.AddScoped<IUJConverter, UJConverterDocx>();
+			services.AddScoped<IGJConverter, GJConverterDocx>();
 		}
 
 		public static void ConfigureJwtAuth(this IServiceCollection services)

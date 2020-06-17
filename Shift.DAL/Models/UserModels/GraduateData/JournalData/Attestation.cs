@@ -26,8 +26,14 @@ namespace Shift.DAL.Models.UserModels.GraduateData.JournalData
 		public DateTime? TrainingHeadApproveDate { get; set; }
 		public bool IsTrainingHeadApproved { get; set; } = false;
 
-		public int? ProtocolId { get; set; }
-		public virtual Protocol Protocol { get; set; }
+		public int? DepartmentProtocolId { get; set; }
+		public virtual Protocol DepartmentProtocol { get; set; }
+
+		public int? CommissionProtocolId { get; set; }
+		public virtual Protocol CommissionProtocol { get; set; }
+
+		public string DepartmentResult { get; set; }
+		public string CommissionResult { get; set; }
 
 		public int? EducationPhaseId { get; set; }
 		public virtual EducationPhase EducationPhase { get; set; }

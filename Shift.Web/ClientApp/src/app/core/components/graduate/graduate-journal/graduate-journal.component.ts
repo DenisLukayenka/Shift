@@ -7,7 +7,7 @@ import { StudentState, selectGJournal } from "src/app/core/store/student/student
 import { StorageService } from "src/app/services/storage/storage.service";
 import { selectViewLoading } from "src/app/core/store/app/app.state";
 import { UserIdKey } from "src/app/services/storage/StorageKeys";
-import { ExecuteLoadGJournal, SaveGJournal } from "src/app/core/store/student/student.actions";
+import { ExecuteLoadGJournal, SaveGJournal, DownloadGJournal } from "src/app/core/store/student/student.actions";
 import { ViewStartLoading } from "src/app/core/store/app/app.actions";
 
 @Component({
@@ -35,6 +35,10 @@ export class GraduateJournalComponent implements OnInit {
     }
 
     public downloadJournal() {
+        let userId = +this.storage.getValue(UserIdKey);
+
+        this.studentState.dispatch(new ViewStartLoading());
+        this.studentState.dispatch(new DownloadGJournal({ userId: userId }));
         console.log("download");
     }
 }

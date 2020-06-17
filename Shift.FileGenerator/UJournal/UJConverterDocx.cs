@@ -90,13 +90,13 @@ namespace Shift.FileGenerator.UJournal
         protected virtual Content GetUniversityContent(Specialty specialty)
         {
             return new Content(
-                new FieldContent("Faculty", specialty?.Department?.Faculty?.Name.ValueOrDefault()),
-                new FieldContent("Department", specialty?.Department?.Name.ValueOrDefault()),
-                new FieldContent("Specialty", this.GetFullSpecialtyName(specialty).ValueOrDefault()),
-                new FieldContent("ViceRectorSign", specialty?.Department?.Faculty?.University?.ViceRector.ValueOrDefault()),
-                new FieldContent("TrainingHeadSign", specialty?.Department?.Faculty?.University?.ScientificTrainingHead.ValueOrDefault()),
-                new FieldContent("FacultyDeanSign", specialty?.Department?.Faculty?.Dean.ValueOrDefault()),
-                new FieldContent("DepartmentHeadSign", specialty?.Department?.Head.ValueOrDefault())
+                new FieldContent("Faculty", specialty?.Department?.Faculty?.Name ?? ""),
+                new FieldContent("Department", specialty?.Department?.Name ?? ""),
+                new FieldContent("Specialty", this.GetFullSpecialtyName(specialty) ?? ""),
+                new FieldContent("ViceRectorSign", specialty?.Department?.Faculty?.University?.ViceRector ?? ""),
+                new FieldContent("TrainingHeadSign", specialty?.Department?.Faculty?.University?.ScientificTrainingHead ?? ""),
+                new FieldContent("FacultyDeanSign", specialty?.Department?.Faculty?.Dean ?? ""),
+                new FieldContent("DepartmentHeadSign", specialty?.Department?.Head ?? "")
             );
         }
 

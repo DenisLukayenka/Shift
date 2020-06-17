@@ -5,6 +5,7 @@ namespace Shift.Repository.Repositories.Interfaces
 	public interface IGJournalRepository: IRepository<GraduateJournal>
 	{
 		GraduateJournal GetByUserId(int userId);
+		GraduateJournal GetFullByUserId(int userId);
 		GraduateJournal GetByIdTracking(int graduateJournalId);
 	}
 }

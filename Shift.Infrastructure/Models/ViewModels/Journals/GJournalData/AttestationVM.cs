@@ -22,8 +22,14 @@ namespace Shift.Infrastructure.Models.ViewModels.Journals.GJournalData
 		public DateTime? TrainingHeadApproveDate { get; set; }
 		public bool IsTrainingHeadApproved { get; set; } = false;
 
-		public int? ProtocolId { get; set; }
-		public virtual ProtocolVM Protocol { get; set; }
+		public string DepartmentResult { get; set; }
+		public string CommissionResult { get; set; }
+
+		public int? DepartmentProtocolId { get; set; }
+		public virtual ProtocolVM DepartmentProtocol { get; set; }
+
+		public int? CommissionProtocolId { get; set; }
+		public virtual ProtocolVM CommissionProtocol { get; set; }
 
 		public int? EducationPhaseId { get; set; }
 	}

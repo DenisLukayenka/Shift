@@ -74,7 +74,13 @@ namespace Shift.Services.Managers.User
 			{
 				var entity = this._mapper.Map<Graduate>(graduate);
 				var journal = new GraduateJournal();
-				journal.EducationYears.Add(new EducationPhase());
+				var educationPhase = new EducationPhase();
+				var attestaion = new Attestation();
+				attestaion.DepartmentProtocol = new Protocol();
+				attestaion.CommissionProtocol = new Protocol();
+				educationPhase.Attestations.Add(attestaion);
+
+				journal.EducationYears.Add(educationPhase);
 				journal.RationalInfo.Protocol = new Protocol();
 				journal.WorkPlans.Add(new WorkPlan());
 

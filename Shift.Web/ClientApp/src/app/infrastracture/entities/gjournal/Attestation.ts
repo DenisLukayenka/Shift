@@ -16,8 +16,14 @@ export class Attestation {
     public TrainingHeadApproveDate: Date;
     public IsTrainingHeadApproved: boolean;
 
-    public ProtocolId: number;
-    public Protocol: Protocol;
+    public DepartmentResult: string;
+    public CommissionResult: string;
+
+    public DepartmentProtocolId: number;
+    public DepartmentProtocol: Protocol;
+
+    public CommissionProtocolId: number;
+    public CommissionProtocol: Protocol;
 
     public EducationPhaseId: number;
 }

@@ -6,5 +6,6 @@ namespace Shift.Services.Managers.Journals.GJournals
 	{
 		GJournal FetchJournal(int userId);
 		GJournal SaveJournal(GJournal journal);
+		byte[] DownloadJournalDocx(int userId);
 	}
 }

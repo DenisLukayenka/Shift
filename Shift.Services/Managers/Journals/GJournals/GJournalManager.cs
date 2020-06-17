@@ -6,7 +6,8 @@ namespace Shift.Services.Managers.Journals.GJournals
 {
 	using Shift.DAL.Models.UserModels.GraduateData.JournalData;
 	using Shift.DAL.Models.UserModels.UserData;
-	using Shift.Infrastructure.Models.ViewModels.Journals;
+    using Shift.FileGenerator.GJournal;
+    using Shift.Infrastructure.Models.ViewModels.Journals;
 	using Shift.Repository.Database;
 	using Shift.Repository.Repositories;
 
@@ -15,12 +16,14 @@ namespace Shift.Services.Managers.Journals.GJournals
 		private readonly IRepositoryWrapper _repository;
 		private readonly IMapper _mapper;
 		private readonly CoreContext _context;
+		private readonly IGJConverter _gjConverter;
 
-		public GJournalManager(IRepositoryWrapper repository, IMapper mapper, CoreContext context)
+		public GJournalManager(IRepositoryWrapper repository, IMapper mapper, CoreContext context, IGJConverter gjConverter)
 		{
 			this._repository = repository;
 			this._mapper = mapper;
 			this._context = context;
+			this._gjConverter = gjConverter;
 		}
 
 		public GJournal FetchJournal(int userId)
@@ -52,6 +55,20 @@ namespace Shift.Services.Managers.Journals.GJournals
 			this._context.SaveChanges();
 
 			return this._mapper.Map<GJournal>(dbJournal);
+		}
+
+		public virtual byte[] DownloadJournalDocx(int userId)
+		{
+			var dbJournal = this._repository.GJournals.GetFullByUserId(userId);
+
+			if (dbJournal != null)
+			{
+				byte[] journalDocx = this._gjConverter.Convert(dbJournal);
+
+				return journalDocx;
+			}
+
+			return null;
 		}
 	}
 }

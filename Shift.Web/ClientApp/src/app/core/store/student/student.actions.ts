@@ -18,6 +18,8 @@ export enum StudentActionTypes {
 
     SaveGJournal = '[Pac] Save GJournal',
     SaveGJournalSuccess = '[Pac] Save GJournal Success',
+    DownloadGJournal = '[Pac] Download GJournal',
+    DownloadGJournalSuccess = '[Pac] Download GJournal Success',
 
     ResetJournals = '[Pac] Reset Journals',
 }
@@ -96,6 +98,16 @@ export class DownloadUJournalSuccess implements Action {
     readonly type = StudentActionTypes.DownloadUJournalSuccess;
 };
 
+export class DownloadGJournal implements Action {
+    readonly type = StudentActionTypes.DownloadGJournal;
+
+    constructor(public payload: { userId: number }){}
+};
+
+export class DownloadGJournalSuccess implements Action {
+    readonly type = StudentActionTypes.DownloadGJournalSuccess;
+};
+
 export type StudentActionsUnion = 
     | LoadUJournal
     | LoadUJournalSuccess
@@ -113,4 +125,6 @@ export type StudentActionsUnion =
     | ExecuteLoadUJournal
     | ExecuteLoadGJournal
     
-    | ResetJournals;
+    | ResetJournals
+    | DownloadGJournal
+    | DownloadGJournalSuccess;

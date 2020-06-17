@@ -477,45 +477,57 @@
                             <mat-form-field class="width-full section-element">
                                 <textarea class="non-scrollable-textarea" cdkTextareaAutosize cdkAutosizeMinRows="2" matInput formControlName="AttestationResult"></textarea>
                             </mat-form-field>
+                            <mat-form-field class="mr-2">
+                                <mat-label>Научный руководитель:</mat-label>
+                                <input matInput [matDatepicker]="adviserApproveDatepicker" formControlName="AdviserApproveDate">
+                                <mat-datepicker-toggle matSuffix [for]="adviserApproveDatepicker"></mat-datepicker-toggle>
+                                <mat-datepicker #adviserApproveDatepicker></mat-datepicker>
+                            </mat-form-field>
 
                             <h5 class="section-label">
-                                Результаты научно-исследовательской работы аспиранта (соискателя) заслушаны и обсуждены на заседании кафедры <i>(указать наименование)</i>
+                                Результаты научно-исследовательской работы аспиранта (соискателя) заслушаны и обсуждены на заседании кафедры
                             </h5>
+                            <p class="section-label">ПОСТАНОВИЛИ</p>
+                            <mat-form-field class="width-full section-element">
+                                <textarea class="non-scrollable-textarea" cdkTextareaAutosize cdkAutosizeMinRows="2" matInput formControlName="DepartmentResult"></textarea>
+                            </mat-form-field>
 
-                            <mat-grid-list cols="2" rowHeight="50px" class="col-md-5">
-                                <mat-grid-tile>
-                                    <p class="mr-4 zero-margin">Научный руководитель</p>
-                                </mat-grid-tile>
-                                <mat-grid-tile>
-                                    <mat-form-field class="inline section-element">
-                                        <input matInput [matDatepicker]="approveDatepicker" formControlName="AdviserApproveDate">
-                                        <mat-datepicker-toggle matSuffix [for]="approveDatepicker"></mat-datepicker-toggle>
-                                        <mat-datepicker #approveDatepicker></mat-datepicker>
-                                    </mat-form-field>
-                                </mat-grid-tile>
+                            <div formGroupName="DepartmentProtocol" class="inline-fields align-baseline">
+                                <p>Протокол </p>
+            
+                                <mat-form-field class="inline section-element">
+                                    <mat-label>от</mat-label>
+                                    <input matInput [matDatepicker]="protocolDepartmentProtocolDatepicker" formControlName="Date">
+                                    <mat-datepicker-toggle matSuffix [for]="protocolDepartmentProtocolDatepicker"></mat-datepicker-toggle>
+                                    <mat-datepicker #protocolDepartmentProtocolDatepicker></mat-datepicker>
+                                </mat-form-field>
+                                <mat-form-field class="inline section-element">
+                                    <mat-label>№ </mat-label>
+                                    <input matInput formControlName="Number">
+                                </mat-form-field>
+                            </div>
 
-                                <mat-grid-tile>
-                                    <p class="mr-4 zero-margin">Заведующий кафедрой</p>
-                                </mat-grid-tile>
-                                <mat-grid-tile>
-                                    <mat-form-field class="inline section-element">
-                                        <input matInput [matDatepicker]="dhDatepicker" formControlName="DepartmentHeadApproveDate">
-                                        <mat-datepicker-toggle matSuffix [for]="dhDatepicker"></mat-datepicker-toggle>
-                                        <mat-datepicker #dhDatepicker></mat-datepicker>
-                                    </mat-form-field>
-                                </mat-grid-tile>
-                               
-                                <mat-grid-tile>
-                                    <p class="mr-4 zero-margin">Начальник УПНКВК </p>
-                                </mat-grid-tile>
-                                <mat-grid-tile>
-                                    <mat-form-field class="inline section-element">
-                                        <input matInput [matDatepicker]="trainerDatepicker" formControlName="TrainingHeadApproveDate">
-                                        <mat-datepicker-toggle matSuffix [for]="trainerDatepicker"></mat-datepicker-toggle>
-                                        <mat-datepicker #trainerDatepicker></mat-datepicker>
-                                    </mat-form-field>
-                                </mat-grid-tile>
-                            </mat-grid-list>
+                            <h5 class="section-label">
+                                Аттестация рассмотрена на заседании аттестационной комиссии
+                            </h5>
+                            <p class="section-label">ПОСТАНОВИЛИ</p>
+                            <mat-form-field class="width-full section-element">
+                                <textarea class="non-scrollable-textarea" cdkTextareaAutosize cdkAutosizeMinRows="2" matInput formControlName="CommissionResult"></textarea>
+                            </mat-form-field>
+                            <div formGroupName="DepartmentProtocol" class="inline-fields align-baseline">
+                                <p>Протокол </p>
+            
+                                <mat-form-field class="inline section-element">
+                                    <mat-label>от</mat-label>
+                                    <input matInput [matDatepicker]="protocolCommissionProtocolDatepicker" formControlName="Date">
+                                    <mat-datepicker-toggle matSuffix [for]="protocolCommissionProtocolDatepicker"></mat-datepicker-toggle>
+                                    <mat-datepicker #protocolCommissionProtocolDatepicker></mat-datepicker>
+                                </mat-form-field>
+                                <mat-form-field class="inline section-element">
+                                    <mat-label>№ </mat-label>
+                                    <input matInput formControlName="Number">
+                                </mat-form-field>
+                            </div>
                         </div>
                     </ng-container>
                 </div>

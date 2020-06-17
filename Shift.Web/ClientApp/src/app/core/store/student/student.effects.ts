@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Actions, Effect, ofType } from "@ngrx/effects";
 import { HttpProcessorService } from "src/app/services/http-processor/http-processor.service";
-import { StudentActionTypes, LoadUJournal, LoadUJournalSuccess, SaveUJournalSuccess, SaveUJournal, LoadGJournal, LoadGJournalSuccess, ExecuteLoadUJournal, ExecuteLoadGJournal, SaveGJournal, SaveGJournalSuccess, DownloadUJournal, DownloadUJournalSuccess } from "./student.actions";
+import { StudentActionTypes, LoadUJournal, LoadUJournalSuccess, SaveUJournalSuccess, SaveUJournal, LoadGJournal, LoadGJournalSuccess, ExecuteLoadUJournal, ExecuteLoadGJournal, SaveGJournal, SaveGJournalSuccess, DownloadUJournal, DownloadUJournalSuccess, DownloadGJournal } from "./student.actions";
 import { map, exhaustMap, catchError, switchMap } from "rxjs/operators";
 import { FetchUJournalReq } from "src/app/infrastracture/requests/journals/undergraduates/FetchUJournalReq";
 import { AppFailure, ViewStartLoading, ViewFinishLoading } from "../app/app.actions";
@@ -11,6 +11,7 @@ import { StorageService } from "src/app/services/storage/storage.service";
 import { FetchGJournalReq } from "src/app/infrastracture/requests/journals/graduates/FetchGJournalReq";
 import { SaveGJournalReq } from "src/app/infrastracture/requests/journals/graduates/SaveGJournalReq";
 import { DownloadUJournalReq } from "src/app/infrastracture/requests/journals/undergraduates/DownloadUJournalReq";
+import { DownloadGJournalReq } from "src/app/infrastracture/requests/journals/graduates/DownloadGJournalReq";
 
 @Injectable()
 export class StudentEffects {
@@ -76,6 +77,29 @@ export class StudentEffects {
             link.setAttribute('type', 'hidden');
             link.href = data;
             link.download = 'ПланМагистранта' + '.docx';
+            link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+            setTimeout(function () {
+                window.URL.revokeObjectURL(data);
+                link.remove();
+            }, 100);
+
+            return new ViewFinishLoading();
+        }),
+        catchError(error => of(new AppFailure()))
+    );
+
+    @Effect()
+    downloadGJournal$ = this.actions$.pipe(
+        ofType<DownloadGJournal>(StudentActionTypes.DownloadGJournal),
+        exhaustMap(action => this.httpProcessor.execute(new DownloadGJournalReq(action.payload.userId))),
+        map((response) => {
+            const blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+            const data = URL.createObjectURL(blob);
+
+            let link = document.createElement('a');
+            link.setAttribute('type', 'hidden');
+            link.href = data;
+            link.download = 'ПланАспиранта' + '.docx';
             link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
             setTimeout(function () {
                 window.URL.revokeObjectURL(data);

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Shift.Infrastructure.Models.SharedData;
 using Shift.Infrastructure.Models.ViewModels.Journals;
 using Shift.Services.Managers.Journals.GJournals;
+using System.IO;
 
 namespace Shift.Web.Controllers
 {
@@ -29,6 +30,17 @@ namespace Shift.Web.Controllers
             }
 
             return Ok(new { Alert = Config.BadRequest });
+        }
+
+        [HttpGet]
+        [Route("downloadJournal")]
+        [Authorize]
+        public IActionResult DownloadJournal([FromQuery] int userId)
+        {
+            var journalBytes = this._journalManager.DownloadJournalDocx(userId);
+            var content = new MemoryStream(journalBytes);
+
+            return File(content, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "GraduateTemplate.docx");
         }
 
         [HttpPost]
