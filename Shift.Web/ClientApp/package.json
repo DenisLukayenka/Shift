@@ -38,7 +38,7 @@
     "core-js": "^3.6.5",
     "immer": "^6.0.3",
     "jquery": "3.4.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "moment": "^2.26.0",
     "oidc-client": "^1.9.1",
     "popper.js": "^1.16.0",
